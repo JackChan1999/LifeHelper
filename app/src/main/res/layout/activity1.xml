@@ -1,0 +1,23 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://robobinding.org/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    tools:context=".Activity1">
+
+    <TextView
+        android:id="@+id/bind_by_robobinding_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        bind:text="{text}" />
+
+    <TextView
+        android:id="@+id/bind_by_android_annotation_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bind_by_robobinding_tv"
+        android:textSize="20sp" />
+
+</RelativeLayout>
