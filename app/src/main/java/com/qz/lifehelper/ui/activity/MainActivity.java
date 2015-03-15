@@ -1,53 +1,25 @@
 package com.qz.lifehelper.ui.activity;
 
-import android.content.Intent;
+import org.androidannotations.annotations.EActivity;
+import org.robobinding.binder.Binders;
+
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
 
 import com.qz.lifehelper.R;
-
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.ViewById;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.qz.lifehelper.presentation.MainActivityPresentation;
 
 /**
  * Created by kohoh on 15/3/14.
  */
-@EActivity(R.layout.activity_main)
+@EActivity
 public class MainActivity extends ActionBarActivity {
-
-	@ViewById(R.id.activities_lv)
-	ListView listView;
-
-	@AfterViews
-	void setListView() {
-
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
-        listView.setAdapter(adapter);
-        ArrayList<String> activities = new ArrayList<String>();
-        activities.add("ChooseCities");
-        adapter.addAll(activities);
-
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch (position) {
-                    case 0:
-                        Intent intent = new Intent(MainActivity.this, ChooseCityActivity_.class);
-                        MainActivity.this.startActivity(intent);
-                        break;
-                }
-            }
-        });
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        MainActivityPresentation presentation = new MainActivityPresentation(this);
+        View rootView = Binders.inflateAndBind(this, R.layout.activity_main, presentation);
+        setContentView(rootView);
     }
-
 }
