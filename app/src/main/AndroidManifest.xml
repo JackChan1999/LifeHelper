@@ -13,9 +13,6 @@
             android:value="Drjj8aQ7mvTgYYES5rMgdZUE" />
 
         <activity
-            android:name=".ui.activity.Activity1_"
-            android:label="@string/title_activity1"/>
-        <activity
             android:name=".ui.activity.BaiduMapDempActivity_"
             android:label="BaiduMapDemo"/>
 

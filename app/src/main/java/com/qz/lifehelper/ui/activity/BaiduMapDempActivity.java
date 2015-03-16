@@ -13,6 +13,10 @@ import com.qz.lifehelper.R;
 /**
  * Created by kohoh on 15/3/13.
  */
+
+/**
+ * 这只是一个用于测试Baidu Map API是否可以使用的Demo
+ */
 @EActivity(R.layout.activitiy_baidu_map_demo)
 public class BaiduMapDempActivity extends ActionBarActivity {
 
