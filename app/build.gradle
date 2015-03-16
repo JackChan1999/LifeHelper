@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
 
-def package_name='com.qz.lifehelper'
+def package_name = 'com.qz.lifehelper'
 android {
     compileSdkVersion 21
     buildToolsVersion "21.1.2"
@@ -14,8 +14,8 @@ android {
         versionName "1.0"
     }
 
-    signingConfigs{
-        release{
+    signingConfigs {
+        release {
             storeFile file(STORE_FILE)
             storePassword STORE_PASSWORD
             keyAlias KEY_ALIAS
@@ -36,6 +36,11 @@ android {
             jniLibs.srcDirs = ['libs']
         }
     }
+
+    packagingOptions {
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/LICENSE.txt'
+    }
 }
 
 def AAVersion = '3.2'
@@ -49,6 +54,7 @@ dependencies {
 //    compile "org.robobinding:robobinding:${robobindingVersion}"
 //    apt "org.robobinding:codegen:$robobindingVersion"
 //    compile "com.jayway.android.robotium:robotium-solo:5.3.1"
+    compile 'com.google.code.gson:gson:2.3.1'
 }
 
 apt {

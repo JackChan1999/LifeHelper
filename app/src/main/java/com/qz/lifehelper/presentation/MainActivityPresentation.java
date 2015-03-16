@@ -22,10 +22,9 @@ public class MainActivityPresentation {
 
 	private List<ActivityClass> activityClasses;
 
-    /**
-     *  获取Activity目录信息
-     * @return activity目录到信息
-     */
+	/**
+	 * 获取Activity目录信息
+	 */
 	public List<ActivityClass> getActivityClasses() {
 
 		if (activityClasses == null) {
@@ -37,9 +36,9 @@ public class MainActivityPresentation {
 		return activityClasses;
 	}
 
-    /**
-     * 该类封装类Activity到信息，包括名字和类
-     */
+	/**
+	 * 该类封装类Activity到信息，包括名字和类
+	 */
 	public class ActivityClass {
 		private String name;
 		private Class<? extends Activity> activityClass;
