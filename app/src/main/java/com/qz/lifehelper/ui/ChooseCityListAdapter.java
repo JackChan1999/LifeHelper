@@ -8,23 +8,31 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.qz.lifehelper.R;
 import com.qz.lifehelper.entity.ChooseCityListItemData;
 import com.qz.lifehelper.entity.ChooseCityListItemSection;
 import com.qz.lifehelper.entity.City;
+import com.qz.lifehelper.presentation.ChooseCityListAdapterPresentation;
+
+import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.EBean;
+import org.androidannotations.annotations.RootContext;
 
 /**
  * 选择城市列表对应的适配器
  */
+@EBean
 public class ChooseCityListAdapter extends BaseAdapter {
 	private List<ChooseCityListItemData> itemDatas = new ArrayList<>();
-	private Context context;
 
-	public ChooseCityListAdapter(Context context) {
-		this.context = context;
-	}
+    @RootContext
+	public Context context;
+
+    @Bean
+    public ChooseCityListAdapterPresentation presentation;
 
 	public void setItemDatas(List<ChooseCityListItemData> itemDatas) {
 		this.itemDatas.clear();
@@ -69,6 +77,7 @@ public class ChooseCityListAdapter extends BaseAdapter {
 		 */
 		class ChooseCityItemChildView {
 			public TextView cityNameTv;
+            public Button findLocationBn;
 		}
 
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -84,14 +93,15 @@ public class ChooseCityListAdapter extends BaseAdapter {
 
 			ChooseCityItemChildView chooseCityItemChildView = new ChooseCityItemChildView();
 			chooseCityItemChildView.cityNameTv = (TextView) itemChildView.chooseCityItem.findViewById(R.id.city_name_tv);
-			itemChildView.chooseCityItem.setTag(chooseCityItemChildView);
+            chooseCityItemChildView.findLocationBn = (Button) itemChildView.chooseCityItem.findViewById(R.id.find_location_bn);
+            itemChildView.chooseCityItem.setTag(chooseCityItemChildView);
 
 			convertView.setTag(itemChildView);
 		}
 
-		ChooseCityListItemData itemData = itemDatas.get(position);
+		final ChooseCityListItemData itemData = itemDatas.get(position);
 		ItemChildView itemChildView = (ItemChildView) convertView.getTag();
-		ChooseCityItemChildView chooseCityItemChildView = (ChooseCityItemChildView) itemChildView.chooseCityItem.getTag();
+		final ChooseCityItemChildView chooseCityItemChildView = (ChooseCityItemChildView) itemChildView.chooseCityItem.getTag();
 		ChooseCitySectionChildView chooseCitySectionChildView = (ChooseCitySectionChildView) itemChildView.chooseCitySection.getTag();
 		switch (itemData.getItemType()) {
 		case SECTION:
@@ -103,9 +113,43 @@ public class ChooseCityListAdapter extends BaseAdapter {
 			itemChildView.chooseCityItem.setVisibility(View.VISIBLE);
 			itemChildView.chooseCitySection.setVisibility(View.GONE);
 			chooseCityItemChildView.cityNameTv.setText(((City) itemData).cityName);
+            chooseCityItemChildView.findLocationBn.setVisibility(View.GONE);
 			break;
+        case FIND_LOCATION:
+            chooseCityItemChildView.findLocationBn.setVisibility(View.GONE);
+            itemChildView.chooseCitySection.setVisibility(View.GONE);
+            chooseCityItemChildView.cityNameTv.setText(((City) itemData).cityName);
+            if (((City) itemData).cityName.equals(context.getString(R.string.find_location_ing))) {
+                chooseCityItemChildView.findLocationBn.setBackground(context.getResources().getDrawable(android.R.color.holo_orange_light));
+            } else {
+                chooseCityItemChildView.findLocationBn.setBackground(context.getResources().getDrawable(android.R.color.holo_red_light));
+            }
+            chooseCityItemChildView.findLocationBn.setVisibility(View.VISIBLE);
+            chooseCityItemChildView.findLocationBn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    presentation.findCurrentLocationCity();
+                }
+            });
+            break;
 		}
+
+        switch (itemData.getItemType()) {
+            case CITY:
+            case FIND_LOCATION:
+                convertView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (!((City) itemData).cityName.equals(context.getString(R.string.find_location_ing))) {
+                            presentation.setCurrentCity((com.qz.lifehelper.entity.City) itemData);
+                        }
+                    }
+                });
+                break;
+        }
 
 		return convertView;
 	}
+
+
 }
