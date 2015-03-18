@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="周边快查"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:padding="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/find_food_lv"
+            style="@style/HomeNavigateButtomTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/find_food_iv"
+                android:layout_width="@dimen/home_page_navigate_button_size"
+                android:layout_height="@dimen/home_page_navigate_button_size"
+                android:src="@android:color/holo_blue_light" />
+
+            <TextView
+                style="@style/HomeNavigateButtomThemeTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="找美食" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/find_scenic_lv"
+            style="@style/HomeNavigateButtomTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/find_scenic_iv"
+                android:layout_width="@dimen/home_page_navigate_button_size"
+                android:layout_height="@dimen/home_page_navigate_button_size"
+                android:src="@android:color/holo_blue_light" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/HomeNavigateButtomThemeTitle"
+                android:text="搜景点" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/find_movie_lv"
+            style="@style/HomeNavigateButtomTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/find_movie_iv"
+                android:layout_width="@dimen/home_page_navigate_button_size"
+                android:layout_height="@dimen/home_page_navigate_button_size"
+                android:src="@android:color/holo_blue_light" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/HomeNavigateButtomThemeTitle"
+                android:text="看电影" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/find_hotel_lv"
+            style="@style/HomeNavigateButtomTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/find_hotel_iv"
+                android:layout_width="@dimen/home_page_navigate_button_size"
+                android:layout_height="@dimen/home_page_navigate_button_size"
+                android:src="@android:color/holo_blue_light" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/HomeNavigateButtomThemeTitle"
+                android:text="订酒店" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/call_take_out_lv"
+            style="@style/HomeNavigateButtomTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/call_take_out_iv"
+                android:layout_width="@dimen/home_page_navigate_button_size"
+                android:layout_height="@dimen/home_page_navigate_button_size"
+                android:src="@android:color/holo_blue_light" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/HomeNavigateButtomThemeTitle"
+                android:text="叫外卖" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/special_local_product_lv"
+            style="@style/HomeNavigateButtomTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/special_local_product_iv"
+                android:layout_width="@dimen/home_page_navigate_button_size"
+                android:layout_height="@dimen/home_page_navigate_button_size"
+                android:src="@android:color/holo_blue_light" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/HomeNavigateButtomThemeTitle"
+                android:text="特产" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/use_car_lv"
+            style="@style/HomeNavigateButtomTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/use_car_iv"
+                android:layout_width="@dimen/home_page_navigate_button_size"
+                android:layout_height="@dimen/home_page_navigate_button_size"
+                android:src="@android:color/holo_blue_light" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/HomeNavigateButtomThemeTitle"
+                android:text="用车" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/more_lv"
+            style="@style/HomeNavigateButtomTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/more_iv"
+                android:layout_width="@dimen/home_page_navigate_button_size"
+                android:layout_height="@dimen/home_page_navigate_button_size"
+                android:src="@android:color/holo_blue_light" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/HomeNavigateButtomThemeTitle"
+                android:text="更多>" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -9,6 +9,7 @@ import android.app.Activity;
 
 import com.qz.lifehelper.ui.activity.BaiduMapDempActivity_;
 import com.qz.lifehelper.ui.activity.ChooseCityActivity_;
+import com.qz.lifehelper.ui.activity.HomeActivity_;
 
 /**
  * Created by kohoh on 15/3/14.
@@ -31,7 +32,8 @@ public class MainActivityPresentation {
 			activityClasses = new ArrayList<ActivityClass>();
 			activityClasses.add(new ActivityClass("ChooseCityActivity", ChooseCityActivity_.class));
 			activityClasses.add(new ActivityClass("BaiduMaoDemoActivity", BaiduMapDempActivity_.class));
-		}
+            activityClasses.add(new ActivityClass("HomeActivity", HomeActivity_.class));
+        }
 
 		return activityClasses;
 	}

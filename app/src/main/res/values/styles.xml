@@ -5,4 +5,16 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="HomeNavigateButtomTheme" parent="AppTheme">
+        <item name="android:gravity">center</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="HomeNavigateButtomThemeTitle">
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
 </resources>

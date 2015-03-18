@@ -14,13 +14,23 @@
 
         <activity
             android:name=".ui.activity.BaiduMapDempActivity_"
-            android:label="BaiduMapDemo"/>
+            android:label="BaiduMapDemo" />
 
         <activity
             android:name=".ui.activity.ChooseCityActivity_"
-            android:label="@string/title_choose_city"/>
+            android:label="@string/title_choose_city_activity" />
 
-        <activity android:name=".ui.activity.MainActivity_"
+        <activity
+            android:name=".ui.activity.HomeActivity_"
+            android:label="@string/title_home_activity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ui.activity.MainActivity_"
             android:label="@string/title_main_activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
