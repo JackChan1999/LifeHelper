@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.qz.lifehelper.R;
+import com.qz.lifehelper.entity.ChooseCityListItemCity;
 import com.qz.lifehelper.entity.ChooseCityListItemData;
 import com.qz.lifehelper.entity.ChooseCityListItemSection;
 import com.qz.lifehelper.entity.City;
@@ -112,14 +113,14 @@ public class ChooseCityListAdapter extends BaseAdapter {
 		case CITY:
 			itemChildView.chooseCityItem.setVisibility(View.VISIBLE);
 			itemChildView.chooseCitySection.setVisibility(View.GONE);
-			chooseCityItemChildView.cityNameTv.setText(((City) itemData).cityName);
+			chooseCityItemChildView.cityNameTv.setText(((ChooseCityListItemCity) itemData).cityName);
             chooseCityItemChildView.findLocationBn.setVisibility(View.GONE);
 			break;
         case FIND_LOCATION:
             chooseCityItemChildView.findLocationBn.setVisibility(View.GONE);
             itemChildView.chooseCitySection.setVisibility(View.GONE);
-            chooseCityItemChildView.cityNameTv.setText(((City) itemData).cityName);
-            if (((City) itemData).cityName.equals(context.getString(R.string.find_location_ing))) {
+            chooseCityItemChildView.cityNameTv.setText(((ChooseCityListItemCity) itemData).cityName);
+            if (((ChooseCityListItemCity) itemData).cityName.equals(context.getString(R.string.find_location_ing))) {
                 chooseCityItemChildView.findLocationBn.setBackground(context.getResources().getDrawable(android.R.color.holo_orange_light));
             } else {
                 chooseCityItemChildView.findLocationBn.setBackground(context.getResources().getDrawable(android.R.color.holo_red_light));
@@ -140,8 +141,8 @@ public class ChooseCityListAdapter extends BaseAdapter {
                 convertView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (!((City) itemData).cityName.equals(context.getString(R.string.find_location_ing))) {
-                            presentation.setCurrentCity((com.qz.lifehelper.entity.City) itemData);
+                        if (!((ChooseCityListItemCity) itemData).cityName.equals(context.getString(R.string.find_location_ing))) {
+                            presentation.setCurrentCity(City.generateCity(((ChooseCityListItemCity) itemData).cityName));
                         }
                     }
                 });

@@ -22,6 +22,8 @@ import com.qz.lifehelper.entity.ChooseCityListItemType;
 import com.qz.lifehelper.entity.City;
 import com.qz.lifehelper.entity.json.CitiesGroupByFirstCharJson;
 import com.qz.lifehelper.entity.json.CityJson;
+import com.qz.lifehelper.event.CetCurrentCityEvent;
+import com.qz.lifehelper.event.GetCurrentLocationCityEvent;
 import com.qz.lifehelper.persist.LocationPersist;
 
 import de.greenrobot.event.EventBus;
@@ -38,37 +40,31 @@ public class LocationBusiness {
 	Context context;
 
 	@Bean
-    LocationPersist locationPersist;
+	LocationPersist locationPersist;
 
-    /**
-     * 清除当前定位到的城市数据
-     */
-    public void clearCurrentLocationCity() {
-        locationPersist.clearCurrentLocationCity();
-    }
+	/**
+	 * 设置当前城市
+	 */
+	public void setCurrentCity(City city) {
+		locationPersist.setCurrentCity(city.cityName);
+		EventBus.getDefault().post(CetCurrentCityEvent.generateEvent(city));
+	}
 
-    /**
-     * 设置当前城市
-     */
-    public void setCurrentCity(City city) {
-        locationPersist.setCurrentCity(city.cityName);
-    }
-
-    /**
-     * 获取当前城市
-     */
-    public City getCurrentCity() {
-        return City.generateCity(locationPersist.getCurrentCity(),ChooseCityListItemType.CITY);
-    }
-
-    /**
-     * 获取定位信息事件
-     */
-    static public class GetLocationEvent{}
+	/**
+	 * 获取当前城市
+	 */
+	public City getCurrentCity() {
+		String currentCityName = locationPersist.getCurrentCity();
+		if (currentCityName == null) {
+			return null;
+		} else {
+			return City.generateCity(currentCityName);
+		}
+	}
 
 	/**
 	 * 通过定位获取当前位置。在获取到当前位置后，会发送GetLocationEvent
-    */
+	 */
 	public void findCurrentLocationCity() {
 		final LocationClient locationClient = new LocationClient(context);
 
@@ -87,26 +83,15 @@ public class LocationBusiness {
 
 					Log.d(TAG, "get current location");
 					locationClient.stop();
-                    locationPersist.setCurrentLocationCity(bdLocation.getCity());
-                    EventBus.getDefault().post(new GetLocationEvent());
-                }
+					EventBus.getDefault().post(
+							GetCurrentLocationCityEvent.generateEvent(City.generateCity(bdLocation.getCity())));
+				}
 			}
 		};
 		locationClient.registerLocationListener(wrapperListener);
 
 		locationClient.start();
-    }
-
-    /**
-     * 获取当前定位到的城市
-     */
-    public City getCurrentLocationCity() {
-        String currentCity = locationPersist.getCurrentLocationCity();
-        if (currentCity == null) {
-            return null;
-        }
-        return City.generateCity(currentCity,ChooseCityListItemType.CITY);
-    }
+	}
 
 	/**
 	 * 获取以首字母分组排序的全部城市
@@ -122,7 +107,7 @@ public class LocationBusiness {
 		for (CitiesGroupByFirstCharJson citiesGroupByFirstCharJson : citiesGroupByFirstCharJsons) {
 			List<City> realCities = new ArrayList<>();
 			for (CityJson cityJson : citiesGroupByFirstCharJson.getCities()) {
-				realCities.add(City.generateCity(cityJson.getName(), ChooseCityListItemType.CITY));
+				realCities.add(City.generateCity(cityJson.getName()));
 			}
 			if (realCities.size() > 0) {
 				cities.put(citiesGroupByFirstCharJson.getSection(), realCities);

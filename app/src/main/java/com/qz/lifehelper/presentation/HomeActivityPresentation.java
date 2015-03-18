@@ -5,9 +5,15 @@ import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
 
 import android.content.Context;
+import android.content.Intent;
 import android.widget.Toast;
 
 import com.qz.lifehelper.business.LocationBusiness;
+import com.qz.lifehelper.entity.City;
+import com.qz.lifehelper.event.CetCurrentCityEvent;
+import com.qz.lifehelper.ui.activity.ChooseCityActivity_;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by kohoh on 15/3/18.
@@ -30,8 +36,9 @@ public class HomeActivityPresentation {
 	}
 
 	private void toChooseCity() {
-		Toast.makeText(context, "前往选择城市页面", Toast.LENGTH_SHORT).show();
-	}
+        Intent intent = new Intent(context, ChooseCityActivity_.class);
+        context.startActivity(intent);
+    }
 
 	private void toSearch() {
 		Toast.makeText(context, "前往搜索页面", Toast.LENGTH_SHORT).show();
@@ -76,4 +83,13 @@ public class HomeActivityPresentation {
 	public void search() {
 		toSearch();
 	}
+
+    public void getCurrentCity() {
+        City currentCity = locationBusiness.getCurrentCity();
+        if (currentCity == null) {
+            toChooseCity();
+        } else {
+            EventBus.getDefault().post(CetCurrentCityEvent.generateEvent(currentCity));
+        }
+    }
 }

@@ -1,12 +1,12 @@
 package com.qz.lifehelper.ui.activity;
 
-import android.content.Context;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 
 import com.qz.lifehelper.R;
+import com.qz.lifehelper.event.CetCurrentCityEvent;
 import com.qz.lifehelper.presentation.HomeActivityPresentation;
 
 import org.androidannotations.annotations.AfterInject;
@@ -14,7 +14,8 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.ViewById;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by kohoh on 15/3/18.
@@ -66,6 +67,8 @@ public class HomeActivity extends ActionBarActivity {
         presentation.findMore();
     }
 
+    TextView currentCityTv;
+
     @AfterViews
     public void setActionBar() {
 
@@ -79,11 +82,22 @@ public class HomeActivity extends ActionBarActivity {
             }
         });
 
-        actionbar.findViewById(R.id.choose_city_tv).setOnClickListener(new View.OnClickListener() {
+        currentCityTv = (TextView) actionbar.findViewById(R.id.current_city_tv);
+        currentCityTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 presentation.chooseCity();
             }
         });
+        presentation.getCurrentCity();
+    }
+
+    @AfterInject
+    public void registerEventBus() {
+        EventBus.getDefault().register(this);
+    }
+
+    public void onEventMainThread(CetCurrentCityEvent event) {
+        currentCityTv.setText(event.currentCity.cityName);
     }
 }

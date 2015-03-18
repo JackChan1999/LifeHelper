@@ -41,7 +41,6 @@ public class LocationPersist {
 		return citiesJson;
 	}
 
-    static final private String CURRENT_LOCATAION_CITY = "CURRENT_LOCATAION_CITY";
     static final private String CURRENT_CITY = "CURRENT_CITY";
     static final private String LOCATION_SHARED_PREFERENCES = "LOCATION_SHARED_PREFERENCES";
 
@@ -50,31 +49,9 @@ public class LocationPersist {
     }
 
     /**
-     * 设置当前定位到到城市
-     */
-    public void setCurrentLocationCity(String cityName) {
-        getLocationSharedPrefences().edit().putString(CURRENT_LOCATAION_CITY, cityName).commit();
-    }
-
-    /**
-     * 获取当前定位到到城市
-     */
-    public String getCurrentLocationCity() {
-        return getLocationSharedPrefences().getString(CURRENT_LOCATAION_CITY, null);
-    }
-
-    /**
-     * 清除当前到定位信息
-     */
-    public void clearCurrentLocationCity() {
-        getLocationSharedPrefences().edit().putString(CURRENT_LOCATAION_CITY, null).commit();
-    }
-
-    /**
      * 设置当前城市
      */
     public void setCurrentCity(String cityName) {
-        Toast.makeText(context, "current city = " + cityName, Toast.LENGTH_LONG).show();
         getLocationSharedPrefences().edit().putString(CURRENT_CITY, cityName).commit();
     }
 

@@ -5,6 +5,9 @@ import org.androidannotations.annotations.EBean;
 
 import com.qz.lifehelper.business.LocationBusiness;
 import com.qz.lifehelper.entity.City;
+import com.qz.lifehelper.event.FinishActivityEvent;
+import com.qz.lifehelper.event.InvalidCityListEvent;
+import com.qz.lifehelper.event.NewCityListEvent;
 import com.qz.lifehelper.ui.activity.ChooseCityActivity;
 
 import de.greenrobot.event.EventBus;
@@ -22,8 +25,7 @@ public class ChooseCityListAdapterPresentation {
      * 重新定位，获取当前的位置
      */
     public void findCurrentLocationCity() {
-        locationBusiness.clearCurrentLocationCity();
-        EventBus.getDefault().post(new ChooseCityActivity.RefreshCityListEvent());
+        EventBus.getDefault().post(InvalidCityListEvent.generateEvent());
         locationBusiness.findCurrentLocationCity();
     }
 
@@ -32,5 +34,6 @@ public class ChooseCityListAdapterPresentation {
      */
     public void setCurrentCity(City city) {
         locationBusiness.setCurrentCity(city);
+        EventBus.getDefault().post(FinishActivityEvent.generateEvent(ChooseCityActivity.class));
     }
 }
