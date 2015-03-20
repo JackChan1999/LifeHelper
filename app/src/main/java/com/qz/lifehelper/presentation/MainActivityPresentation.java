@@ -10,6 +10,8 @@ import android.app.Activity;
 import com.qz.lifehelper.ui.activity.BaiduMapDempActivity_;
 import com.qz.lifehelper.ui.activity.ChooseCityActivity_;
 import com.qz.lifehelper.ui.activity.HomeActivity_;
+import com.qz.lifehelper.ui.activity.POIResultActivity;
+import com.qz.lifehelper.ui.activity.POIResultActivity_;
 
 /**
  * Created by kohoh on 15/3/14.
@@ -33,6 +35,7 @@ public class MainActivityPresentation {
 			activityClasses.add(new ActivityClass("ChooseCityActivity", ChooseCityActivity_.class));
 			activityClasses.add(new ActivityClass("BaiduMaoDemoActivity", BaiduMapDempActivity_.class));
             activityClasses.add(new ActivityClass("HomeActivity", HomeActivity_.class));
+            activityClasses.add(new ActivityClass("POIResultActivity", POIResultActivity_.class));
         }
 
 		return activityClasses;

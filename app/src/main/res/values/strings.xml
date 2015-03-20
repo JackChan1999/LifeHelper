@@ -5,4 +5,5 @@
     <string name="title_home_activity">首页</string>
 
     <string name="find_location_ing">正在定位……</string>
+    <string name="title_poi_result">搜素结果页</string>
 </resources>

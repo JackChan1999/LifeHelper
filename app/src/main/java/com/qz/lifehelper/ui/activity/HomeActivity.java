@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.qz.lifehelper.R;
-import com.qz.lifehelper.event.CetCurrentCityEvent;
+import com.qz.lifehelper.event.GetCurrentCityEvent;
 import com.qz.lifehelper.presentation.HomeActivityPresentation;
 
 import org.androidannotations.annotations.AfterInject;
@@ -97,7 +97,7 @@ public class HomeActivity extends ActionBarActivity {
         EventBus.getDefault().register(this);
     }
 
-    public void onEventMainThread(CetCurrentCityEvent event) {
+    public void onEventMainThread(GetCurrentCityEvent event) {
         currentCityTv.setText(event.currentCity.cityName);
     }
 }

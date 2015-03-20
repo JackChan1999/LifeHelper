@@ -5,10 +5,10 @@ import com.qz.lifehelper.entity.City;
 /**
 * Created by kohoh on 15/3/18.
 */
-public class CetCurrentCityEvent {
+public class GetCurrentCityEvent {
 
-    static public CetCurrentCityEvent generateEvent(City currentCity) {
-        CetCurrentCityEvent event = new CetCurrentCityEvent();
+    static public GetCurrentCityEvent generateEvent(City currentCity) {
+        GetCurrentCityEvent event = new GetCurrentCityEvent();
         event.currentCity = currentCity;
         return event;
     }

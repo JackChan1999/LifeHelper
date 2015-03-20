@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import com.qz.lifehelper.business.LocationBusiness;
 import com.qz.lifehelper.entity.City;
-import com.qz.lifehelper.event.CetCurrentCityEvent;
+import com.qz.lifehelper.event.GetCurrentCityEvent;
 import com.qz.lifehelper.ui.activity.ChooseCityActivity_;
 
 import de.greenrobot.event.EventBus;
@@ -89,7 +89,7 @@ public class HomeActivityPresentation {
         if (currentCity == null) {
             toChooseCity();
         } else {
-            EventBus.getDefault().post(CetCurrentCityEvent.generateEvent(currentCity));
+            EventBus.getDefault().post(GetCurrentCityEvent.generateEvent(currentCity));
         }
     }
 }

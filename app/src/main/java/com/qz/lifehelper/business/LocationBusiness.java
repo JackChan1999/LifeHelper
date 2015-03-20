@@ -18,11 +18,10 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.qz.lifehelper.entity.ChooseCityListItemType;
 import com.qz.lifehelper.entity.City;
 import com.qz.lifehelper.entity.json.CitiesGroupByFirstCharJson;
 import com.qz.lifehelper.entity.json.CityJson;
-import com.qz.lifehelper.event.CetCurrentCityEvent;
+import com.qz.lifehelper.event.GetCurrentCityEvent;
 import com.qz.lifehelper.event.GetCurrentLocationCityEvent;
 import com.qz.lifehelper.persist.LocationPersist;
 
@@ -47,7 +46,7 @@ public class LocationBusiness {
 	 */
 	public void setCurrentCity(City city) {
 		locationPersist.setCurrentCity(city.cityName);
-		EventBus.getDefault().post(CetCurrentCityEvent.generateEvent(city));
+		EventBus.getDefault().post(GetCurrentCityEvent.generateEvent(city));
 	}
 
 	/**
