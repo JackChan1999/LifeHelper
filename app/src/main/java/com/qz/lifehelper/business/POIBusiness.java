@@ -22,51 +22,52 @@ import de.greenrobot.event.EventBus;
  */
 @EBean
 public class POIBusiness {
-    boolean isLoding = false;
+	boolean isLoding = false;
 
-    public void loadPOIData(City city, final String category, String distance) {
-        if (isLoding) {
-            return;
-        }
+    /**
+     * 开始加载制定城市的相关类别的POI数据。当加载成功会发出GetPOIResultEvent。
+     * */
+	public void loadPOIData(City city, final String category) {
+		if (isLoding) {
+			return;
+		}
 
-        final PoiSearch poiSearch = PoiSearch.newInstance();
-        OnGetPoiSearchResultListener listener = new OnGetPoiSearchResultListener() {
-            @Override
-            public void onGetPoiResult(PoiResult poiResult) {
-                isLoding = false;
-                poiSearch.destroy();
-                List<PoiInfo> poiInfos = poiResult.getAllPoi();
-                List<POIResult> poiResults = new ArrayList<>();
-                for (PoiInfo poiInfo : poiInfos) {
-                    POIResult mPOIResult = new POIResult();
-                    mPOIResult.address = poiInfo.address;
-                    mPOIResult.category = category;
-                    mPOIResult.distance = poiInfo.city;
-                    mPOIResult.poiIv = null;
-                    mPOIResult.grade = 60;
-                    mPOIResult.title = poiInfo.name;
-                    poiResults.add(mPOIResult);
-                }
-                eventBus.post(GetPOIResultEvent.generateEvnet(poiResults));
-            }
+		final PoiSearch poiSearch = PoiSearch.newInstance();
+		OnGetPoiSearchResultListener listener = new OnGetPoiSearchResultListener() {
+			@Override
+			public void onGetPoiResult(PoiResult poiResult) {
+				isLoding = false;
+				poiSearch.destroy();
+				List<PoiInfo> poiInfos = poiResult.getAllPoi();
+				List<POIResult> poiResults = new ArrayList<>();
+				for (PoiInfo poiInfo : poiInfos) {
+					POIResult mPOIResult = new POIResult();
+					mPOIResult.address = poiInfo.address;
+					mPOIResult.poiIv = null;
+					mPOIResult.tel = poiInfo.phoneNum;
+					mPOIResult.title = poiInfo.name;
+					poiResults.add(mPOIResult);
+				}
+				eventBus.post(GetPOIResultEvent.generateEvnet(poiResults));
+			}
 
-            @Override
-            public void onGetPoiDetailResult(PoiDetailResult poiDetailResult) {
+			@Override
+			public void onGetPoiDetailResult(PoiDetailResult poiDetailResult) {
 
-            }
-        };
-        poiSearch.setOnGetPoiSearchResultListener(listener);
-        poiSearch.searchInCity(new PoiCitySearchOption().city(city.cityName).keyword(category).pageNum(10));
-        isLoding = true;
-    }
+			}
+		};
+		poiSearch.setOnGetPoiSearchResultListener(listener);
+		poiSearch.searchInCity(new PoiCitySearchOption().city(city.cityName).keyword(category).pageNum(10));
+		isLoding = true;
+	}
 
-    EventBus eventBus;
+	EventBus eventBus;
 
-    public POIBusiness() {
-        eventBus = EventBus.builder().build();
-    }
+	public POIBusiness() {
+		eventBus = EventBus.builder().build();
+	}
 
-    public EventBus getEventBus() {
-        return eventBus;
-    }
+	public EventBus getEventBus() {
+		return eventBus;
+	}
 }

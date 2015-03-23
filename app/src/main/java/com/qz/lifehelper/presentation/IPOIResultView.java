@@ -7,11 +7,19 @@ import com.qz.lifehelper.entity.City;
  */
 public interface IPOIResultView {
 
-    public void setCurrentLocation(City currentLoaction);
-
+    /**
+     * 当开始加载数据时，该方法被调用
+     */
     public void starLoadPOIData();
 
+    /**
+     * 当成功加载到数据时，该方法被调用
+     */
     public void loadPOIDataSuccess();
 
+
+    /**
+     *  当加载数据失败时，该方法被调用
+     */
     public void loadPOIDataFial();
 }

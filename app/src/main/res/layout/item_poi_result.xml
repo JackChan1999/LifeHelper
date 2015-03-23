@@ -8,7 +8,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
+        android:layout_centerVertical="true"
         android:layout_margin="10dp"
         android:background="@android:color/holo_blue_light"
         android:minHeight="60dp"
@@ -21,44 +21,35 @@
         android:layout_alignBaseline="@id/poi_iv"
         android:layout_toRightOf="@id/poi_iv"
         android:padding="5dp"
-        android:text="井山湖农庄" />
+        android:text="井山湖农庄"
+        android:textSize="20sp"
+        android:textColor="@android:color/holo_blue_dark"/>
 
-    <ProgressBar
-        android:id="@+id/grade_pb"
-        style="?android:attr/progressBarStyleHorizontal"
+    <TextView
+        android:id="@+id/tel_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@id/poi_iv"
         android:layout_below="@id/title_tv"
         android:layout_toRightOf="@id/poi_iv"
-        android:padding="5dp"
-        android:progress="70" />
+        android:padding="2dp"
+        android:text="tel:57780881" />
 
     <TextView
         android:id="@+id/address_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/grade_pb"
+        android:layout_below="@id/tel_tv"
         android:layout_toRightOf="@id/poi_iv"
-        android:padding="5dp"
-        android:text="杭州市滨江区长河街道唐子沿江农……" />
+        android:padding="2dp"
+        android:text="add:杭州市滨江区长河街道唐子沿江农……" />
 
-    <TextView
-        android:id="@+id/category_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/title_tv"
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="60dp"
+        android:src="@android:drawable/arrow_up_float"
         android:layout_alignParentRight="true"
-        android:padding="5dp"
-        android:text="农家院" />
+        android:layout_centerVertical="true"/>
 
-    <TextView
-        android:id="@+id/distance_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@id/grade_pb"
-        android:padding="5dp"
-        android:text="421米" />
 
 </RelativeLayout>

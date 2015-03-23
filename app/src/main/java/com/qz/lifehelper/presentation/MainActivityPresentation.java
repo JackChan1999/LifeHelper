@@ -6,6 +6,7 @@ import java.util.List;
 import org.androidannotations.annotations.EBean;
 
 import android.app.Activity;
+import android.os.Bundle;
 
 import com.qz.lifehelper.ui.activity.BaiduMapDempActivity_;
 import com.qz.lifehelper.ui.activity.ChooseCityActivity_;
@@ -34,9 +35,13 @@ public class MainActivityPresentation {
 			activityClasses = new ArrayList<ActivityClass>();
 			activityClasses.add(new ActivityClass("ChooseCityActivity", ChooseCityActivity_.class));
 			activityClasses.add(new ActivityClass("BaiduMaoDemoActivity", BaiduMapDempActivity_.class));
-            activityClasses.add(new ActivityClass("HomeActivity", HomeActivity_.class));
-            activityClasses.add(new ActivityClass("POIResultActivity", POIResultActivity_.class));
-        }
+			activityClasses.add(new ActivityClass("HomeActivity", HomeActivity_.class));
+
+			Bundle extra = new Bundle();
+			extra.putString(POIResultActivity.CATEGORY, "酒店");
+			extra.putString(POIResultActivity.LOCATION, "上海");
+			activityClasses.add(new ActivityClass("POIResultActivity", POIResultActivity_.class, extra));
+		}
 
 		return activityClasses;
 	}
@@ -47,6 +52,11 @@ public class MainActivityPresentation {
 	public class ActivityClass {
 		private String name;
 		private Class<? extends Activity> activityClass;
+		private Bundle extra;
+
+		public Bundle getExtra() {
+			return extra;
+		}
 
 		public String getName() {
 			return name;
@@ -59,6 +69,12 @@ public class MainActivityPresentation {
 		ActivityClass(String name, Class<? extends Activity> activityClass) {
 			this.name = name;
 			this.activityClass = activityClass;
+		}
+
+		public ActivityClass(String name, Class<? extends Activity> activityClass, Bundle extra) {
+			this.name = name;
+			this.activityClass = activityClass;
+			this.extra = extra;
 		}
 
 		@Override

@@ -7,7 +7,6 @@ public class POIResult {
     public String poiIv;
     public String title;
     public String address;
-    public int grade;
-    public String category;
-    public String distance;
+    public String tel;
+    public String detail;
 }

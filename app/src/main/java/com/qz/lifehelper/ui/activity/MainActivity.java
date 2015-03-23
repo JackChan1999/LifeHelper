@@ -52,6 +52,7 @@ public class MainActivity extends ActionBarActivity {
     void totargetActivity(int position) {
         Intent intent = new Intent(MainActivity.this,
                 presentation.getActivityClasses().get(position).getActivityClass());
+        intent.putExtras(presentation.getActivityClasses().get(position).getExtra());
         MainActivity.this.startActivity(intent);
     }
 
