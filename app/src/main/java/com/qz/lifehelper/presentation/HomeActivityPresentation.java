@@ -6,12 +6,26 @@ import org.androidannotations.annotations.RootContext;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.PagerAdapter;
+import android.view.View;
 import android.widget.Toast;
 
 import com.qz.lifehelper.business.LocationBusiness;
 import com.qz.lifehelper.entity.City;
 import com.qz.lifehelper.event.GetCurrentCityEvent;
 import com.qz.lifehelper.ui.activity.ChooseCityActivity_;
+import com.qz.lifehelper.ui.fragment.ArroundFragmnet;
+import com.qz.lifehelper.ui.fragment.ArroundFragmnet_;
+import com.qz.lifehelper.ui.fragment.LifeFragment;
+import com.qz.lifehelper.ui.fragment.LifeFragment_;
+import com.qz.lifehelper.ui.fragment.PersonalFragment;
+import com.qz.lifehelper.ui.fragment.PersonalFragment_;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import de.greenrobot.event.EventBus;
 
@@ -27,14 +41,6 @@ public class HomeActivityPresentation {
 	@RootContext
 	Context context;
 
-	private void toSearchResult() {
-		Toast.makeText(context, "前往分类搜索页面", Toast.LENGTH_SHORT).show();
-	}
-
-	private void toMoreCategory() {
-		Toast.makeText(context, "前往更多分类页面", Toast.LENGTH_SHORT).show();
-	}
-
 	private void toChooseCity() {
         Intent intent = new Intent(context, ChooseCityActivity_.class);
         context.startActivity(intent);
@@ -42,38 +48,6 @@ public class HomeActivityPresentation {
 
 	private void toSearch() {
 		Toast.makeText(context, "前往搜索页面", Toast.LENGTH_SHORT).show();
-	}
-
-	public void findFood() {
-		toSearchResult();
-	}
-
-	public void findScenic() {
-		toSearchResult();
-	}
-
-	public void findMovie() {
-		toSearchResult();
-	}
-
-	public void findHotel() {
-		toSearchResult();
-	}
-
-	public void callTakeOut() {
-		toSearchResult();
-	}
-
-	public void findSpecialLocalProduct() {
-		toSearchResult();
-	}
-
-	public void useCar() {
-		toSearchResult();
-	}
-
-	public void findMore() {
-		toMoreCategory();
 	}
 
 	public void chooseCity() {
@@ -90,6 +64,33 @@ public class HomeActivityPresentation {
             toChooseCity();
         } else {
             EventBus.getDefault().post(GetCurrentCityEvent.generateEvent(currentCity));
+        }
+    }
+
+    public PagerAdapter getContainerAdapter(FragmentManager fragmentManager) {
+        return new ContainerAdapter(fragmentManager);
+    }
+
+    class ContainerAdapter extends FragmentPagerAdapter {
+
+        List<Fragment> fragments = new ArrayList<>();
+
+
+        public ContainerAdapter(FragmentManager fm) {
+            super(fm);
+            fragments.add(new ArroundFragmnet_());
+            fragments.add(new LifeFragment_());
+            fragments.add(new PersonalFragment_());
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return fragments.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return fragments.size();
         }
     }
 }

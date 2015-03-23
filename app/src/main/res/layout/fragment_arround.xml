@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/darker_gray">
+
+    <LinearLayout
+        android:layout_marginBottom="10dp"
+        android:background="@android:color/white"
+        android:layout_alignParentTop="true"
+        android:id="@+id/topic_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/topic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/holo_blue_light"
+            android:minHeight="120dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginBottom="10dp"
+        android:background="@android:color/white"
+        android:layout_below="@id/topic_container"
+        android:id="@+id/arround_menu_containrt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="周边快查"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/food"
+                style="@style/HomeNavigateButtomTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/food_iv"
+                    android:layout_width="@dimen/home_page_navigate_button_size"
+                    android:layout_height="@dimen/home_page_navigate_button_size"
+                    android:src="@android:color/holo_blue_light" />
+
+                <TextView
+                    style="@style/HomeNavigateButtomThemeTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="美食" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/hotel"
+                style="@style/HomeNavigateButtomTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/hotel_iv"
+                    android:layout_width="@dimen/home_page_navigate_button_size"
+                    android:layout_height="@dimen/home_page_navigate_button_size"
+                    android:src="@android:color/holo_blue_light" />
+
+                <TextView
+                    style="@style/HomeNavigateButtomThemeTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="酒店" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/hospital"
+                style="@style/HomeNavigateButtomTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/hospital_iv"
+                    android:layout_width="@dimen/home_page_navigate_button_size"
+                    android:layout_height="@dimen/home_page_navigate_button_size"
+                    android:src="@android:color/holo_blue_light" />
+
+                <TextView
+                    style="@style/HomeNavigateButtomThemeTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="医院" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/toliet"
+                style="@style/HomeNavigateButtomTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/toliet_iv"
+                    android:layout_width="@dimen/home_page_navigate_button_size"
+                    android:layout_height="@dimen/home_page_navigate_button_size"
+                    android:src="@android:color/holo_blue_light" />
+
+                <TextView
+                    style="@style/HomeNavigateButtomThemeTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="厕所" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/supermarket"
+                style="@style/HomeNavigateButtomTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/supermarket_iv"
+                    android:layout_width="@dimen/home_page_navigate_button_size"
+                    android:layout_height="@dimen/home_page_navigate_button_size"
+                    android:src="@android:color/holo_blue_light" />
+
+                <TextView
+                    style="@style/HomeNavigateButtomThemeTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="超市" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/bbq"
+                style="@style/HomeNavigateButtomTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/bbq_iv"
+                    android:layout_width="@dimen/home_page_navigate_button_size"
+                    android:layout_height="@dimen/home_page_navigate_button_size"
+                    android:src="@android:color/holo_blue_light" />
+
+                <TextView
+                    style="@style/HomeNavigateButtomThemeTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="烧烤" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/charfingdish"
+                style="@style/HomeNavigateButtomTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/charfingdishiv"
+                    android:layout_width="@dimen/home_page_navigate_button_size"
+                    android:layout_height="@dimen/home_page_navigate_button_size"
+                    android:src="@android:color/holo_blue_light" />
+
+                <TextView
+                    style="@style/HomeNavigateButtomThemeTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="火锅" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/more"
+                style="@style/HomeNavigateButtomTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/more_iv"
+                    android:layout_width="@dimen/home_page_navigate_button_size"
+                    android:layout_height="@dimen/home_page_navigate_button_size"
+                    android:src="@android:color/holo_blue_light" />
+
+                <TextView
+                    style="@style/HomeNavigateButtomThemeTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="更多>" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:background="@android:color/white"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/action_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/top10restaurant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:padding="2dp"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="十大必去餐厅"
+                    android:textStyle="bold"
+                    android:textSize="30sp"/>
+
+                <TextView
+                    android:textSize="20sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="最值得去的餐厅"/>
+
+
+            </LinearLayout>
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="65dp"
+                android:minWidth="65dp"
+                android:background="@android:color/holo_blue_light"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="center"
+            android:id="@+id/sale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:orientation="vertical">
+
+            <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="特惠"
+            android:textStyle="bold"
+            android:textSize="30sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="最便宜"
+                android:textSize="20sp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

@@ -44,16 +44,18 @@ public class POIBusiness {
 				poiSearch.destroy();
 				List<PoiInfo> poiInfos = poiResult.getAllPoi();
 				List<POIResult> poiResults = new ArrayList<>();
-				for (PoiInfo poiInfo : poiInfos) {
-					POIResult mPOIResult = new POIResult();
-					mPOIResult.address = poiInfo.address;
-					mPOIResult.poiIv = null;
-					mPOIResult.tel = poiInfo.phoneNum;
-					mPOIResult.title = poiInfo.name;
-                    mPOIResult.id = poiInfo.uid;
-                    poiResults.add(mPOIResult);
-                    addPOIResult(mPOIResult);
-				}
+                if (poiInfos != null) {
+                    for (PoiInfo poiInfo : poiInfos) {
+                        POIResult mPOIResult = new POIResult();
+                        mPOIResult.address = poiInfo.address;
+                        mPOIResult.poiIv = null;
+                        mPOIResult.tel = poiInfo.phoneNum;
+                        mPOIResult.title = poiInfo.name;
+                        mPOIResult.id = poiInfo.uid;
+                        poiResults.add(mPOIResult);
+                        addPOIResult(mPOIResult);
+                    }
+                }
 				eventBus.post(GetPOIResultEvent.generateEvnet(poiResults));
 			}
 

@@ -7,6 +7,7 @@ import org.androidannotations.annotations.ItemClick;
 import org.androidannotations.annotations.ViewById;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -52,7 +53,10 @@ public class MainActivity extends ActionBarActivity {
     void totargetActivity(int position) {
         Intent intent = new Intent(MainActivity.this,
                 presentation.getActivityClasses().get(position).getActivityClass());
-        intent.putExtras(presentation.getActivityClasses().get(position).getExtra());
+        Bundle bundle = presentation.getActivityClasses().get(position).getExtra();
+        if (bundle != null) {
+            intent.putExtras(bundle);
+        }
         MainActivity.this.startActivity(intent);
     }
 
