@@ -33,6 +33,9 @@
         <activity android:name=".ui.activity.POIResultActivity_"
             android:label="@string/title_poi_result"/>
 
+        <activity android:name=".ui.activity.POIResultDetailActivity_"
+            android:label="@string/title_poi_result_detail"/>
+
         <activity
             android:name=".ui.activity.MainActivity_"
             android:label="@string/title_main_activity">

@@ -6,4 +6,5 @@
 
     <string name="find_location_ing">正在定位……</string>
     <string name="title_poi_result">搜素结果页</string>
+    <string name="title_poi_result_detail">POI搜索结果详情</string>
 </resources>

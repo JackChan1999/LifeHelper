@@ -9,4 +9,5 @@ public class POIResult {
     public String address;
     public String tel;
     public String detail;
+    public String id;
 }

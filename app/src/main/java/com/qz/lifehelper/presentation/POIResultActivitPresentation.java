@@ -9,6 +9,7 @@ import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import com.qz.lifehelper.entity.City;
 import com.qz.lifehelper.entity.POIResult;
 import com.qz.lifehelper.event.GetCurrentCityEvent;
 import com.qz.lifehelper.event.GetPOIResultEvent;
+import com.qz.lifehelper.ui.activity.POIResultDetailActivity;
 
 import de.greenrobot.event.EventBus;
 
@@ -196,7 +198,15 @@ class POIResultListAdpater extends BaseAdapter {
 		}
 
 		ItemPOIREsultChilds childs = (ItemPOIREsultChilds) convertView.getTag();
-		POIResult poiResult = data.get(position);
+		final POIResult poiResult = data.get(position);
+
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = POIResultDetailActivity.generateIntent(context, poiResult.id);
+                context.startActivity(intent);
+            }
+        });
 
 		childs.poiIv.setBackgroundColor(context.getResources().getColor(android.R.color.holo_blue_light));
 		childs.titleTv.setText(poiResult.title);
