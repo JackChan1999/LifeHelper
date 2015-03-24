@@ -7,7 +7,7 @@ import android.graphics.Bitmap;
  */
 public interface IPersonalView {
 
-    void login(Bitmap userIcon, Bitmap userIconBag);
+    void login(String userName,Bitmap userIcon, Bitmap userIconBag);
 
     void logout(Bitmap userIcon, Bitmap userIconBag);
 

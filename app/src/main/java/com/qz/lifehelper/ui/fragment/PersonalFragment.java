@@ -71,18 +71,25 @@ public class PersonalFragment extends Fragment implements IPersonalView{
     @ViewById(R.id.user_icon_background_iv)
     ImageView userIconBagIv;
 
+    @ViewById(R.id.user_name)
+    TextView userNameTv;
+
     @Override
-    public void login(Bitmap userIcon, Bitmap userIconBag) {
+    public void login(String userName,Bitmap userIcon, Bitmap userIconBag) {
+        userNameTv.setVisibility(View.VISIBLE);
         loginBn.setVisibility(View.GONE);
         userIconBagIv.setImageBitmap(userIconBag);
         userIconIv.setImageBitmap(userIcon);
+        userNameTv.setText(userName);
     }
 
     @Override
     public void logout(Bitmap userIcon,Bitmap userIconBag) {
         loginBn.setVisibility(View.VISIBLE);
+        userNameTv.setVisibility(View.GONE);
         userIconBagIv.setImageBitmap(userIconBag);
         userIconIv.setImageBitmap(userIcon);
+        userNameTv.setText(null);
     }
 
     @ViewById(R.id.app_version_tv)
