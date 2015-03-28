@@ -16,7 +16,7 @@ import com.qz.lifehelper.ui.activity.POIResultActivity;
  */
 
 @EBean
-public class LifeFragmentPresentation {
+public class LifeHelper {
 
 	@Bean
 	LocationBusiness locationBusiness;
@@ -24,48 +24,47 @@ public class LifeFragmentPresentation {
 	@RootContext
 	Context context;
 
-	private void toPOIResult(String catrgory) {
+	/**
+	 * 前往POI搜索结果页
+	 */
+	public void toPOIResult(String catrgory) {
 		Intent intent = POIResultActivity.generateIntent(context, locationBusiness.getCurrentCity().cityName, catrgory);
 		context.startActivity(intent);
 	}
 
+	/**
+	 * 前往航班信息页
+	 */
 	public void toPlane() {
 		Toast.makeText(context, "前往飞机票", Toast.LENGTH_SHORT).show();
 	}
 
+	/**
+	 * 前往火车信息页
+	 */
 	public void toTrain() {
 		Toast.makeText(context, "前往火车票", Toast.LENGTH_SHORT).show();
 	}
 
+	/**
+	 * 前往长途汽车页
+	 */
 	public void toBus() {
 		Toast.makeText(context, "前往大巴票", Toast.LENGTH_SHORT).show();
 	}
 
-	public void toMove() {
-		toPOIResult("物流");
+	/**
+	 * 前往交易市场搜索结果页
+	 */
+	public void toMarketResult(String category) {
+		Toast.makeText(context, "前往" + category + "交易市场", Toast.LENGTH_SHORT).show();
+
 	}
 
-	public void toMaternityMatron() {
-		toPOIResult("月嫂");
-	}
-
-	public void toCleaner() {
-		toPOIResult("保洁");
-	}
-
-	public void toBuyFruit() {
-		Toast.makeText(context, "前往蔬菜水果交易市场", Toast.LENGTH_SHORT).show();
-	}
-
-	public void toBuyElectricAppliance() {
-		Toast.makeText(context, "前往电子商品交易市场", Toast.LENGTH_SHORT).show();
-	}
-
-	public void toBuyClothes() {
-		Toast.makeText(context, "前往衣服鞋包交易市场", Toast.LENGTH_SHORT).show();
-	}
-
-	public void toBuyMore() {
+	/**
+	 * 前往交易市场类别目录页
+	 */
+	public void toMarketCategory() {
 		Toast.makeText(context, "前往更多交易市场", Toast.LENGTH_SHORT).show();
 	}
 }

@@ -35,7 +35,7 @@ public class ArroundHelper {
 	/**
 	 * 跳转到POI类别目录页
 	 */
-	public void toMore() {
+	public void toPOICategory() {
 		Toast.makeText(context, "前往POI类别列表", Toast.LENGTH_SHORT).show();
 	}
 

@@ -65,7 +65,7 @@ public class ArroundFragmnet extends Fragment {
 
 	@Click(R.id.more)
 	public void onMoreClick() {
-		arroundHelper.toMore();
+		arroundHelper.toPOICategory();
 	}
 
 	@Click(R.id.top10restaurant)
