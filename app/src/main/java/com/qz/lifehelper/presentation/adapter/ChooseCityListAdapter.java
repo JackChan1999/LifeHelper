@@ -1,4 +1,4 @@
-package com.qz.lifehelper.ui;
+package com.qz.lifehelper.presentation.adapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,11 +12,12 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.qz.lifehelper.R;
+import com.qz.lifehelper.business.LocationBusiness;
 import com.qz.lifehelper.entity.ChooseCityListItemCity;
 import com.qz.lifehelper.entity.ChooseCityListItemData;
 import com.qz.lifehelper.entity.ChooseCityListItemSection;
 import com.qz.lifehelper.entity.City;
-import com.qz.lifehelper.presentation.ChooseCityListAdapterPresentation;
+import com.qz.lifehelper.presentation.ChooseCityHelper;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
@@ -33,7 +34,7 @@ public class ChooseCityListAdapter extends BaseAdapter {
 	public Context context;
 
     @Bean
-    public ChooseCityListAdapterPresentation presentation;
+    LocationBusiness locationBusiness;
 
 	public void setItemDatas(List<ChooseCityListItemData> itemDatas) {
 		this.itemDatas.clear();
@@ -55,6 +56,9 @@ public class ChooseCityListAdapter extends BaseAdapter {
 		return position;
 	}
 
+    /**
+     * 一共分为了三种View，分别是SECTION,CITY,FIND_LOACTION
+     */
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 
@@ -129,7 +133,9 @@ public class ChooseCityListAdapter extends BaseAdapter {
             chooseCityItemChildView.findLocationBn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    presentation.findCurrentLocationCity();
+                    locationBusiness.findCurrentLocationCity();
+                    chooseCityItemChildView.cityNameTv.setText(context.getString(R.string.find_location_ing));
+                    chooseCityItemChildView.findLocationBn.setBackground(context.getResources().getDrawable(android.R.color.holo_orange_light));
                 }
             });
             break;
@@ -142,7 +148,7 @@ public class ChooseCityListAdapter extends BaseAdapter {
                     @Override
                     public void onClick(View v) {
                         if (!((ChooseCityListItemCity) itemData).cityName.equals(context.getString(R.string.find_location_ing))) {
-                            presentation.setCurrentCity(City.generateCity(((ChooseCityListItemCity) itemData).cityName));
+                            locationBusiness.setCurrentCity(City.generateCity(((ChooseCityListItemCity) itemData).cityName));
                         }
                     }
                 });

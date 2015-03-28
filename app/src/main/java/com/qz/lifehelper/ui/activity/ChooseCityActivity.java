@@ -1,6 +1,5 @@
 package com.qz.lifehelper.ui.activity;
 
-import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
@@ -11,10 +10,12 @@ import android.support.v7.app.ActionBarActivity;
 import android.widget.ListView;
 
 import com.qz.lifehelper.R;
-import com.qz.lifehelper.event.FinishActivityEvent;
-import com.qz.lifehelper.event.NewCityListEvent;
-import com.qz.lifehelper.presentation.ChooseCityActivityPresentation;
-import com.qz.lifehelper.ui.ChooseCityListAdapter;
+import com.qz.lifehelper.business.LocationBusiness;
+import com.qz.lifehelper.event.GetCurrentCityEvent;
+import com.qz.lifehelper.event.GetCurrentLocationCityEvent;
+import com.qz.lifehelper.presentation.ChooseCityHelper;
+import com.qz.lifehelper.presentation.IChooseCityView;
+import com.qz.lifehelper.presentation.adapter.ChooseCityListAdapter;
 
 import de.greenrobot.event.EventBus;
 
@@ -22,7 +23,7 @@ import de.greenrobot.event.EventBus;
  * Created by kohoh on 15/3/14.
  */
 @EActivity(R.layout.activity_choose_city)
-public class ChooseCityActivity extends ActionBarActivity {
+public class ChooseCityActivity extends ActionBarActivity implements IChooseCityView {
 
 	public static final String TAG = ChooseCityActivity.class.getSimpleName() + "TAG";
 
@@ -38,40 +39,62 @@ public class ChooseCityActivity extends ActionBarActivity {
 	public ListView cityLv;
 
 	@Bean
-	ChooseCityActivityPresentation presentation;
+	ChooseCityHelper chooseCityHelper;
 
 	@Bean
-	ChooseCityListAdapter chooseCityListAdapter;
+	LocationBusiness locationBusiness;
+
+	@Bean
+	ChooseCityListAdapter cityListAdapter;
 
 	/**
 	 * 配置选择城市列表
 	 */
 	@AfterViews
 	public void setCityListView() {
-		cityLv.setAdapter(chooseCityListAdapter);
-        presentation.getChooseCityListData();
-    }
+		locationBusiness.findCurrentLocationCity();
+		refreshCityList();
+		cityLv.setAdapter(cityListAdapter);
+	}
 
-    //注册Eventbus
-	@AfterInject
-	public void reginsterEventBus() {
+	@Override
+	protected void onStart() {
+		super.onStart();
+		regisetEventBus();
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		unregisterEventBus();
+	}
+
+	public void regisetEventBus() {
 		EventBus.getDefault().register(this);
 	}
 
-    /**
-	 * 刷新ChooseCity列表的数据
-	 */
-	public void onEventMainThread(NewCityListEvent event) {
-		chooseCityListAdapter.setItemDatas(event.cityListItemDatas);
-		chooseCityListAdapter.notifyDataSetChanged();
+	public void unregisterEventBus() {
+		EventBus.getDefault().unregister(this);
 	}
 
-    /**
-     * 如果受到要求结束自己的的事件，则结束自己
-     */
-    public void onEventMainThread(FinishActivityEvent event) {
-        if (event.aClass.isInstance(this)) {
-            finish();
-        }
-    }
+	/**
+	 * 当收到成功定位的消息，设置当前定位到的城市，并刷新城市列表
+	 */
+	public void onEventMainThread(GetCurrentLocationCityEvent event) {
+		chooseCityHelper.setCurrentLocationCity(event.currentLocationCity);
+		refreshCityList();
+	}
+
+	/**
+	 * 当接收到设置当前位置的消息，关闭该activity
+	 */
+	public void onEventMainThread(GetCurrentCityEvent event) {
+		finish();
+	}
+
+	// 刷新城市列表
+	void refreshCityList() {
+		cityListAdapter.setItemDatas(chooseCityHelper.getChooseCityListData());
+		cityListAdapter.notifyDataSetChanged();
+	}
 }

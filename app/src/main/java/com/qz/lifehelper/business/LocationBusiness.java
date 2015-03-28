@@ -82,7 +82,7 @@ public class LocationBusiness {
 
 					Log.d(TAG, "get current location");
 					locationClient.stop();
-					EventBus.getDefault().post(
+					getEventBus().post(
 							GetCurrentLocationCityEvent.generateEvent(City.generateCity(bdLocation.getCity())));
 				}
 			}
@@ -114,4 +114,10 @@ public class LocationBusiness {
 		}
 		return cities;
 	}
+
+
+
+    public EventBus getEventBus() {
+        return EventBus.getDefault();
+    }
 }
