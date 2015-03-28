@@ -2,16 +2,15 @@ package com.qz.lifehelper.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.support.v7.app.ActionBarActivity;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.qz.lifehelper.R;
-import com.qz.lifehelper.presentation.IPOIResultDetailView;
-import com.qz.lifehelper.presentation.POIResultDetailActivityPresentation;
+import com.qz.lifehelper.business.POIBusiness;
+import com.qz.lifehelper.entity.POIResult;
 
-import org.androidannotations.annotations.AfterExtras;
+import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
@@ -21,7 +20,7 @@ import org.androidannotations.annotations.ViewById;
  * Created by kohoh on 15/3/23.
  */
 @EActivity(R.layout.activity_poi_result_detail)
-public class POIResultDetailActivity extends ActionBarActivity implements IPOIResultDetailView{
+public class POIResultDetailActivity extends ActionBarActivity{
 
 
     @ViewById(R.id.poi_iv)
@@ -45,48 +44,19 @@ public class POIResultDetailActivity extends ActionBarActivity implements IPOIRe
     String poiResultId;
 
     @Bean
-    public POIResultDetailActivityPresentation presentation;
+    POIBusiness poiBusiness;
 
-    @AfterExtras
-    public void setPoiResultId() {
-        presentation.setPoiResultId(poiResultId);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        presentation.bind(this);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        presentation.unbind();
-    }
-
-    @Override
-    public void setPOIImage(Bitmap poiImage) {
-        //TODO 暂时不实现
-    }
-
-    @Override
-    public void setTitle(String title) {
-        titleIv.setText(title);
-    }
-
-    @Override
-    public void setTel(String tel) {
-        telTv.setText(tel);
-    }
-
-    @Override
-    public void setAdd(String add) {
-        addTv.setText(add);
-    }
-
-    @Override
-    public void setDetail(String detail) {
-        detailTv.setText(detail);
+    /**
+     * 设置POIResultDetail的数据
+     */
+    @AfterViews
+    void setData() {
+        POIResult poiResult = poiBusiness.getPOIResult(poiResultId);
+        titleIv.setText(poiResult.title);
+        telTv.setText("tel:" + poiResult.tel);
+        addTv.setText("add:"+poiResult.address);
+        detailTv.setText(poiResult.detail);
+        //TODO 设置图片
     }
 
     public static Intent generateIntent(Context context, String poiResultId) {
