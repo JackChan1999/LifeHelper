@@ -9,10 +9,10 @@ import org.androidannotations.annotations.RootContext;
 import de.greenrobot.event.EventBus;
 
 /**
- * Created by kohoh on 15/3/23.
+ * 该类主要负责处理用户验证相关的业务逻辑
  */
 
-@EBean
+@EBean(scope = EBean.Scope.Singleton)
 public class AuthenticationBusiness {
 
     @RootContext
@@ -20,14 +20,26 @@ public class AuthenticationBusiness {
 
     EventBus eventBus = EventBus.builder().build();
 
+    /**
+     * 判断是否已经登录
+     */
     public boolean isLogin() {
+        //TODO 还没有实现
         return false;
     }
 
-    public void login() {
+    /**
+     * 登录
+     * 登录成功之后，会发送GetAuthEvent，通知相关组件登录成功
+     */
+    public void login(String userName,String password) {
         Toast.makeText(context, "前往登录和注册页面", Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * 登出
+     * 登出成功之后，会发送GetAuthEvent，通知相关组件已经成功登出
+     */
     public void logout() {
         Toast.makeText(context, "退出登入", Toast.LENGTH_SHORT).show();
     }

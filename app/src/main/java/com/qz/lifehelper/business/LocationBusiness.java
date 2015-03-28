@@ -28,9 +28,12 @@ import com.qz.lifehelper.persist.LocationPersist;
 import de.greenrobot.event.EventBus;
 
 /**
- * Created by kohoh on 15-3-14.
+ * 该类主要负责与位置相关的业务逻辑
+ *
+ * currentCity指的是当前应用选择的城市
+ * currentLoactionCity 指的是当前设备所在的城市
  */
-@EBean
+@EBean(scope = EBean.Scope.Singleton)
 public class LocationBusiness {
 
 	public static final String TAG = LocationBusiness.class.getSimpleName() + "TAG";
@@ -42,15 +45,15 @@ public class LocationBusiness {
 	LocationPersist locationPersist;
 
 	/**
-	 * 设置当前城市
+	 * 设置应用选择的当前城市
 	 */
 	public void setCurrentCity(City city) {
 		locationPersist.setCurrentCity(city.cityName);
-		EventBus.getDefault().post(GetCurrentCityEvent.generateEvent(city));
+		getEventBus().post(GetCurrentCityEvent.generateEvent(city));
 	}
 
 	/**
-	 * 获取当前城市
+	 * 获取应用选择的当前城市
 	 */
 	public City getCurrentCity() {
 		String currentCityName = locationPersist.getCurrentCity();
@@ -62,8 +65,11 @@ public class LocationBusiness {
 	}
 
 	/**
-	 * 通过定位获取当前位置。在获取到当前位置后，会发送GetLocationEvent
+	 * 通过定位获取当前设备所在位置。
+     *
+     * 在获取到当前设备所在位置后，会发送GetLocationEvent，以通知先关组件
 	 */
+    //TODO 实现返回callback
 	public void findCurrentLocationCity() {
 		final LocationClient locationClient = new LocationClient(context);
 
@@ -83,7 +89,7 @@ public class LocationBusiness {
 					Log.d(TAG, "get current location");
 					locationClient.stop();
 					getEventBus().post(
-							GetCurrentLocationCityEvent.generateEvent(City.generateCity(bdLocation.getCity())));
+					GetCurrentLocationCityEvent.generateEvent(City.generateCity(bdLocation.getCity())));
 				}
 			}
 		};
@@ -94,6 +100,9 @@ public class LocationBusiness {
 
 	/**
 	 * 获取以首字母分组排序的全部城市
+     *
+     * 该方法会为ChooseCity页面提供城市列表
+     * 返回的map，key是城市的首字母，value是该首字母对应的城市的list集合
 	 */
 	public Map<String, List<City>> getAllCity() {
 		Map<String, List<City>> cities = new ListOrderedMap<>();
@@ -115,9 +124,9 @@ public class LocationBusiness {
 		return cities;
 	}
 
-
+    private EventBus eventBus = EventBus.builder().build();
 
     public EventBus getEventBus() {
-        return EventBus.getDefault();
+        return eventBus;
     }
 }

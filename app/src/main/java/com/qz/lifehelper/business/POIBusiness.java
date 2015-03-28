@@ -20,18 +20,25 @@ import java.util.Map;
 import de.greenrobot.event.EventBus;
 
 /**
- * Created by kohoh on 15/3/20.
+ * 该类主要负责与POI先相关的业务逻辑
+ *
+ * 所有加载到的POI信息都会被缓存，方便POIResultDetail的调用
  */
 @EBean(scope = EBean.Scope.Singleton)
 public class POIBusiness {
+	//是否正在加载POI数据
 	boolean isLoding = false;
 
+	//缓存所有加载过的POI数据
     Map<String, POIResult> poiResults = new LinkedHashMap<>();
 
     /**
-     * 开始加载制定城市的相关类别的POI数据。当加载成功会发出GetPOIResultEvent。
+     * 开始加载制定城市的相关类别的POI数据。
+	 *
+	 * 当加载成功会发出GetPOIResultEvent。
      * */
-	public void loadPOIData(City city, final String category) {
+	//TODO 实现callback
+ 	public void loadPOIData(City city, final String category) {
 		if (isLoding) {
 			return;
 		}
@@ -69,22 +76,24 @@ public class POIBusiness {
 		isLoding = true;
 	}
 
-    public void addPOIResult(POIResult poiResult) {
+	/**
+	 * 增加POI缓存数据
+	 */
+    private void addPOIResult(POIResult poiResult) {
         if (!poiResults.containsKey(poiResult.id)) {
             poiResults.put(poiResult.id, poiResult);
         }
     }
 
-	EventBus eventBus;
-
-	public POIBusiness() {
-		eventBus = EventBus.builder().build();
-	}
+	EventBus eventBus = EventBus.builder().build();
 
 	public EventBus getEventBus() {
 		return eventBus;
 	}
 
+	/**
+	 * 根据POI数据的id获取缓存的POI数据
+	 */
     public POIResult getPOIResult(String poiResultId) {
         return poiResults.get(poiResultId);
     }

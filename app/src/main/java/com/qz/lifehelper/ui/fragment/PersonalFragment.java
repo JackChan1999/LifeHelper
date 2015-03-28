@@ -36,8 +36,7 @@ public class PersonalFragment extends Fragment {
 
 	@Click(R.id.login_bn)
 	void onLoginBnClick() {
-		// 前往登录注册页面
-		authenticationBusiness.login();
+		personalHelper.toLogin();
 	}
 
 	@Click(R.id.my_sales)

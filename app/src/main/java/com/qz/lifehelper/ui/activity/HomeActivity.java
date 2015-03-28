@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.qz.lifehelper.R;
+import com.qz.lifehelper.business.LocationBusiness;
 import com.qz.lifehelper.event.GetCurrentCityEvent;
 import com.qz.lifehelper.helper.HomeHelper;
 
@@ -117,9 +118,12 @@ public class HomeActivity extends ActionBarActivity {
 		homeHelper.getCurrentCity();
 	}
 
+	@Bean
+	LocationBusiness locationBusiness;
+
 	@AfterInject
 	public void registerEventBus() {
-		EventBus.getDefault().register(this);
+		locationBusiness.getEventBus().register(this);
 	}
 
 	/**

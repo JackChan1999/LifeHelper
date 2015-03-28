@@ -69,11 +69,11 @@ public class ChooseCityActivity extends ActionBarActivity{
 	}
 
 	public void regisetEventBus() {
-		EventBus.getDefault().register(this);
+		locationBusiness.getEventBus().register(this);
 	}
 
 	public void unregisterEventBus() {
-		EventBus.getDefault().unregister(this);
+		locationBusiness.getEventBus().unregister(this);
 	}
 
 	/**

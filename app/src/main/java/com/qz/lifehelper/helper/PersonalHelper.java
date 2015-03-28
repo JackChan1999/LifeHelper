@@ -17,6 +17,13 @@ public class PersonalHelper {
 	Context context;
 
 	/**
+	 * 前往登录和注册页面
+	 */
+	public void toLogin() {
+		Toast.makeText(context, "前往登录和注册页面", Toast.LENGTH_SHORT).show();
+	}
+
+	/**
 	 * 前往我发布到商品页面
 	 */
 	public void toMySale() {
