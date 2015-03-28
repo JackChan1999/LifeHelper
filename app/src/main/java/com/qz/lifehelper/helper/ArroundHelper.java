@@ -12,7 +12,9 @@ import com.qz.lifehelper.business.LocationBusiness;
 import com.qz.lifehelper.ui.activity.POIResultActivity;
 
 /**
- * Created by kohoh on 15/3/23.
+ * ArroundFragment的助手
+ *
+ * 帮助ArroundFragment实现一部分业务逻辑
  */
 
 @EBean

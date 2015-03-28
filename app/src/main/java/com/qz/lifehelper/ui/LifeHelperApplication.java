@@ -5,13 +5,14 @@ import android.app.Application;
 import com.baidu.mapapi.SDKInitializer;
 
 /**
- * Created by kohoh on 15/3/20.
+ * 应用的全局appliaciton
  */
 public class LifeHelperApplication extends Application {
 
     @Override
     public void onCreate() {
         super.onCreate();
+        //百度SDK的初始化
         SDKInitializer.initialize(this);
     }
 }

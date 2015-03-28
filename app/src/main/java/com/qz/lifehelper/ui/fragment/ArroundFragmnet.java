@@ -10,7 +10,7 @@ import com.qz.lifehelper.R;
 import com.qz.lifehelper.helper.ArroundHelper;
 
 /**
- * Created by kohoh on 15/3/23.
+ * 周边信息页
  */
 @EFragment(R.layout.fragment_arround)
 public class ArroundFragmnet extends Fragment {

@@ -6,8 +6,11 @@ import org.androidannotations.annotations.RootContext;
 import android.content.Context;
 import android.widget.Toast;
 
+
 /**
- * Created by kohoh on 15/3/23.
+ * PersonalFragment的助手
+ *
+ * 帮助PersonalFragment实现一部分业务逻辑
  */
 
 @EBean

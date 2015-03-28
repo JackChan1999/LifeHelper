@@ -19,7 +19,7 @@ import com.qz.lifehelper.event.GetAuthEvent;
 import com.qz.lifehelper.helper.PersonalHelper;
 
 /**
- * Created by kohoh on 15/3/23.
+ * 个人信息页
  */
 
 @EFragment(R.layout.fragment_personal)

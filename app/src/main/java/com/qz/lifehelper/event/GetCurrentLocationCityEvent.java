@@ -4,6 +4,8 @@ import com.qz.lifehelper.entity.CityBean;
 
 /**
  * 获取定位信息事件
+ *
+ * 当成功定位到设备当前所在位置时，会发送该事件
  */
 public class GetCurrentLocationCityEvent {
 

@@ -6,7 +6,9 @@ import com.qz.lifehelper.entity.POIResultBean;
 import java.util.List;
 
 /**
- * Created by kohoh on 15/3/20.
+ * 获取POI搜索结果事件
+ *
+ * 当成功获取到POI搜索结果，会发送该事件
  */
 public class GetPOIResultEvent {
 

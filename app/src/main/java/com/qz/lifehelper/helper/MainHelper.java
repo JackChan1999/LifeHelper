@@ -8,18 +8,15 @@ import org.androidannotations.annotations.EBean;
 import android.app.Activity;
 import android.os.Bundle;
 
-import com.qz.lifehelper.ui.activity.BaiduMapDempActivity_;
 import com.qz.lifehelper.ui.activity.ChooseCityActivity_;
 import com.qz.lifehelper.ui.activity.HomeActivity_;
 import com.qz.lifehelper.ui.activity.POIResultActivity;
 import com.qz.lifehelper.ui.activity.POIResultActivity_;
 
 /**
- * Created by kohoh on 15/3/14.
- */
-
-/**
- * 这是MainActivity对应的Presentation
+ * MainActivity的助手
+ *
+ * 帮助MainActivity实现一部分业务逻辑
  */
 @EBean
 public class MainHelper {
@@ -34,7 +31,6 @@ public class MainHelper {
 		if (activityClasses == null) {
 			activityClasses = new ArrayList<ActivityClass>();
 			activityClasses.add(new ActivityClass("ChooseCityActivity", ChooseCityActivity_.class));
-			activityClasses.add(new ActivityClass("BaiduMaoDemoActivity", BaiduMapDempActivity_.class));
 			activityClasses.add(new ActivityClass("HomeActivity", HomeActivity_.class));
 
 			Bundle extra = new Bundle();

@@ -23,7 +23,9 @@ import com.qz.lifehelper.entity.SectionItemBean;
 import com.qz.lifehelper.entity.CityBean;
 
 /**
- * 这是ChooseCityActivity的Presentation
+ * ChooseCityActivity的助手
+ *
+ * 帮助ChooseCityActivity实现一部分业务逻辑
  */
 
 @EBean(scope = EBean.Scope.Singleton)

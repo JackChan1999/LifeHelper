@@ -16,10 +16,6 @@ import com.qz.lifehelper.R;
 import com.qz.lifehelper.helper.MainHelper;
 
 /**
- * Created by kohoh on 15/3/14.
- */
-
-/**
  * 该Activity存在的目的是：
  * 1. 在开发工程中，方便的打开某个Activity
  * 2. 作为项目架构的一个演示Demo

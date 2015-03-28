@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
-* Created by kohoh on 15/3/28.
+* 该adapter用于POI搜索结果列表
 */
 @EBean
 public class POIResultListAdpater extends BaseAdapter {

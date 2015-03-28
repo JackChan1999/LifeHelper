@@ -17,14 +17,13 @@ import com.qz.lifehelper.helper.ChooseCityHelper;
 import com.qz.lifehelper.ui.adapter.ChooseCityListAdapter;
 
 /**
- * Created by kohoh on 15/3/14.
+ * 选择城市页面
  */
 @EActivity(R.layout.activity_choose_city)
 public class ChooseCityActivity extends ActionBarActivity{
 
 	public static final String TAG = ChooseCityActivity.class.getSimpleName() + "TAG";
 
-	// 配置ActionBar
 	@AfterViews
 	public void setActionBar() {
 		this.getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);

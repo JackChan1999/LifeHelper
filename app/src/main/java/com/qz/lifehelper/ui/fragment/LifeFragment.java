@@ -10,7 +10,7 @@ import com.qz.lifehelper.R;
 import com.qz.lifehelper.helper.LifeHelper;
 
 /**
- * Created by kohoh on 15/3/23.
+ * 生活信息页
  */
 
 @EFragment(R.layout.fragmnet_life)

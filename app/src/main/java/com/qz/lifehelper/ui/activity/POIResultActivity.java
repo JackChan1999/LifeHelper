@@ -21,7 +21,7 @@ import com.qz.lifehelper.event.GetPOIResultEvent;
 import com.qz.lifehelper.ui.adapter.POIResultListAdpater;
 
 /**
- * Created by kohoh on 15/3/19.
+ * POI搜索结果页
  */
 @EActivity(R.layout.activity_poi_result)
 public class POIResultActivity extends ActionBarActivity {

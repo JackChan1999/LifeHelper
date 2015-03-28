@@ -3,7 +3,9 @@ package com.qz.lifehelper.event;
 import com.qz.lifehelper.entity.CityBean;
 
 /**
-* Created by kohoh on 15/3/18.
+ * 当前选中城市发生改变事件
+ *
+ * 当应用的当前选中城市发生改变时，会发送该事件
 */
 public class GetCurrentCityEvent {
 

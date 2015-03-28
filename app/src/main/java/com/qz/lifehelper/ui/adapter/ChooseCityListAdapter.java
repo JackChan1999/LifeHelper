@@ -58,12 +58,15 @@ public class ChooseCityListAdapter extends BaseAdapter {
 
     /**
      * 一共分为了三种View，分别是SECTION,CITY,FIND_LOACTION
+	 *
+	 * 由于该list需要三种item，因此实现的时候，将三种item对应的view放在了一个主view中。
+	 * 当具体需要某种item的时候，将另外两个item影藏
      */
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 
 		/**
-		 * item_choose_city的子view
+		 * 用于包含所有的子item
 		 */
 		class ItemChildViews {
 			public View sectionItem;
@@ -72,19 +75,23 @@ public class ChooseCityListAdapter extends BaseAdapter {
 		}
 
 		/**
-		 * item_choose_city_section的子view
+		 * 标题item的子view
 		 */
 		class SectionItemChildViews {
 			public TextView titleTv;
 		}
 
+
 		/**
-		 * item_choose_city_item的子view
+		 * 城市item的子view
 		 */
 		class CityItemChildViews {
 			public TextView cityNameTv;
 		}
 
+		/**
+		 * 定位item的子view
+		 */
 		class FindLoactionItemChildlViews {
 			public TextView cityNameTv;
 			public Button findLocationBn;

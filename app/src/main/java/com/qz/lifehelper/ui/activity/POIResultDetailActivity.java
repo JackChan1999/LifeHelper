@@ -17,7 +17,7 @@ import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
 
 /**
- * Created by kohoh on 15/3/23.
+ * POI搜索结果详情页
  */
 @EActivity(R.layout.activity_poi_result_detail)
 public class POIResultDetailActivity extends ActionBarActivity{

@@ -22,7 +22,9 @@ import com.qz.lifehelper.ui.fragment.PersonalFragment_;
 import de.greenrobot.event.EventBus;
 
 /**
- * Created by kohoh on 15/3/18.
+ * HomeActivity的助手
+ *
+ * 帮助HomeActivity实现一部分业务逻辑
  */
 @EBean
 public class HomeHelper {

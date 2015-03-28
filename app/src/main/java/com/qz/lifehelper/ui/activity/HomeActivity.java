@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by kohoh on 15/3/18.
+ * 主页面
  */
 
 @EActivity(R.layout.activity_home)

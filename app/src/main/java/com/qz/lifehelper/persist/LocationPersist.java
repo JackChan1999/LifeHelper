@@ -15,7 +15,7 @@ import android.widget.Toast;
 import com.baidu.location.BDLocation;
 
 /**
- * Created by kohoh on 15/3/16.
+ * 该类用于维护与位置相关信息的数据
  */
 @EBean
 public class LocationPersist {
@@ -26,7 +26,7 @@ public class LocationPersist {
 	static final public String TAG = LocationPersist.class.getSimpleName() + "TAG";
 
 	/**
-	 * 获取本地存储的全国城市列表
+	 * 获取本地存储的全国城市列表的json数据
 	 */
 	public String getAllCitiesGroupByFirstChar() {
 		String citiesJson = null;
@@ -49,14 +49,14 @@ public class LocationPersist {
     }
 
     /**
-     * 设置当前城市
+     * 设置当前应用选择的城市
      */
     public void setCurrentCity(String cityName) {
         getLocationSharedPrefences().edit().putString(CURRENT_CITY, cityName).commit();
     }
 
     /**
-     * 获取当前城市
+     * 获取当前应用选择的城市
      */
     public String getCurrentCity() {
         return getLocationSharedPrefences().getString(CURRENT_CITY, null);
