@@ -1,4 +1,4 @@
-package com.qz.lifehelper.presentation.adapter;
+package com.qz.lifehelper.ui.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,21 +14,22 @@ import com.qz.lifehelper.entity.POIResult;
 import com.qz.lifehelper.ui.activity.POIResultActivity;
 import com.qz.lifehelper.ui.activity.POIResultDetailActivity;
 
+import org.androidannotations.annotations.EBean;
+import org.androidannotations.annotations.RootContext;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
 * Created by kohoh on 15/3/28.
 */
+@EBean
 public class POIResultListAdpater extends BaseAdapter {
 
     List<POIResult> data = new ArrayList<>();
 
-    private Context context;
-
-    public POIResultListAdpater(Context context) {
-        this.context = context;
-    }
+    @RootContext
+    Context context;
 
     public void setData(List<POIResult> data) {
         if (data != null) {

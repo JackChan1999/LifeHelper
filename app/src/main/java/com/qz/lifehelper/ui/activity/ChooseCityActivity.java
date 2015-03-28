@@ -14,8 +14,7 @@ import com.qz.lifehelper.business.LocationBusiness;
 import com.qz.lifehelper.event.GetCurrentCityEvent;
 import com.qz.lifehelper.event.GetCurrentLocationCityEvent;
 import com.qz.lifehelper.presentation.ChooseCityHelper;
-import com.qz.lifehelper.presentation.IChooseCityView;
-import com.qz.lifehelper.presentation.adapter.ChooseCityListAdapter;
+import com.qz.lifehelper.ui.adapter.ChooseCityListAdapter;
 
 import de.greenrobot.event.EventBus;
 
@@ -23,7 +22,7 @@ import de.greenrobot.event.EventBus;
  * Created by kohoh on 15/3/14.
  */
 @EActivity(R.layout.activity_choose_city)
-public class ChooseCityActivity extends ActionBarActivity implements IChooseCityView {
+public class ChooseCityActivity extends ActionBarActivity{
 
 	public static final String TAG = ChooseCityActivity.class.getSimpleName() + "TAG";
 

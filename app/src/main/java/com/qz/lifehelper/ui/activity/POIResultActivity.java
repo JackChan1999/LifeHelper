@@ -18,7 +18,7 @@ import com.qz.lifehelper.business.POIBusiness;
 import com.qz.lifehelper.entity.City;
 import com.qz.lifehelper.entity.POIResult;
 import com.qz.lifehelper.event.GetPOIResultEvent;
-import com.qz.lifehelper.presentation.adapter.POIResultListAdpater;
+import com.qz.lifehelper.ui.adapter.POIResultListAdpater;
 
 /**
  * Created by kohoh on 15/3/19.
@@ -56,6 +56,7 @@ public class POIResultActivity extends ActionBarActivity {
 	@Bean
 	POIBusiness poiBusiness;
 
+    @Bean
 	POIResultListAdpater adpater;
 
 	@Override
@@ -97,7 +98,6 @@ public class POIResultActivity extends ActionBarActivity {
 	 */
 	@AfterViews
 	public void setPoiResltLv() {
-		adpater = new POIResultListAdpater(this);
 		poiResultLv.setAdapter(adpater);
 		poiBusiness.loadPOIData(City.generateCity(currentLocation), category);
 		onStarLoadPOIData();

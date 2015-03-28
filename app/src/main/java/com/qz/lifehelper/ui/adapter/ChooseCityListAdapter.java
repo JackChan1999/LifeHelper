@@ -1,4 +1,4 @@
-package com.qz.lifehelper.presentation.adapter;
+package com.qz.lifehelper.ui.adapter;
 
 import java.util.ArrayList;
 import java.util.List;
