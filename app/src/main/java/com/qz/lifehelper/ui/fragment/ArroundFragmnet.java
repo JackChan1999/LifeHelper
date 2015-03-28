@@ -1,16 +1,13 @@
 package com.qz.lifehelper.ui.fragment;
 
-import android.support.v4.app.Fragment;
-import android.view.View;
-
-import com.qz.lifehelper.R;
-import com.qz.lifehelper.presentation.ArroundFragmentPresentation;
-
-import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.ViewById;
+
+import android.support.v4.app.Fragment;
+
+import com.qz.lifehelper.R;
+import com.qz.lifehelper.presentation.ArroundHelper;
 
 /**
  * Created by kohoh on 15/3/23.
@@ -18,95 +15,66 @@ import org.androidannotations.annotations.ViewById;
 @EFragment(R.layout.fragment_arround)
 public class ArroundFragmnet extends Fragment {
 
-    @Bean
-    ArroundFragmentPresentation presentation;
+	@Bean
+	ArroundHelper arroundHelper;
 
-    @ViewById(R.id.topic)
-    View topicView;
+	@Click(R.id.topic)
+	public void onTopicClick() {
+		arroundHelper.toTopic();
+	}
 
-    @ViewById(R.id.food)
-    View foodView;
+	@Click(R.id.food)
+	public void onFoodClick() {
+		arroundHelper.toPOIResult("餐厅");
+	}
 
-    @ViewById(R.id.hotel)
-    View hotelView;
+	@Click(R.id.hotel)
+	public void onHotelClick() {
+		arroundHelper.toPOIResult("酒店");
+	}
 
-    @ViewById(R.id.hospital)
-    View hospitalView;
+	@Click(R.id.hospital)
+	public void onHostelClick() {
+		arroundHelper.toPOIResult("医院");
 
-    @ViewById(R.id.toliet)
-    View toiletView;
+	}
 
-    @ViewById(R.id.supermarket)
-    View supermarketView;
+	@Click(R.id.toliet)
+	public void onTolietClick() {
+		arroundHelper.toPOIResult("厕所");
 
-    @ViewById(R.id.bbq)
-    View bbqView;
+	}
 
-    @ViewById(R.id.charfingdish)
-    View charfingdishView;
+	@Click(R.id.supermarket)
+	public void onSupermarketClick() {
+		arroundHelper.toPOIResult("超市");
 
-    @ViewById(R.id.more)
-    View moreView;
+	}
 
-    @ViewById(R.id.top10restaurant)
-    View top10restaurantView;
+	@Click(R.id.bbq)
+	public void onBBQClick() {
+		arroundHelper.toPOIResult("烧烤");
 
-    @ViewById(R.id.sale)
-    View saleView;
+	}
 
+	@Click(R.id.charfingdish)
+	public void onCharfingdishClick() {
+		arroundHelper.toPOIResult("火锅");
 
-    @Click(R.id.topic)
-    public void onTopicClick() {
-        presentation.toTopic();
-    }
+	}
 
-    @Click(R.id.food)
-    public void onFoodClick() {
-        presentation.toFood();
-    }
+	@Click(R.id.more)
+	public void onMoreClick() {
+		arroundHelper.toMore();
+	}
 
-    @Click(R.id.hotel)
-    public void onHotelClick() {
-        presentation.toHotel();
-    }
+	@Click(R.id.top10restaurant)
+	public void onTop10RestaurantClick() {
+		arroundHelper.toTop10Restaurant();
+	}
 
-    @Click(R.id.hospital)
-    public void onHostelClick() {
-        presentation.toHospital();
-    }
-
-    @Click(R.id.toliet)
-    public void onTolietClick() {
-        presentation.toToilet();
-    }
-
-    @Click(R.id.supermarket)
-    public void onSupermarketClick() {
-        presentation.toSuperMarket();
-    }
-
-    @Click(R.id.bbq)
-    public void onBBQClick() {
-        presentation.toBBQ();
-    }
-
-    @Click(R.id.charfingdish)
-    public void onCharfingdishClick() {
-        presentation.toChafingdish();
-    }
-
-    @Click(R.id.more)
-    public void onMoreClick() {
-        presentation.toMore();
-    }
-
-    @Click(R.id.top10restaurant)
-    public void onTop10RestaurantClick() {
-        presentation.toTop10Restaurant();
-    }
-
-    @Click(R.id.sale)
-    public void onSaleClick() {
-        presentation.toSale();
-    }
+	@Click(R.id.sale)
+	public void onSaleClick() {
+		arroundHelper.toSale();
+	}
 }
