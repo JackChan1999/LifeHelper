@@ -1,6 +1,7 @@
 package com.qz.lifehelper.ui.activity;
 
-import org.androidannotations.annotations.AfterExtras;
+import java.util.List;
+
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
@@ -13,14 +14,17 @@ import android.support.v7.app.ActionBarActivity;
 import android.widget.ListView;
 
 import com.qz.lifehelper.R;
-import com.qz.lifehelper.presentation.IPOIResultView;
-import com.qz.lifehelper.presentation.POIResultActivitPresentation;
+import com.qz.lifehelper.business.POIBusiness;
+import com.qz.lifehelper.entity.City;
+import com.qz.lifehelper.entity.POIResult;
+import com.qz.lifehelper.event.GetPOIResultEvent;
+import com.qz.lifehelper.presentation.adapter.POIResultListAdpater;
 
 /**
  * Created by kohoh on 15/3/19.
  */
 @EActivity(R.layout.activity_poi_result)
-public class POIResultActivity extends ActionBarActivity implements IPOIResultView {
+public class POIResultActivity extends ActionBarActivity {
 
 	@ViewById(R.id.poi_result_lv)
 	public ListView poiResultLv;
@@ -34,11 +38,14 @@ public class POIResultActivity extends ActionBarActivity implements IPOIResultVi
 	@Extra(CATEGORY)
 	String category;
 
-    /**
-     * 生成跳转到POIResultActivity的Intent
-     * @param location 查询信息的位置
-     * @param category 查询信息的类别
-     */
+	/**
+	 * 生成跳转到POIResultActivity的Intent
+	 * 
+	 * @param location
+	 *            查询信息的位置
+	 * @param category
+	 *            查询信息的类别
+	 */
 	static public Intent generateIntent(Context context, String location, String category) {
 		Intent intent = new Intent(context, POIResultActivity_.class);
 		intent.putExtra(LOCATION, location);
@@ -46,61 +53,75 @@ public class POIResultActivity extends ActionBarActivity implements IPOIResultVi
 		return intent;
 	}
 
-    /**
-     * 设置ViewModel
-     */
-	@AfterExtras
-	public void setPresentation() {
-		presentation.setCurrentLocation(currentLocation);
-		presentation.setCategory(category);
-	}
-
 	@Bean
-	public POIResultActivitPresentation presentation;
+	POIBusiness poiBusiness;
+
+	POIResultListAdpater adpater;
 
 	@Override
 	protected void onStart() {
 		super.onResume();
-        //开始绑定数据
-		presentation.bind(this);
+		registerEventBus();
 	}
 
 	@Override
 	protected void onStop() {
 		super.onPause();
-        //停止绑定数据
-		presentation.unBind();
+		unregisterEventBus();
+	}
+
+	private void registerEventBus() {
+		poiBusiness.getEventBus().register(this);
+	}
+
+	private void unregisterEventBus() {
+		poiBusiness.getEventBus().unregister(this);
 	}
 
     /**
-     * 设置POI结果列表
+     * 当收到POI查询结果事件，则更新adapter
      */
-    @AfterViews
-	public void setPoiResltListSp() {
-		poiResultLv.setAdapter(presentation.getPOIResultListAdapter());
+	public void onEventMainThread(GetPOIResultEvent event) {
+		List<POIResult> poiResults = event.poiResults;
+		if (poiResults == null || poiResults.size() == 0) {
+			onLoadPOIDataFial();
+		} else {
+			adpater.setData(poiResults);
+			adpater.notifyDataSetChanged();
+			onLoadPOIDataSuccess();
+		}
 	}
 
-    /**
-     * 当开始加载数据时被调用
-     */
-	@Override
-	public void starLoadPOIData() {
+	/**
+	 * 设置POI结果列表
+	 */
+	@AfterViews
+	public void setPoiResltLv() {
+		adpater = new POIResultListAdpater(this);
+		poiResultLv.setAdapter(adpater);
+		poiBusiness.loadPOIData(City.generateCity(currentLocation), category);
+		onStarLoadPOIData();
+	}
+
+	/**
+	 * 当开始加载数据时被调用
+	 */
+	void onStarLoadPOIData() {
 
 	}
 
-    /**
-     * 当成功加载数据时被调用
-     */
-	@Override
-	public void loadPOIDataSuccess() {
+	/**
+	 * 当成功加载数据时被调用
+	 */
+	void onLoadPOIDataSuccess() {
 
 	}
 
-    /**
-     * 当加载数据失败时被调用
-     */
-	@Override
-	public void loadPOIDataFial() {
+	/**
+	 * 当加载数据失败时被调用
+	 */
+	void onLoadPOIDataFial() {
 
 	}
+
 }
