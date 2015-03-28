@@ -3,6 +3,8 @@ package com.qz.lifehelper.presentation;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
+import org.apache.commons.collections4.OrderedMap;
+import org.apache.commons.collections4.map.ListOrderedMap;
 
 import android.content.Context;
 import android.content.Intent;
@@ -25,7 +27,11 @@ import com.qz.lifehelper.ui.fragment.PersonalFragment;
 import com.qz.lifehelper.ui.fragment.PersonalFragment_;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import de.greenrobot.event.EventBus;
 
@@ -33,7 +39,7 @@ import de.greenrobot.event.EventBus;
  * Created by kohoh on 15/3/18.
  */
 @EBean
-public class HomeActivityPresentation {
+public class HomeHelper {
 
 	@Bean
 	LocationBusiness locationBusiness;
@@ -41,56 +47,42 @@ public class HomeActivityPresentation {
 	@RootContext
 	Context context;
 
-	private void toChooseCity() {
-        Intent intent = new Intent(context, ChooseCityActivity_.class);
-        context.startActivity(intent);
-    }
+	/**
+	 * 前往选择城市页
+	 */
+	public void chooseCity() {
+		Intent intent = new Intent(context, ChooseCityActivity_.class);
+		context.startActivity(intent);
+	}
 
-	private void toSearch() {
+	/**
+	 * 前往关键字搜索页
+	 */
+	public void search() {
 		Toast.makeText(context, "前往搜索页面", Toast.LENGTH_SHORT).show();
 	}
 
-	public void chooseCity() {
-		toChooseCity();
+	/**
+	 * 获取当前选择的城市
+	 */
+	public void getCurrentCity() {
+		City currentCity = locationBusiness.getCurrentCity();
+		if (currentCity == null) {
+			chooseCity();
+		} else {
+			EventBus.getDefault().post(GetCurrentCityEvent.generateEvent(currentCity));
+		}
 	}
 
-	public void search() {
-		toSearch();
+	/**
+	 * 获取Home页面的三个子页面对应的Fragment及其对应当Tab标题
+	 */
+	public OrderedMap<String, Fragment> getFragments() {
+		OrderedMap<String,Fragment> fragments = new ListOrderedMap<String,Fragment>();
+		fragments.put("周边", new ArroundFragmnet_());
+		fragments.put("生活", new LifeFragment_());
+		fragments.put("个人", new PersonalFragment_());
+		return fragments;
 	}
 
-    public void getCurrentCity() {
-        City currentCity = locationBusiness.getCurrentCity();
-        if (currentCity == null) {
-            toChooseCity();
-        } else {
-            EventBus.getDefault().post(GetCurrentCityEvent.generateEvent(currentCity));
-        }
-    }
-
-    public PagerAdapter getContainerAdapter(FragmentManager fragmentManager) {
-        return new ContainerAdapter(fragmentManager);
-    }
-
-    class ContainerAdapter extends FragmentPagerAdapter {
-
-        List<Fragment> fragments = new ArrayList<>();
-
-
-        public ContainerAdapter(FragmentManager fm) {
-            super(fm);
-            fragments.add(new ArroundFragmnet_());
-            fragments.add(new LifeFragment_());
-            fragments.add(new PersonalFragment_());
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return fragments.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return fragments.size();
-        }
-    }
 }
