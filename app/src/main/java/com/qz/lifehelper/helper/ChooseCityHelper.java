@@ -1,4 +1,4 @@
-package com.qz.lifehelper.presentation;
+package com.qz.lifehelper.helper;
 
 /**
  * Created by kohoh on 15/3/16.

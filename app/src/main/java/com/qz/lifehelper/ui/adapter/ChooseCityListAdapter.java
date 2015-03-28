@@ -17,7 +17,6 @@ import com.qz.lifehelper.entity.ChooseCityListItemCity;
 import com.qz.lifehelper.entity.ChooseCityListItemData;
 import com.qz.lifehelper.entity.ChooseCityListItemSection;
 import com.qz.lifehelper.entity.City;
-import com.qz.lifehelper.presentation.ChooseCityHelper;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;

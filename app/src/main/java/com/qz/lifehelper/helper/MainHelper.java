@@ -1,4 +1,4 @@
-package com.qz.lifehelper.presentation;
+package com.qz.lifehelper.helper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ import com.qz.lifehelper.ui.activity.POIResultActivity_;
  * 这是MainActivity对应的Presentation
  */
 @EBean
-public class MainActivityPresentation {
+public class MainHelper {
 
 	private List<ActivityClass> activityClasses;
 

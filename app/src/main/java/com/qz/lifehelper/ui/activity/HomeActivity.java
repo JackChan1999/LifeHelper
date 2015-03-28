@@ -12,10 +12,7 @@ import android.widget.TextView;
 
 import com.qz.lifehelper.R;
 import com.qz.lifehelper.event.GetCurrentCityEvent;
-import com.qz.lifehelper.presentation.HomeHelper;
-import com.qz.lifehelper.ui.fragment.ArroundFragmnet_;
-import com.qz.lifehelper.ui.fragment.LifeFragment_;
-import com.qz.lifehelper.ui.fragment.PersonalFragment_;
+import com.qz.lifehelper.helper.HomeHelper;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;

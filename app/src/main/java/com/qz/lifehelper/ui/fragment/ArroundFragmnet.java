@@ -7,7 +7,7 @@ import org.androidannotations.annotations.EFragment;
 import android.support.v4.app.Fragment;
 
 import com.qz.lifehelper.R;
-import com.qz.lifehelper.presentation.ArroundHelper;
+import com.qz.lifehelper.helper.ArroundHelper;
 
 /**
  * Created by kohoh on 15/3/23.

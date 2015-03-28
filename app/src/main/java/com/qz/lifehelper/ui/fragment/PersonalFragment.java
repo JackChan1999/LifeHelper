@@ -16,7 +16,7 @@ import com.qz.lifehelper.R;
 import com.qz.lifehelper.business.AppBusiness;
 import com.qz.lifehelper.business.AuthenticationBusiness;
 import com.qz.lifehelper.event.GetAuthEvent;
-import com.qz.lifehelper.presentation.PersonalHelper;
+import com.qz.lifehelper.helper.PersonalHelper;
 
 /**
  * Created by kohoh on 15/3/23.

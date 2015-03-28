@@ -1,4 +1,4 @@
-package com.qz.lifehelper.presentation;
+package com.qz.lifehelper.helper;
 
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;

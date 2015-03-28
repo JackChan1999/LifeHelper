@@ -9,13 +9,11 @@ import org.androidannotations.annotations.ViewById;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.qz.lifehelper.R;
-import com.qz.lifehelper.presentation.MainActivityPresentation;
+import com.qz.lifehelper.helper.MainHelper;
 
 /**
  * Created by kohoh on 15/3/14.
@@ -36,14 +34,14 @@ public class MainActivity extends ActionBarActivity {
 
     //MainActiity对应到presentation
 	@Bean
-	MainActivityPresentation presentation;
+    MainHelper mainHelper;
 
     //设置Activity目录列表
 	@AfterViews
 	void setActivitiesLv() {
-		ArrayAdapter<MainActivityPresentation.ActivityClass> activitiesAdapter = new ArrayAdapter<MainActivityPresentation.ActivityClass>(
+		ArrayAdapter<MainHelper.ActivityClass> activitiesAdapter = new ArrayAdapter<MainHelper.ActivityClass>(
 				this, android.R.layout.simple_list_item_1);
-		activitiesAdapter.addAll(presentation.getActivityClasses());
+		activitiesAdapter.addAll(mainHelper.getActivityClasses());
 
 		activitiesLv.setAdapter(activitiesAdapter);
 	}
@@ -52,8 +50,8 @@ public class MainActivity extends ActionBarActivity {
     @ItemClick(R.id.activities_lv)
     void totargetActivity(int position) {
         Intent intent = new Intent(MainActivity.this,
-                presentation.getActivityClasses().get(position).getActivityClass());
-        Bundle bundle = presentation.getActivityClasses().get(position).getExtra();
+                mainHelper.getActivityClasses().get(position).getActivityClass());
+        Bundle bundle = mainHelper.getActivityClasses().get(position).getExtra();
         if (bundle != null) {
             intent.putExtras(bundle);
         }

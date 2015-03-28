@@ -1,4 +1,4 @@
-package com.qz.lifehelper.presentation;
+package com.qz.lifehelper.helper;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
@@ -9,29 +9,15 @@ import org.apache.commons.collections4.map.ListOrderedMap;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.PagerAdapter;
-import android.view.View;
 import android.widget.Toast;
 
 import com.qz.lifehelper.business.LocationBusiness;
 import com.qz.lifehelper.entity.City;
 import com.qz.lifehelper.event.GetCurrentCityEvent;
 import com.qz.lifehelper.ui.activity.ChooseCityActivity_;
-import com.qz.lifehelper.ui.fragment.ArroundFragmnet;
 import com.qz.lifehelper.ui.fragment.ArroundFragmnet_;
-import com.qz.lifehelper.ui.fragment.LifeFragment;
 import com.qz.lifehelper.ui.fragment.LifeFragment_;
-import com.qz.lifehelper.ui.fragment.PersonalFragment;
 import com.qz.lifehelper.ui.fragment.PersonalFragment_;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import de.greenrobot.event.EventBus;
 

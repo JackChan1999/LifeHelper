@@ -13,7 +13,7 @@ import com.qz.lifehelper.R;
 import com.qz.lifehelper.business.LocationBusiness;
 import com.qz.lifehelper.event.GetCurrentCityEvent;
 import com.qz.lifehelper.event.GetCurrentLocationCityEvent;
-import com.qz.lifehelper.presentation.ChooseCityHelper;
+import com.qz.lifehelper.helper.ChooseCityHelper;
 import com.qz.lifehelper.ui.adapter.ChooseCityListAdapter;
 
 import de.greenrobot.event.EventBus;
