@@ -4,11 +4,15 @@
     android:layout_height="match_parent">
 
     <include
-        layout="@layout/item_choose_city_item"
-        android:id="@+id/item_choose_city_item" />
+        layout="@layout/city_item"
+        android:id="@+id/city_item" />
 
     <include
-        layout="@layout/item_choose_city_section"
-        android:id="@+id/item_choose_city_section" />
+        layout="@layout/section_item"
+        android:id="@+id/section_item" />
+
+    <include
+        layout="@layout/find_loaction_item"
+        android:id="@+id/find_loaction_item" />
 
 </FrameLayout>

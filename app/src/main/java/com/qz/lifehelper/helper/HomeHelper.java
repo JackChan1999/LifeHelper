@@ -12,7 +12,7 @@ import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
 import com.qz.lifehelper.business.LocationBusiness;
-import com.qz.lifehelper.entity.City;
+import com.qz.lifehelper.entity.CityBean;
 import com.qz.lifehelper.event.GetCurrentCityEvent;
 import com.qz.lifehelper.ui.activity.ChooseCityActivity_;
 import com.qz.lifehelper.ui.fragment.ArroundFragmnet_;
@@ -52,11 +52,11 @@ public class HomeHelper {
 	 * 获取当前选择的城市
 	 */
 	public void getCurrentCity() {
-		City currentCity = locationBusiness.getCurrentCity();
-		if (currentCity == null) {
+		CityBean currentCityBean = locationBusiness.getCurrentCity();
+		if (currentCityBean == null) {
 			chooseCity();
 		} else {
-			EventBus.getDefault().post(GetCurrentCityEvent.generateEvent(currentCity));
+			EventBus.getDefault().post(GetCurrentCityEvent.generateEvent(currentCityBean));
 		}
 	}
 

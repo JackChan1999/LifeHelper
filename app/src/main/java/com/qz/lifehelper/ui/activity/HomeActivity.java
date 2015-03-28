@@ -25,8 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import de.greenrobot.event.EventBus;
-
 /**
  * Created by kohoh on 15/3/18.
  */
@@ -130,7 +128,7 @@ public class HomeActivity extends ActionBarActivity {
 	 * 当当前选择城市被修改时，更新Home页面当当前城市
 	 */
 	public void onEventMainThread(GetCurrentCityEvent event) {
-		currentCityTv.setText(event.currentCity.cityName);
+		currentCityTv.setText(event.currentCityBean.cityName);
 	}
 
 	/**

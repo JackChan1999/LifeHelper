@@ -1,17 +1,17 @@
 package com.qz.lifehelper.event;
 
-import com.qz.lifehelper.entity.City;
+import com.qz.lifehelper.entity.CityBean;
 
 /**
 * Created by kohoh on 15/3/18.
 */
 public class GetCurrentCityEvent {
 
-    static public GetCurrentCityEvent generateEvent(City currentCity) {
+    static public GetCurrentCityEvent generateEvent(CityBean currentCityBean) {
         GetCurrentCityEvent event = new GetCurrentCityEvent();
-        event.currentCity = currentCity;
+        event.currentCityBean = currentCityBean;
         return event;
     }
 
-    public City currentCity;
+    public CityBean currentCityBean;
 }

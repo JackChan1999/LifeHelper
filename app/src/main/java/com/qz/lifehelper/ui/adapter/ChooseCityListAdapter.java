@@ -13,10 +13,11 @@ import android.widget.TextView;
 
 import com.qz.lifehelper.R;
 import com.qz.lifehelper.business.LocationBusiness;
-import com.qz.lifehelper.entity.ChooseCityListItemCity;
+import com.qz.lifehelper.entity.CityItemBean;
 import com.qz.lifehelper.entity.ChooseCityListItemData;
-import com.qz.lifehelper.entity.ChooseCityListItemSection;
-import com.qz.lifehelper.entity.City;
+import com.qz.lifehelper.entity.FindLoactionItemBean;
+import com.qz.lifehelper.entity.SectionItemBean;
+import com.qz.lifehelper.entity.CityBean;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
@@ -64,95 +65,111 @@ public class ChooseCityListAdapter extends BaseAdapter {
 		/**
 		 * item_choose_city的子view
 		 */
-		class ItemChildView {
-			public View chooseCitySection;
-			public View chooseCityItem;
+		class ItemChildViews {
+			public View sectionItem;
+			public View cityItem;
+			public View findLocationItem;
 		}
 
 		/**
 		 * item_choose_city_section的子view
 		 */
-		class ChooseCitySectionChildView {
+		class SectionItemChildViews {
 			public TextView titleTv;
 		}
 
 		/**
 		 * item_choose_city_item的子view
 		 */
-		class ChooseCityItemChildView {
+		class CityItemChildViews {
 			public TextView cityNameTv;
-            public Button findLocationBn;
+		}
+
+		class FindLoactionItemChildlViews {
+			public TextView cityNameTv;
+			public Button findLocationBn;
 		}
 
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		if (convertView == null) {
-			ItemChildView itemChildView = new ItemChildView();
+			ItemChildViews itemChildViews = new ItemChildViews();
 			convertView = inflater.inflate(R.layout.item_choose_city, parent, false);
-			itemChildView.chooseCityItem = convertView.findViewById(R.id.item_choose_city_item);
-			itemChildView.chooseCitySection = convertView.findViewById(R.id.item_choose_city_section);
+			itemChildViews.cityItem = convertView.findViewById(R.id.city_item);
+			itemChildViews.sectionItem = convertView.findViewById(R.id.section_item);
+			itemChildViews.findLocationItem = convertView.findViewById(R.id.find_loaction_item);
+			convertView.setTag(itemChildViews);
 
-			ChooseCitySectionChildView chooseCitySectionChildView = new ChooseCitySectionChildView();
-			chooseCitySectionChildView.titleTv = (TextView) itemChildView.chooseCitySection.findViewById(R.id.title_tv);
-			itemChildView.chooseCitySection.setTag(chooseCitySectionChildView);
+			SectionItemChildViews sectionItemChildViews = new SectionItemChildViews();
+			sectionItemChildViews.titleTv = (TextView) itemChildViews.sectionItem.findViewById(R.id.title_tv);
+			itemChildViews.sectionItem.setTag(sectionItemChildViews);
 
-			ChooseCityItemChildView chooseCityItemChildView = new ChooseCityItemChildView();
-			chooseCityItemChildView.cityNameTv = (TextView) itemChildView.chooseCityItem.findViewById(R.id.city_name_tv);
-            chooseCityItemChildView.findLocationBn = (Button) itemChildView.chooseCityItem.findViewById(R.id.find_location_bn);
-            itemChildView.chooseCityItem.setTag(chooseCityItemChildView);
+			CityItemChildViews cityItemChildViews = new CityItemChildViews();
+			cityItemChildViews.cityNameTv = (TextView) itemChildViews.cityItem.findViewById(R.id.city_name_tv);
+            itemChildViews.cityItem.setTag(cityItemChildViews);
 
-			convertView.setTag(itemChildView);
+			FindLoactionItemChildlViews findLoactionItemChildlViews = new FindLoactionItemChildlViews();
+			findLoactionItemChildlViews.cityNameTv = (TextView) itemChildViews.findLocationItem.findViewById(R.id.city_name_tv);
+			findLoactionItemChildlViews.findLocationBn= (Button) itemChildViews.findLocationItem.findViewById(R.id.find_location_bn);
+			itemChildViews.findLocationItem.setTag(findLoactionItemChildlViews);
 		}
 
 		final ChooseCityListItemData itemData = itemDatas.get(position);
-		ItemChildView itemChildView = (ItemChildView) convertView.getTag();
-		final ChooseCityItemChildView chooseCityItemChildView = (ChooseCityItemChildView) itemChildView.chooseCityItem.getTag();
-		ChooseCitySectionChildView chooseCitySectionChildView = (ChooseCitySectionChildView) itemChildView.chooseCitySection.getTag();
+		final ItemChildViews itemChildViews = (ItemChildViews) convertView.getTag();
+		final CityItemChildViews cityItemChildViews = (CityItemChildViews) itemChildViews.cityItem.getTag();
+		final SectionItemChildViews sectionItemChildViews = (SectionItemChildViews) itemChildViews.sectionItem.getTag();
+		final FindLoactionItemChildlViews findLoactionItemChildlViews= (FindLoactionItemChildlViews) itemChildViews.findLocationItem.getTag();
 		switch (itemData.getItemType()) {
 		case SECTION:
-			itemChildView.chooseCityItem.setVisibility(View.GONE);
-			itemChildView.chooseCitySection.setVisibility(View.VISIBLE);
-			chooseCitySectionChildView.titleTv.setText(((ChooseCityListItemSection) itemData).title);
+			itemChildViews.cityItem.setVisibility(View.GONE);
+			itemChildViews.sectionItem.setVisibility(View.VISIBLE);
+			itemChildViews.findLocationItem.setVisibility(View.GONE);
+			sectionItemChildViews.titleTv.setText(((SectionItemBean) itemData).title);
 			break;
 		case CITY:
-			itemChildView.chooseCityItem.setVisibility(View.VISIBLE);
-			itemChildView.chooseCitySection.setVisibility(View.GONE);
-			chooseCityItemChildView.cityNameTv.setText(((ChooseCityListItemCity) itemData).cityName);
-            chooseCityItemChildView.findLocationBn.setVisibility(View.GONE);
+			itemChildViews.cityItem.setVisibility(View.VISIBLE);
+			itemChildViews.sectionItem.setVisibility(View.GONE);
+			itemChildViews.findLocationItem.setVisibility(View.GONE);
+			cityItemChildViews.cityNameTv.setText(((CityItemBean) itemData).cityName);
 			break;
         case FIND_LOCATION:
-            chooseCityItemChildView.findLocationBn.setVisibility(View.GONE);
-            itemChildView.chooseCitySection.setVisibility(View.GONE);
-            chooseCityItemChildView.cityNameTv.setText(((ChooseCityListItemCity) itemData).cityName);
-            if (((ChooseCityListItemCity) itemData).cityName.equals(context.getString(R.string.find_location_ing))) {
-                chooseCityItemChildView.findLocationBn.setBackground(context.getResources().getDrawable(android.R.color.holo_orange_light));
+			itemChildViews.cityItem.setVisibility(View.GONE);
+			itemChildViews.sectionItem.setVisibility(View.GONE);
+			itemChildViews.findLocationItem.setVisibility(View.VISIBLE);
+            findLoactionItemChildlViews.cityNameTv.setText(((FindLoactionItemBean) itemData).cityName);
+            if (((FindLoactionItemBean) itemData).cityName.equals(context.getString(R.string.find_location_ing))) {
+                findLoactionItemChildlViews.findLocationBn.setBackground(context.getResources().getDrawable(android.R.color.holo_orange_light));
             } else {
-                chooseCityItemChildView.findLocationBn.setBackground(context.getResources().getDrawable(android.R.color.holo_red_light));
+                findLoactionItemChildlViews.findLocationBn.setBackground(context.getResources().getDrawable(android.R.color.holo_red_light));
             }
-            chooseCityItemChildView.findLocationBn.setVisibility(View.VISIBLE);
-            chooseCityItemChildView.findLocationBn.setOnClickListener(new View.OnClickListener() {
+            findLoactionItemChildlViews.findLocationBn.setVisibility(View.VISIBLE);
+            findLoactionItemChildlViews.findLocationBn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     locationBusiness.findCurrentLocationCity();
-                    chooseCityItemChildView.cityNameTv.setText(context.getString(R.string.find_location_ing));
-                    chooseCityItemChildView.findLocationBn.setBackground(context.getResources().getDrawable(android.R.color.holo_orange_light));
+                    findLoactionItemChildlViews.cityNameTv.setText(context.getString(R.string.find_location_ing));
+                    findLoactionItemChildlViews.findLocationBn.setBackground(context.getResources().getDrawable(android.R.color.holo_orange_light));
                 }
             });
             break;
 		}
 
-        switch (itemData.getItemType()) {
-            case CITY:
-            case FIND_LOCATION:
-                convertView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (!((ChooseCityListItemCity) itemData).cityName.equals(context.getString(R.string.find_location_ing))) {
-                            locationBusiness.setCurrentCity(City.generateCity(((ChooseCityListItemCity) itemData).cityName));
-                        }
-                    }
-                });
-                break;
-        }
+		convertView.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				String cityName = "";
+				switch (itemData.getItemType()) {
+					case CITY:
+						cityName=((CityItemBean)itemData).cityName;
+						break;
+					case FIND_LOCATION:
+						cityName=((FindLoactionItemBean)itemData).cityName;
+						break;
+				}
+				if (!cityName.equals(context.getString(R.string.find_location_ing))) {
+					locationBusiness.setCurrentCity(CityBean.generateCity(cityName));
+				}
+			}
+		});
 
 		return convertView;
 	}

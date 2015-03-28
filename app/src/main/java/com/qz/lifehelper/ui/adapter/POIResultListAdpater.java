@@ -10,8 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.qz.lifehelper.R;
-import com.qz.lifehelper.entity.POIResult;
-import com.qz.lifehelper.ui.activity.POIResultActivity;
+import com.qz.lifehelper.entity.POIResultBean;
 import com.qz.lifehelper.ui.activity.POIResultDetailActivity;
 
 import org.androidannotations.annotations.EBean;
@@ -26,12 +25,12 @@ import java.util.List;
 @EBean
 public class POIResultListAdpater extends BaseAdapter {
 
-    List<POIResult> data = new ArrayList<>();
+    List<POIResultBean> data = new ArrayList<>();
 
     @RootContext
     Context context;
 
-    public void setData(List<POIResult> data) {
+    public void setData(List<POIResultBean> data) {
         if (data != null) {
             this.data.clear();
             this.data.addAll(data);
@@ -74,20 +73,20 @@ public class POIResultListAdpater extends BaseAdapter {
         }
 
         ItemPOIREsultChilds childs = (ItemPOIREsultChilds) convertView.getTag();
-        final POIResult poiResult = data.get(position);
+        final POIResultBean poiResultBean = data.get(position);
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = POIResultDetailActivity.generateIntent(context, poiResult.id);
+                Intent intent = POIResultDetailActivity.generateIntent(context, poiResultBean.id);
                 context.startActivity(intent);
             }
         });
 
         childs.poiIv.setBackgroundColor(context.getResources().getColor(android.R.color.holo_blue_light));
-        childs.titleTv.setText(poiResult.title);
-        childs.addressTv.setText(poiResult.address);
-        childs.telTv.setText(poiResult.tel);
+        childs.titleTv.setText(poiResultBean.title);
+        childs.addressTv.setText(poiResultBean.address);
+        childs.telTv.setText(poiResultBean.tel);
         return convertView;
     }
 }

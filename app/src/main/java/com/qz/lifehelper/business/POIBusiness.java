@@ -6,8 +6,8 @@ import com.baidu.mapapi.search.poi.PoiCitySearchOption;
 import com.baidu.mapapi.search.poi.PoiDetailResult;
 import com.baidu.mapapi.search.poi.PoiResult;
 import com.baidu.mapapi.search.poi.PoiSearch;
-import com.qz.lifehelper.entity.City;
-import com.qz.lifehelper.entity.POIResult;
+import com.qz.lifehelper.entity.CityBean;
+import com.qz.lifehelper.entity.POIResultBean;
 import com.qz.lifehelper.event.GetPOIResultEvent;
 
 import org.androidannotations.annotations.EBean;
@@ -30,7 +30,7 @@ public class POIBusiness {
 	boolean isLoding = false;
 
 	//缓存所有加载过的POI数据
-    Map<String, POIResult> poiResults = new LinkedHashMap<>();
+    Map<String, POIResultBean> poiResults = new LinkedHashMap<>();
 
     /**
      * 开始加载制定城市的相关类别的POI数据。
@@ -38,7 +38,7 @@ public class POIBusiness {
 	 * 当加载成功会发出GetPOIResultEvent。
      * */
 	//TODO 实现callback
- 	public void loadPOIData(City city, final String category) {
+ 	public void loadPOIData(CityBean cityBean, final String category) {
 		if (isLoding) {
 			return;
 		}
@@ -50,20 +50,20 @@ public class POIBusiness {
 				isLoding = false;
 				poiSearch.destroy();
 				List<PoiInfo> poiInfos = poiResult.getAllPoi();
-				List<POIResult> poiResults = new ArrayList<>();
+				List<POIResultBean> poiResultBeans = new ArrayList<>();
                 if (poiInfos != null) {
                     for (PoiInfo poiInfo : poiInfos) {
-                        POIResult mPOIResult = new POIResult();
-                        mPOIResult.address = poiInfo.address;
-                        mPOIResult.poiIv = null;
-                        mPOIResult.tel = poiInfo.phoneNum;
-                        mPOIResult.title = poiInfo.name;
-                        mPOIResult.id = poiInfo.uid;
-                        poiResults.add(mPOIResult);
-                        addPOIResult(mPOIResult);
+                        POIResultBean mPOIResultBean = new POIResultBean();
+                        mPOIResultBean.address = poiInfo.address;
+                        mPOIResultBean.poiIv = null;
+                        mPOIResultBean.tel = poiInfo.phoneNum;
+                        mPOIResultBean.title = poiInfo.name;
+                        mPOIResultBean.id = poiInfo.uid;
+                        poiResultBeans.add(mPOIResultBean);
+                        addPOIResult(mPOIResultBean);
                     }
                 }
-				eventBus.post(GetPOIResultEvent.generateEvnet(poiResults));
+				eventBus.post(GetPOIResultEvent.generateEvnet(poiResultBeans));
 			}
 
 			@Override
@@ -72,16 +72,16 @@ public class POIBusiness {
 			}
 		};
 		poiSearch.setOnGetPoiSearchResultListener(listener);
-		poiSearch.searchInCity(new PoiCitySearchOption().city(city.cityName).keyword(category).pageNum(10));
+		poiSearch.searchInCity(new PoiCitySearchOption().city(cityBean.cityName).keyword(category).pageNum(10));
 		isLoding = true;
 	}
 
 	/**
 	 * 增加POI缓存数据
 	 */
-    private void addPOIResult(POIResult poiResult) {
-        if (!poiResults.containsKey(poiResult.id)) {
-            poiResults.put(poiResult.id, poiResult);
+    private void addPOIResult(POIResultBean poiResultBean) {
+        if (!poiResults.containsKey(poiResultBean.id)) {
+            poiResults.put(poiResultBean.id, poiResultBean);
         }
     }
 
@@ -94,7 +94,7 @@ public class POIBusiness {
 	/**
 	 * 根据POI数据的id获取缓存的POI数据
 	 */
-    public POIResult getPOIResult(String poiResultId) {
+    public POIResultBean getPOIResult(String poiResultId) {
         return poiResults.get(poiResultId);
     }
 }

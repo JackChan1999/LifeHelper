@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.qz.lifehelper.R;
 import com.qz.lifehelper.business.POIBusiness;
-import com.qz.lifehelper.entity.POIResult;
+import com.qz.lifehelper.entity.POIResultBean;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
@@ -51,11 +51,11 @@ public class POIResultDetailActivity extends ActionBarActivity{
      */
     @AfterViews
     void setData() {
-        POIResult poiResult = poiBusiness.getPOIResult(poiResultId);
-        titleIv.setText(poiResult.title);
-        telTv.setText("tel:" + poiResult.tel);
-        addTv.setText("add:"+poiResult.address);
-        detailTv.setText(poiResult.detail);
+        POIResultBean poiResultBean = poiBusiness.getPOIResult(poiResultId);
+        titleIv.setText(poiResultBean.title);
+        telTv.setText("tel:" + poiResultBean.tel);
+        addTv.setText("add:"+ poiResultBean.address);
+        detailTv.setText(poiResultBean.detail);
         //TODO 设置图片
     }
 

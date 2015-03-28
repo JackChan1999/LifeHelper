@@ -1,17 +1,17 @@
 package com.qz.lifehelper.event;
 
-import com.qz.lifehelper.entity.City;
+import com.qz.lifehelper.entity.CityBean;
 
 /**
  * 获取定位信息事件
  */
 public class GetCurrentLocationCityEvent {
 
-    public City currentLocationCity;
+    public CityBean currentLocationCityBean;
 
-    static public GetCurrentLocationCityEvent generateEvent(City currentLocationCity) {
+    static public GetCurrentLocationCityEvent generateEvent(CityBean currentLocationCityBean) {
         GetCurrentLocationCityEvent event = new GetCurrentLocationCityEvent();
-        event.currentLocationCity = currentLocationCity;
+        event.currentLocationCityBean = currentLocationCityBean;
         return event;
     }
 

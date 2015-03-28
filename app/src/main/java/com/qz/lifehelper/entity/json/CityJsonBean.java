@@ -1,9 +1,9 @@
 package com.qz.lifehelper.entity.json;
 
 /**
- * Created by kohoh on 15/3/16.
+ * 这是ChooseCity页面用到的全国城市列表json数据中的一个嵌套bean
  */
-public class CityJson {
+public class CityJsonBean {
 	// 城市的名字
 	private String name;
 

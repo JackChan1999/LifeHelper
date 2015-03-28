@@ -15,8 +15,8 @@ import android.widget.ListView;
 
 import com.qz.lifehelper.R;
 import com.qz.lifehelper.business.POIBusiness;
-import com.qz.lifehelper.entity.City;
-import com.qz.lifehelper.entity.POIResult;
+import com.qz.lifehelper.entity.CityBean;
+import com.qz.lifehelper.entity.POIResultBean;
 import com.qz.lifehelper.event.GetPOIResultEvent;
 import com.qz.lifehelper.ui.adapter.POIResultListAdpater;
 
@@ -83,11 +83,11 @@ public class POIResultActivity extends ActionBarActivity {
      * 当收到POI查询结果事件，则更新adapter
      */
 	public void onEventMainThread(GetPOIResultEvent event) {
-		List<POIResult> poiResults = event.poiResults;
-		if (poiResults == null || poiResults.size() == 0) {
+		List<POIResultBean> poiResultBeans = event.poiResultBeans;
+		if (poiResultBeans == null || poiResultBeans.size() == 0) {
 			onLoadPOIDataFial();
 		} else {
-			adpater.setData(poiResults);
+			adpater.setData(poiResultBeans);
 			adpater.notifyDataSetChanged();
 			onLoadPOIDataSuccess();
 		}
@@ -99,7 +99,7 @@ public class POIResultActivity extends ActionBarActivity {
 	@AfterViews
 	public void setPoiResltLv() {
 		poiResultLv.setAdapter(adpater);
-		poiBusiness.loadPOIData(City.generateCity(currentLocation), category);
+		poiBusiness.loadPOIData(CityBean.generateCity(currentLocation), category);
 		onStarLoadPOIData();
 	}
 

@@ -18,9 +18,9 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.qz.lifehelper.entity.City;
-import com.qz.lifehelper.entity.json.CitiesGroupByFirstCharJson;
-import com.qz.lifehelper.entity.json.CityJson;
+import com.qz.lifehelper.entity.CityBean;
+import com.qz.lifehelper.entity.json.CitiesGroupByFirstCharJsonBean;
+import com.qz.lifehelper.entity.json.CityJsonBean;
 import com.qz.lifehelper.event.GetCurrentCityEvent;
 import com.qz.lifehelper.event.GetCurrentLocationCityEvent;
 import com.qz.lifehelper.persist.LocationPersist;
@@ -47,20 +47,20 @@ public class LocationBusiness {
 	/**
 	 * 设置应用选择的当前城市
 	 */
-	public void setCurrentCity(City city) {
-		locationPersist.setCurrentCity(city.cityName);
-		getEventBus().post(GetCurrentCityEvent.generateEvent(city));
+	public void setCurrentCity(CityBean cityBean) {
+		locationPersist.setCurrentCity(cityBean.cityName);
+		getEventBus().post(GetCurrentCityEvent.generateEvent(cityBean));
 	}
 
 	/**
 	 * 获取应用选择的当前城市
 	 */
-	public City getCurrentCity() {
+	public CityBean getCurrentCity() {
 		String currentCityName = locationPersist.getCurrentCity();
 		if (currentCityName == null) {
 			return null;
 		} else {
-			return City.generateCity(currentCityName);
+			return CityBean.generateCity(currentCityName);
 		}
 	}
 
@@ -89,7 +89,7 @@ public class LocationBusiness {
 					Log.d(TAG, "get current location");
 					locationClient.stop();
 					getEventBus().post(
-					GetCurrentLocationCityEvent.generateEvent(City.generateCity(bdLocation.getCity())));
+					GetCurrentLocationCityEvent.generateEvent(CityBean.generateCity(bdLocation.getCity())));
 				}
 			}
 		};
@@ -104,21 +104,21 @@ public class LocationBusiness {
      * 该方法会为ChooseCity页面提供城市列表
      * 返回的map，key是城市的首字母，value是该首字母对应的城市的list集合
 	 */
-	public Map<String, List<City>> getAllCity() {
-		Map<String, List<City>> cities = new ListOrderedMap<>();
+	public Map<String, List<CityBean>> getAllCity() {
+		Map<String, List<CityBean>> cities = new ListOrderedMap<>();
 
 		String citiesJson = locationPersist.getAllCitiesGroupByFirstChar();
 		Gson gson = new Gson();
-		List<CitiesGroupByFirstCharJson> citiesGroupByFirstCharJsons = gson.fromJson(citiesJson,
-				new TypeToken<List<CitiesGroupByFirstCharJson>>() {
+		List<CitiesGroupByFirstCharJsonBean> citiesGroupByFirstCharJsonBeans = gson.fromJson(citiesJson,
+				new TypeToken<List<CitiesGroupByFirstCharJsonBean>>() {
 				}.getType());
-		for (CitiesGroupByFirstCharJson citiesGroupByFirstCharJson : citiesGroupByFirstCharJsons) {
-			List<City> realCities = new ArrayList<>();
-			for (CityJson cityJson : citiesGroupByFirstCharJson.getCities()) {
-				realCities.add(City.generateCity(cityJson.getName()));
+		for (CitiesGroupByFirstCharJsonBean citiesGroupByFirstCharJsonBean : citiesGroupByFirstCharJsonBeans) {
+			List<CityBean> realCities = new ArrayList<>();
+			for (CityJsonBean cityJsonBean : citiesGroupByFirstCharJsonBean.getCities()) {
+				realCities.add(CityBean.generateCity(cityJsonBean.getName()));
 			}
 			if (realCities.size() > 0) {
-				cities.put(citiesGroupByFirstCharJson.getSection(), realCities);
+				cities.put(citiesGroupByFirstCharJsonBean.getSection(), realCities);
 			}
 		}
 		return cities;

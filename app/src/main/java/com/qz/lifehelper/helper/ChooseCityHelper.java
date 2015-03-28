@@ -16,11 +16,11 @@ import android.content.Context;
 
 import com.qz.lifehelper.R;
 import com.qz.lifehelper.business.LocationBusiness;
-import com.qz.lifehelper.entity.ChooseCityListItemCity;
+import com.qz.lifehelper.entity.CityItemBean;
 import com.qz.lifehelper.entity.ChooseCityListItemData;
-import com.qz.lifehelper.entity.ChooseCityListItemSection;
-import com.qz.lifehelper.entity.ChooseCityListItemType;
-import com.qz.lifehelper.entity.City;
+import com.qz.lifehelper.entity.FindLoactionItemBean;
+import com.qz.lifehelper.entity.SectionItemBean;
+import com.qz.lifehelper.entity.CityBean;
 
 /**
  * 这是ChooseCityActivity的Presentation
@@ -35,7 +35,7 @@ public class ChooseCityHelper {
 	@Bean
 	LocationBusiness locationBusiness;
 
-	private City currentLocationCity = null;
+	private CityBean currentLocationCityBean = null;
 
 
 	/**
@@ -56,14 +56,13 @@ public class ChooseCityHelper {
 	private List<ChooseCityListItemData> getCurrentLocationCity() {
 
 		List<ChooseCityListItemData> currentLoactionCity = new ArrayList<>();
-		currentLoactionCity.add(ChooseCityListItemSection.generateSection("当前定位城市"));
-		if (currentLocationCity == null) {
-			currentLoactionCity.add(ChooseCityListItemCity.generateCity(
-					context.getResources().getString(R.string.find_location_ing), ChooseCityListItemType.FIND_LOCATION));
+		currentLoactionCity.add(SectionItemBean.generateSection("当前定位城市"));
+		if (currentLocationCityBean == null) {
+			currentLoactionCity.add(FindLoactionItemBean.generateCity(
+					context.getResources().getString(R.string.find_location_ing)));
 			locationBusiness.findCurrentLocationCity();
 		} else {
-			currentLoactionCity.add(ChooseCityListItemCity.generateCity(currentLocationCity.cityName,
-					ChooseCityListItemType.FIND_LOCATION));
+			currentLoactionCity.add(FindLoactionItemBean.generateCity(currentLocationCityBean.cityName));
 		}
 		return currentLoactionCity;
 	}
@@ -73,11 +72,11 @@ public class ChooseCityHelper {
 	 */
 	private List<ChooseCityListItemData> getHotCity() {
 		List<ChooseCityListItemData> hotCities = new ArrayList<>();
-		hotCities.add(ChooseCityListItemSection.generateSection("热门城市"));
-		hotCities.add(ChooseCityListItemCity.generateCity("杭州", ChooseCityListItemType.CITY));
-		hotCities.add(ChooseCityListItemCity.generateCity("北京", ChooseCityListItemType.CITY));
-		hotCities.add(ChooseCityListItemCity.generateCity("上海", ChooseCityListItemType.CITY));
-		hotCities.add(ChooseCityListItemCity.generateCity("深圳", ChooseCityListItemType.CITY));
+		hotCities.add(SectionItemBean.generateSection("热门城市"));
+		hotCities.add(CityItemBean.generateCity("杭州"));
+		hotCities.add(CityItemBean.generateCity("北京"));
+		hotCities.add(CityItemBean.generateCity("上海"));
+		hotCities.add(CityItemBean.generateCity("深圳"));
 		return hotCities;
 	}
 
@@ -87,11 +86,11 @@ public class ChooseCityHelper {
 	private List<ChooseCityListItemData> getAllCityGroupByFirstChar() {
 		List<ChooseCityListItemData> cities = new ArrayList<>();
 
-		Map<String, List<City>> allCity = locationBusiness.getAllCity();
+		Map<String, List<CityBean>> allCity = locationBusiness.getAllCity();
 		for (String section : allCity.keySet()) {
-			cities.add(ChooseCityListItemSection.generateSection(section));
-			for (City city : allCity.get(section)) {
-				cities.add(ChooseCityListItemCity.generateCity(city.cityName, ChooseCityListItemType.CITY));
+			cities.add(SectionItemBean.generateSection(section));
+			for (CityBean cityBean : allCity.get(section)) {
+				cities.add(CityItemBean.generateCity(cityBean.cityName));
 			}
 		}
 		return cities;
@@ -100,7 +99,7 @@ public class ChooseCityHelper {
     /**
      * 设置当前定位到的城市
      */
-    public void setCurrentLocationCity(City currentLocationCity) {
-        this.currentLocationCity = currentLocationCity;
+    public void setCurrentLocationCity(CityBean currentLocationCityBean) {
+        this.currentLocationCityBean = currentLocationCityBean;
     }
 }

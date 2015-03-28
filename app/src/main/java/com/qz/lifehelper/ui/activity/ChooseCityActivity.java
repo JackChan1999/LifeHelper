@@ -16,8 +16,6 @@ import com.qz.lifehelper.event.GetCurrentLocationCityEvent;
 import com.qz.lifehelper.helper.ChooseCityHelper;
 import com.qz.lifehelper.ui.adapter.ChooseCityListAdapter;
 
-import de.greenrobot.event.EventBus;
-
 /**
  * Created by kohoh on 15/3/14.
  */
@@ -80,7 +78,7 @@ public class ChooseCityActivity extends ActionBarActivity{
 	 * 当收到成功定位的消息，设置当前定位到的城市，并刷新城市列表
 	 */
 	public void onEventMainThread(GetCurrentLocationCityEvent event) {
-		chooseCityHelper.setCurrentLocationCity(event.currentLocationCity);
+		chooseCityHelper.setCurrentLocationCity(event.currentLocationCityBean);
 		refreshCityList();
 	}
 

@@ -1,7 +1,7 @@
 package com.qz.lifehelper.event;
 
 
-import com.qz.lifehelper.entity.POIResult;
+import com.qz.lifehelper.entity.POIResultBean;
 
 import java.util.List;
 
@@ -10,11 +10,11 @@ import java.util.List;
  */
 public class GetPOIResultEvent {
 
-    public List<POIResult> poiResults;
+    public List<POIResultBean> poiResultBeans;
 
-    static public GetPOIResultEvent generateEvnet(List<POIResult> poiResults) {
+    static public GetPOIResultEvent generateEvnet(List<POIResultBean> poiResultBeans) {
         GetPOIResultEvent event = new GetPOIResultEvent();
-        event.poiResults = poiResults;
+        event.poiResultBeans = poiResultBeans;
         return event;
     }
 

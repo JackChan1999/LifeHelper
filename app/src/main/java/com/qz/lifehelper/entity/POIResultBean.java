@@ -1,9 +1,9 @@
 package com.qz.lifehelper.entity;
 
 /**
- * Created by kohoh on 15/3/20.
+ * 该类分装了POI搜索结果的信息
  */
-public class POIResult {
+public class POIResultBean {
     public String poiIv;
     public String title;
     public String address;
