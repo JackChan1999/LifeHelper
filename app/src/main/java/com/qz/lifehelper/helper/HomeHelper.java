@@ -1,5 +1,6 @@
 package com.qz.lifehelper.helper;
 
+import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
@@ -11,6 +12,9 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
+import bolts.Continuation;
+import bolts.Task;
+
 import com.qz.lifehelper.business.LocationBusiness;
 import com.qz.lifehelper.entity.CityBean;
 import com.qz.lifehelper.event.GetCurrentCityEvent;
@@ -18,8 +22,6 @@ import com.qz.lifehelper.ui.activity.ChooseCityActivity_;
 import com.qz.lifehelper.ui.fragment.ArroundFragmnet_;
 import com.qz.lifehelper.ui.fragment.LifeFragment_;
 import com.qz.lifehelper.ui.fragment.PersonalFragment_;
-
-import de.greenrobot.event.EventBus;
 
 /**
  * HomeActivity的助手
@@ -35,12 +37,16 @@ public class HomeHelper {
 	@RootContext
 	Context context;
 
+	private Task<String>.TaskCompletionSource chooseCityTaskSource;
+
 	/**
 	 * 前往选择城市页
 	 */
-	public void chooseCity() {
+	public Task<String> chooseCity() {
+		chooseCityTaskSource = Task.create();
 		Intent intent = new Intent(context, ChooseCityActivity_.class);
 		context.startActivity(intent);
+		return chooseCityTaskSource.getTask();
 	}
 
 	/**
@@ -53,12 +59,34 @@ public class HomeHelper {
 	/**
 	 * 获取当前选择的城市
 	 */
-	public void getCurrentCity() {
+	public Task<String> getCurrentCity() {
+		final Task<String>.TaskCompletionSource taskCompletionSource = Task.create();
 		CityBean currentCityBean = locationBusiness.getCurrentCity();
 		if (currentCityBean == null) {
-			chooseCity();
+			chooseCity().onSuccess(new Continuation<String, Void>() {
+				@Override
+				public Void then(Task<String> task) throws Exception {
+					taskCompletionSource.setResult(task.getResult());
+					return null;
+				}
+			});
 		} else {
-			EventBus.getDefault().post(GetCurrentCityEvent.generateEvent(currentCityBean));
+			taskCompletionSource.setResult(currentCityBean.cityName);
+		}
+		return taskCompletionSource.getTask();
+	}
+
+	@AfterInject
+	public void reigsterEventBus() {
+		locationBusiness.getEventBus().register(this);
+	}
+
+	/**
+	 * 当接收到选择城市的event，则设置选择城市task的结果
+	 */
+	public void onEvent(GetCurrentCityEvent event) {
+		if (chooseCityTaskSource != null) {
+			chooseCityTaskSource.setResult(event.currentCityBean.cityName);
 		}
 	}
 

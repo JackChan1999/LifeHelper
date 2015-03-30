@@ -1,5 +1,14 @@
 package com.qz.lifehelper.ui.activity;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.ViewById;
+
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -10,20 +19,12 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.TextView;
 
+import bolts.Continuation;
+import bolts.Task;
+
 import com.qz.lifehelper.R;
 import com.qz.lifehelper.business.LocationBusiness;
-import com.qz.lifehelper.event.GetCurrentCityEvent;
 import com.qz.lifehelper.helper.HomeHelper;
-
-import org.androidannotations.annotations.AfterInject;
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Bean;
-import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.ViewById;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 /**
  * 主页面
@@ -92,8 +93,6 @@ public class HomeActivity extends ActionBarActivity {
 		adapter.notifyDataSetChanged();
 	}
 
-	TextView currentCityTv;
-
 	@AfterViews
 	public void setActionBar() {
 		getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -106,30 +105,30 @@ public class HomeActivity extends ActionBarActivity {
 			}
 		});
 
-		currentCityTv = (TextView) actionbar.findViewById(R.id.current_city_tv);
+		final TextView currentCityTv = (TextView) actionbar.findViewById(R.id.current_city_tv);
 		currentCityTv.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				homeHelper.chooseCity();
+				homeHelper.chooseCity().onSuccess(new Continuation<String, Void>() {
+					@Override
+					public Void then(Task<String> task) throws Exception {
+						currentCityTv.setText(task.getResult());
+						return null;
+					}
+				});
 			}
 		});
-		homeHelper.getCurrentCity();
+		homeHelper.getCurrentCity().onSuccess(new Continuation<String, Void>() {
+			@Override
+			public Void then(Task<String> task) throws Exception {
+				currentCityTv.setText(task.getResult());
+				return null;
+			}
+		});
 	}
 
 	@Bean
 	LocationBusiness locationBusiness;
-
-	@AfterInject
-	public void registerEventBus() {
-		locationBusiness.getEventBus().register(this);
-	}
-
-	/**
-	 * 当当前选择城市被修改时，更新Home页面当当前城市
-	 */
-	public void onEventMainThread(GetCurrentCityEvent event) {
-		currentCityTv.setText(event.currentCityBean.cityName);
-	}
 
 	/**
      * 存放子页面当PagerView的adapter
