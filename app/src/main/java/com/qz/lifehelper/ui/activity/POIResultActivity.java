@@ -13,6 +13,9 @@ import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.widget.ListView;
 
+import bolts.Continuation;
+import bolts.Task;
+
 import com.qz.lifehelper.R;
 import com.qz.lifehelper.business.POIBusiness;
 import com.qz.lifehelper.entity.CityBean;
@@ -56,32 +59,12 @@ public class POIResultActivity extends ActionBarActivity {
 	@Bean
 	POIBusiness poiBusiness;
 
-    @Bean
+	@Bean
 	POIResultListAdpater adpater;
 
-	@Override
-	protected void onStart() {
-		super.onResume();
-		registerEventBus();
-	}
-
-	@Override
-	protected void onStop() {
-		super.onPause();
-		unregisterEventBus();
-	}
-
-	private void registerEventBus() {
-		poiBusiness.getEventBus().register(this);
-	}
-
-	private void unregisterEventBus() {
-		poiBusiness.getEventBus().unregister(this);
-	}
-
-    /**
-     * 当收到POI查询结果事件，则更新adapter
-     */
+	/**
+	 * 当收到POI查询结果事件，则更新adapter
+	 */
 	public void onEventMainThread(GetPOIResultEvent event) {
 		List<POIResultBean> poiResultBeans = event.poiResultBeans;
 		if (poiResultBeans == null || poiResultBeans.size() == 0) {
@@ -99,7 +82,21 @@ public class POIResultActivity extends ActionBarActivity {
 	@AfterViews
 	public void setPoiResltLv() {
 		poiResultLv.setAdapter(adpater);
-		poiBusiness.loadPOIData(CityBean.generateCity(currentLocation), category);
+		poiBusiness.loadPOIData(CityBean.generateCity(currentLocation), category).onSuccess(
+				new Continuation<List<POIResultBean>, Void>() {
+					@Override
+					public Void then(Task<List<POIResultBean>> task) throws Exception {
+						List<POIResultBean> poiResultBeans = task.getResult();
+						if (poiResultBeans == null || poiResultBeans.size() == 0) {
+							onLoadPOIDataFial();
+						} else {
+							adpater.setData(poiResultBeans);
+							adpater.notifyDataSetChanged();
+							onLoadPOIDataSuccess();
+						}
+						return null;
+					}
+				}, Task.UI_THREAD_EXECUTOR);
 		onStarLoadPOIData();
 	}
 
