@@ -12,10 +12,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import bolts.Continuation;
+import bolts.Task;
+
 import com.qz.lifehelper.R;
 import com.qz.lifehelper.business.AppBusiness;
 import com.qz.lifehelper.business.AuthenticationBusiness;
-import com.qz.lifehelper.event.GetAuthEvent;
+import com.qz.lifehelper.entity.UserInfoBean;
 import com.qz.lifehelper.helper.PersonalHelper;
 
 /**
@@ -36,7 +39,13 @@ public class PersonalFragment extends Fragment {
 
 	@Click(R.id.login_bn)
 	void onLoginBnClick() {
-		personalHelper.toLogin();
+		personalHelper.login().onSuccess(new Continuation<UserInfoBean, Void>() {
+			@Override
+			public Void then(Task<UserInfoBean> task) throws Exception {
+				// TODO 设置登录成功当状态
+				return null;
+			}
+		});
 	}
 
 	@Click(R.id.my_sales)
@@ -57,6 +66,7 @@ public class PersonalFragment extends Fragment {
 	@Click(R.id.logout_bn)
 	void onLogoutBnClick() {
 		authenticationBusiness.logout();
+		// TODO 设置登出当状态
 	}
 
 	/**
@@ -68,40 +78,6 @@ public class PersonalFragment extends Fragment {
 			// TODO 设置状态为登录
 		} else {
 			// TODO 设置状态为未登录
-		}
-	}
-
-	@Override
-	public void onStart() {
-		super.onStart();
-		registerEventBus();
-	}
-
-	@Override
-	public void onStop() {
-		super.onStop();
-		unregisterEventBus();
-	}
-
-	private void registerEventBus() {
-		authenticationBusiness.getEventBus().register(this);
-	}
-
-	private void unregisterEventBus() {
-		authenticationBusiness.getEventBus().unregister(this);
-	}
-
-	/**
-	 * 收到登录或者登出消息后，刷新页面的用户状态
-	 */
-	public void onEventMainThread(GetAuthEvent event) {
-		switch (event.authState) {
-		case LOGIN:
-			// TODO 设置状态为登录
-			break;
-		case LOGOUT:
-			// TODO 设置状态为未登录
-			break;
 		}
 	}
 

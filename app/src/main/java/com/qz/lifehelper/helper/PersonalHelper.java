@@ -1,11 +1,18 @@
 package com.qz.lifehelper.helper;
 
+import org.androidannotations.annotations.AfterInject;
+import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
 
 import android.content.Context;
 import android.widget.Toast;
 
+import bolts.Task;
+
+import com.qz.lifehelper.business.AuthenticationBusiness;
+import com.qz.lifehelper.entity.UserInfoBean;
+import com.qz.lifehelper.event.GetAuthEvent;
 
 /**
  * PersonalFragment的助手
@@ -19,11 +26,32 @@ public class PersonalHelper {
 	@RootContext
 	Context context;
 
+	@Bean
+	AuthenticationBusiness authenticationBusiness;
+
+	private Task<UserInfoBean>.TaskCompletionSource loginTaskSource;
+
 	/**
 	 * 前往登录和注册页面
 	 */
-	public void toLogin() {
+	public Task<UserInfoBean> login() {
+		loginTaskSource = Task.create();
 		Toast.makeText(context, "前往登录和注册页面", Toast.LENGTH_SHORT).show();
+		return loginTaskSource.getTask();
+	}
+
+	@AfterInject
+	public void registerEventBus() {
+		authenticationBusiness.getEventBus().register(this);
+	}
+
+	/**
+	 * 当接收到登录成功当event厚，设置登录task当结果
+	 */
+	public void onEevent(GetAuthEvent event) {
+		if (loginTaskSource != null && event.authState == GetAuthEvent.AUTH_STATE.LOGIN) {
+			loginTaskSource.setResult(event.userInfoBean);
+		}
 	}
 
 	/**
