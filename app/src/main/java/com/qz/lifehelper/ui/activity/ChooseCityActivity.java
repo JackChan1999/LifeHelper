@@ -23,7 +23,7 @@ import com.qz.lifehelper.ui.adapter.ChooseCityListAdapter;
  * 选择城市页面
  */
 @EActivity(R.layout.activity_choose_city)
-public class ChooseCityActivity extends ActionBarActivity{
+public class ChooseCityActivity extends ActionBarActivity {
 
 	public static final String TAG = ChooseCityActivity.class.getSimpleName() + "TAG";
 
@@ -84,9 +84,7 @@ public class ChooseCityActivity extends ActionBarActivity{
 
 	/**
 	 * 当成功定位到当前设备的位置时，会触发该方法
-	 * 
-	 * @param currentLoactionCity
-	 */
+	 **/
 	private void onGetCurrentLocationCity(CityBean currentLoactionCity) {
 		chooseCityHelper.setCurrentLocationCity(currentLoactionCity);
 		refreshCityList();
