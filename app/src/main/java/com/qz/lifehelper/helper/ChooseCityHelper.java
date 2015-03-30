@@ -16,11 +16,11 @@ import android.content.Context;
 
 import com.qz.lifehelper.R;
 import com.qz.lifehelper.business.LocationBusiness;
-import com.qz.lifehelper.entity.CityItemBean;
 import com.qz.lifehelper.entity.ChooseCityListItemData;
+import com.qz.lifehelper.entity.CityBean;
+import com.qz.lifehelper.entity.CityItemBean;
 import com.qz.lifehelper.entity.FindLoactionItemBean;
 import com.qz.lifehelper.entity.SectionItemBean;
-import com.qz.lifehelper.entity.CityBean;
 
 /**
  * ChooseCityActivity的助手
@@ -38,7 +38,6 @@ public class ChooseCityHelper {
 	LocationBusiness locationBusiness;
 
 	private CityBean currentLocationCityBean = null;
-
 
 	/**
 	 * 为选择城市列表提供数据
@@ -60,9 +59,8 @@ public class ChooseCityHelper {
 		List<ChooseCityListItemData> currentLoactionCity = new ArrayList<>();
 		currentLoactionCity.add(SectionItemBean.generateSection("当前定位城市"));
 		if (currentLocationCityBean == null) {
-			currentLoactionCity.add(FindLoactionItemBean.generateCity(
-					context.getResources().getString(R.string.find_location_ing)));
-			locationBusiness.findCurrentLocationCity();
+			currentLoactionCity.add(FindLoactionItemBean.generateCity(context.getResources().getString(
+					R.string.find_location_ing)));
 		} else {
 			currentLoactionCity.add(FindLoactionItemBean.generateCity(currentLocationCityBean.cityName));
 		}
@@ -98,10 +96,10 @@ public class ChooseCityHelper {
 		return cities;
 	}
 
-    /**
-     * 设置当前定位到的城市
-     */
-    public void setCurrentLocationCity(CityBean currentLocationCityBean) {
-        this.currentLocationCityBean = currentLocationCityBean;
-    }
+	/**
+	 * 设置当前定位到的城市
+	 */
+	public void setCurrentLocationCity(CityBean currentLocationCityBean) {
+		this.currentLocationCityBean = currentLocationCityBean;
+	}
 }

@@ -3,6 +3,10 @@ package com.qz.lifehelper.ui.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.EBean;
+import org.androidannotations.annotations.RootContext;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,17 +15,16 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import bolts.Continuation;
+import bolts.Task;
+
 import com.qz.lifehelper.R;
 import com.qz.lifehelper.business.LocationBusiness;
-import com.qz.lifehelper.entity.CityItemBean;
 import com.qz.lifehelper.entity.ChooseCityListItemData;
+import com.qz.lifehelper.entity.CityBean;
+import com.qz.lifehelper.entity.CityItemBean;
 import com.qz.lifehelper.entity.FindLoactionItemBean;
 import com.qz.lifehelper.entity.SectionItemBean;
-import com.qz.lifehelper.entity.CityBean;
-
-import org.androidannotations.annotations.Bean;
-import org.androidannotations.annotations.EBean;
-import org.androidannotations.annotations.RootContext;
 
 /**
  * 选择城市列表对应的适配器
@@ -152,7 +155,15 @@ public class ChooseCityListAdapter extends BaseAdapter {
             findLoactionItemChildlViews.findLocationBn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    locationBusiness.findCurrentLocationCity();
+					locationBusiness.findCurrentLocationCity().onSuccess(new Continuation<CityBean, Void>() {
+						@Override
+						public Void then(Task<CityBean> task) throws Exception {
+							findLoactionItemChildlViews.cityNameTv.setText(task.getResult().cityName);
+							findLoactionItemChildlViews.findLocationBn.setBackground(context.getResources().getDrawable(
+									android.R.color.holo_red_light));
+							return null;
+						}
+					});
                     findLoactionItemChildlViews.cityNameTv.setText(context.getString(R.string.find_location_ing));
                     findLoactionItemChildlViews.findLocationBn.setBackground(context.getResources().getDrawable(android.R.color.holo_orange_light));
                 }

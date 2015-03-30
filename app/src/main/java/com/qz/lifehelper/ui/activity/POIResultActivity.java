@@ -20,7 +20,6 @@ import com.qz.lifehelper.R;
 import com.qz.lifehelper.business.POIBusiness;
 import com.qz.lifehelper.entity.CityBean;
 import com.qz.lifehelper.entity.POIResultBean;
-import com.qz.lifehelper.event.GetPOIResultEvent;
 import com.qz.lifehelper.ui.adapter.POIResultListAdpater;
 
 /**
@@ -61,20 +60,6 @@ public class POIResultActivity extends ActionBarActivity {
 
 	@Bean
 	POIResultListAdpater adpater;
-
-	/**
-	 * 当收到POI查询结果事件，则更新adapter
-	 */
-	public void onEventMainThread(GetPOIResultEvent event) {
-		List<POIResultBean> poiResultBeans = event.poiResultBeans;
-		if (poiResultBeans == null || poiResultBeans.size() == 0) {
-			onLoadPOIDataFial();
-		} else {
-			adpater.setData(poiResultBeans);
-			adpater.notifyDataSetChanged();
-			onLoadPOIDataSuccess();
-		}
-	}
 
 	/**
 	 * 设置POI结果列表

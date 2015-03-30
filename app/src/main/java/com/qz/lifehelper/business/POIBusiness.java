@@ -33,8 +33,6 @@ public class POIBusiness {
 
 	/**
 	 * 开始加载制定城市的相关类别的POI数据。
-	 *
-	 * 当加载成功会发出GetPOIResultEvent。
 	 * */
 	public Task<List<POIResultBean>> loadPOIData(CityBean cityBean, final String category) {
 		final Task<List<POIResultBean>>.TaskCompletionSource taskCompletionSource = Task.create();

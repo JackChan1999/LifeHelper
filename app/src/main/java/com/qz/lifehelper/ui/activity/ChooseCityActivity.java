@@ -9,10 +9,13 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.widget.ListView;
 
+import bolts.Continuation;
+import bolts.Task;
+
 import com.qz.lifehelper.R;
 import com.qz.lifehelper.business.LocationBusiness;
+import com.qz.lifehelper.entity.CityBean;
 import com.qz.lifehelper.event.GetCurrentCityEvent;
-import com.qz.lifehelper.event.GetCurrentLocationCityEvent;
 import com.qz.lifehelper.helper.ChooseCityHelper;
 import com.qz.lifehelper.ui.adapter.ChooseCityListAdapter;
 
@@ -48,7 +51,13 @@ public class ChooseCityActivity extends ActionBarActivity{
 	 */
 	@AfterViews
 	public void setCityListView() {
-		locationBusiness.findCurrentLocationCity();
+		locationBusiness.findCurrentLocationCity().onSuccess(new Continuation<CityBean, Void>() {
+			@Override
+			public Void then(Task<CityBean> task) throws Exception {
+				onGetCurrentLocationCity(task.getResult());
+				return null;
+			}
+		});
 		refreshCityList();
 		cityLv.setAdapter(cityListAdapter);
 	}
@@ -74,10 +83,12 @@ public class ChooseCityActivity extends ActionBarActivity{
 	}
 
 	/**
-	 * 当收到成功定位的消息，设置当前定位到的城市，并刷新城市列表
+	 * 当成功定位到当前设备的位置时，会触发该方法
+	 * 
+	 * @param currentLoactionCity
 	 */
-	public void onEventMainThread(GetCurrentLocationCityEvent event) {
-		chooseCityHelper.setCurrentLocationCity(event.currentLocationCityBean);
+	private void onGetCurrentLocationCity(CityBean currentLoactionCity) {
+		chooseCityHelper.setCurrentLocationCity(currentLoactionCity);
 		refreshCityList();
 	}
 

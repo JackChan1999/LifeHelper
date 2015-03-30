@@ -12,6 +12,8 @@ import org.apache.commons.collections4.map.ListOrderedMap;
 import android.content.Context;
 import android.util.Log;
 
+import bolts.Task;
+
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
@@ -69,8 +71,9 @@ public class LocationBusiness {
      *
      * 在获取到当前设备所在位置后，会发送GetLocationEvent，以通知先关组件
 	 */
-    //TODO 实现返回callback
-	public void findCurrentLocationCity() {
+	public Task<CityBean> findCurrentLocationCity() {
+		final Task<CityBean>.TaskCompletionSource taskCompletionSource = Task.create();
+
 		final LocationClient locationClient = new LocationClient(context);
 
 		LocationClientOption locationClientOption = new LocationClientOption();
@@ -88,14 +91,16 @@ public class LocationBusiness {
 
 					Log.d(TAG, "get current location");
 					locationClient.stop();
-					getEventBus().post(
-					GetCurrentLocationCityEvent.generateEvent(CityBean.generateCity(bdLocation.getCity())));
+					CityBean currentLocationCity = CityBean.generateCity(bdLocation.getCity());
+					taskCompletionSource.setResult(currentLocationCity);
+					getEventBus().post(GetCurrentLocationCityEvent.generateEvent(currentLocationCity));
 				}
 			}
 		};
 		locationClient.registerLocationListener(wrapperListener);
 
 		locationClient.start();
+		return taskCompletionSource.getTask();
 	}
 
 	/**
