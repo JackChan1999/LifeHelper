@@ -48,7 +48,7 @@ public class PersonalHelper {
 	/**
 	 * 当接收到登录成功当event厚，设置登录task当结果
 	 */
-	public void onEevent(GetAuthEvent event) {
+	public void onEvent(GetAuthEvent event) {
 		if (loginTaskSource != null && event.authState == GetAuthEvent.AUTH_STATE.LOGIN) {
 			loginTaskSource.setResult(event.userInfoBean);
 		}

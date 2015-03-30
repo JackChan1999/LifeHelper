@@ -1,10 +1,4 @@
 <resources>
-    <string name="app_name">LifeHelper</string>
-    <string name="title_choose_city_activity">选择城市</string>
-    <string name="title_main_activity">Activity目录</string>
-    <string name="title_home_activity">首页</string>
-
+    <string name="life_helper">LifeHelper</string>
     <string name="find_location_ing">正在定位……</string>
-    <string name="title_poi_result">搜素结果页</string>
-    <string name="title_poi_result_detail">POI搜索结果详情</string>
 </resources>

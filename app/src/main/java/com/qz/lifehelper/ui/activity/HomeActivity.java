@@ -1,7 +1,5 @@
 package com.qz.lifehelper.ui.activity;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import org.androidannotations.annotations.AfterViews;
@@ -10,8 +8,6 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -25,6 +21,7 @@ import bolts.Task;
 import com.qz.lifehelper.R;
 import com.qz.lifehelper.business.LocationBusiness;
 import com.qz.lifehelper.helper.HomeHelper;
+import com.qz.lifehelper.ui.adapter.FragmentPagerViewAdapter;
 
 /**
  * 主页面
@@ -47,7 +44,7 @@ public class HomeActivity extends ActionBarActivity {
 	 */
 	@AfterViews
 	public void setContainerPv() {
-		ContainerAdapter adapter = new ContainerAdapter(this.getSupportFragmentManager());
+		FragmentPagerViewAdapter adapter = new FragmentPagerViewAdapter(this.getSupportFragmentManager());
 		containerPv.setAdapter(adapter);
 		final ActionBar actionBar = getSupportActionBar();
 
@@ -130,32 +127,4 @@ public class HomeActivity extends ActionBarActivity {
 	@Bean
 	LocationBusiness locationBusiness;
 
-	/**
-     * 存放子页面当PagerView的adapter
-     */
-	class ContainerAdapter extends FragmentPagerAdapter {
-
-		List<Fragment> fragments = new ArrayList<>();
-
-        /**
-         * 添加子页面对应的fragment
-         */
-		public void addfragment(Fragment fragment) {
-			fragments.add(fragment);
-		}
-
-		public ContainerAdapter(FragmentManager fm) {
-			super(fm);
-		}
-
-		@Override
-		public Fragment getItem(int position) {
-			return fragments.get(position);
-		}
-
-		@Override
-		public int getCount() {
-			return fragments.size();
-		}
-	}
 }

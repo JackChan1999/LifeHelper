@@ -6,7 +6,7 @@
         android:name=".ui.LifeHelperApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
+        android:label="@string/life_helper"
         android:theme="@style/AppTheme">
 
         <meta-data
@@ -14,29 +14,21 @@
             android:value="Drjj8aQ7mvTgYYES5rMgdZUE" />
 
 
-        <activity
-            android:name=".ui.activity.ChooseCityActivity_"
-            android:label="@string/title_choose_city_activity" />
+        <activity android:name=".ui.activity.ChooseCityActivity_" />
 
-        <activity
-            android:name=".ui.activity.HomeActivity_"
-            android:label="@string/title_home_activity">
-            <intent-filter>
+        <activity android:name=".ui.activity.HomeActivity_">
+        <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.activity.POIResultActivity_"
-            android:label="@string/title_poi_result"/>
+        <activity android:name=".ui.activity.POIResultActivity_" />
 
-        <activity android:name=".ui.activity.POIResultDetailActivity_"
-            android:label="@string/title_poi_result_detail"/>
+        <activity android:name=".ui.activity.POIResultDetailActivity_" />
 
-        <activity
-            android:name=".ui.activity.MainActivity_"
-            android:label="@string/title_main_activity">
-            <intent-filter>
+        <activity android:name=".ui.activity.MainActivity_">
+        <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
