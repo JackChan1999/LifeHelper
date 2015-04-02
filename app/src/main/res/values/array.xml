@@ -13,7 +13,7 @@
         <item>酒店</item>
         <item>电影</item>
     </string-array>
-    
+
     <string-array name="grade">
         <item>1星</item>
         <item>2星</item>

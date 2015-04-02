@@ -12,6 +12,6 @@
         bind:source="{activities}"
         bind:itemLayout="@android:layout/simple_list_item_1"
         bind:itemMapping="[text1.text:{title}]"
-        bind:onItemClick="toTargetActivity"/>
+        bind:onItemClick="toTargetActivity" />
 
 </LinearLayout>

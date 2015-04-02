@@ -1,18 +1,7 @@
 package com.qz.lifehelper.business;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import org.androidannotations.annotations.Bean;
-import org.androidannotations.annotations.EBean;
-import org.androidannotations.annotations.RootContext;
-import org.apache.commons.collections4.map.ListOrderedMap;
-
 import android.content.Context;
 import android.util.Log;
-
-import bolts.Task;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -27,107 +16,117 @@ import com.qz.lifehelper.event.GetCurrentCityEvent;
 import com.qz.lifehelper.event.GetCurrentLocationCityEvent;
 import com.qz.lifehelper.persist.LocationPersist;
 
+import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.EBean;
+import org.androidannotations.annotations.RootContext;
+import org.apache.commons.collections4.map.ListOrderedMap;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import bolts.Task;
 import de.greenrobot.event.EventBus;
 
 /**
  * 该类主要负责与位置相关的业务逻辑
- *
+ * <p/>
  * currentCity指的是当前应用选择的城市
  * currentLoactionCity 指的是当前设备所在的城市
  */
 @EBean(scope = EBean.Scope.Singleton)
 public class LocationBusiness {
 
-	public static final String TAG = LocationBusiness.class.getSimpleName() + "TAG";
+    public static final String TAG = LocationBusiness.class.getSimpleName() + "TAG";
 
-	@RootContext
-	Context context;
+    @RootContext
+    Context context;
 
-	@Bean
-	LocationPersist locationPersist;
+    @Bean
+    LocationPersist locationPersist;
 
-	/**
-	 * 设置应用选择的当前城市
-	 */
-	public void setCurrentCity(CityBean cityBean) {
-		locationPersist.setCurrentCity(cityBean.cityName);
-		getEventBus().post(GetCurrentCityEvent.generateEvent(cityBean));
-	}
+    /**
+     * 设置应用选择的当前城市
+     */
+    public void setCurrentCity(CityBean cityBean) {
+        locationPersist.setCurrentCity(cityBean.cityName);
+        getEventBus().post(GetCurrentCityEvent.generateEvent(cityBean));
+    }
 
-	/**
-	 * 获取应用选择的当前城市
-	 */
-	public CityBean getCurrentCity() {
-		String currentCityName = locationPersist.getCurrentCity();
-		if (currentCityName == null) {
-			return null;
-		} else {
-			return CityBean.generateCity(currentCityName);
-		}
-	}
+    /**
+     * 获取应用选择的当前城市
+     */
+    public CityBean getCurrentCity() {
+        String currentCityName = locationPersist.getCurrentCity();
+        if (currentCityName == null) {
+            return null;
+        } else {
+            return CityBean.generateCity(currentCityName);
+        }
+    }
 
-	/**
-	 * 通过定位获取当前设备所在位置。
-     *
+    /**
+     * 通过定位获取当前设备所在位置。
+     * <p/>
      * 在获取到当前设备所在位置后，会发送GetLocationEvent，以通知先关组件
-	 */
-	public Task<CityBean> findCurrentLocationCity() {
-		final Task<CityBean>.TaskCompletionSource taskCompletionSource = Task.create();
+     */
+    public Task<CityBean> findCurrentLocationCity() {
+        final Task<CityBean>.TaskCompletionSource taskCompletionSource = Task.create();
 
-		final LocationClient locationClient = new LocationClient(context);
+        final LocationClient locationClient = new LocationClient(context);
 
-		LocationClientOption locationClientOption = new LocationClientOption();
-		locationClientOption.setIsNeedAddress(true);
-		locationClientOption.setScanSpan(10001);
-		locationClientOption.setLocationMode(LocationClientOption.LocationMode.Battery_Saving);
-		locationClient.setLocOption(locationClientOption);
+        LocationClientOption locationClientOption = new LocationClientOption();
+        locationClientOption.setIsNeedAddress(true);
+        locationClientOption.setScanSpan(10001);
+        locationClientOption.setLocationMode(LocationClientOption.LocationMode.Battery_Saving);
+        locationClient.setLocOption(locationClientOption);
 
-		BDLocationListener wrapperListener = new BDLocationListener() {
-			@Override
-			public void onReceiveLocation(BDLocation bdLocation) {
-				if (bdLocation != null && bdLocation.getCity() != null && bdLocation.getCityCode() != null
-						&& !bdLocation.getCity().equals("") && !bdLocation.getCity().equals("null")
-						&& !bdLocation.getCityCode().equals("") && !bdLocation.getCityCode().equals("null")) {
+        BDLocationListener wrapperListener = new BDLocationListener() {
+            @Override
+            public void onReceiveLocation(BDLocation bdLocation) {
+                if (bdLocation != null && bdLocation.getCity() != null && bdLocation.getCityCode() != null
+                        && !bdLocation.getCity().equals("") && !bdLocation.getCity().equals("null")
+                        && !bdLocation.getCityCode().equals("") && !bdLocation.getCityCode().equals("null")) {
 
-					Log.d(TAG, "get current location");
-					locationClient.stop();
-					CityBean currentLocationCity = CityBean.generateCity(bdLocation.getCity());
-					taskCompletionSource.setResult(currentLocationCity);
-					getEventBus().post(GetCurrentLocationCityEvent.generateEvent(currentLocationCity));
-				}
-			}
-		};
-		locationClient.registerLocationListener(wrapperListener);
+                    Log.d(TAG, "get current location");
+                    locationClient.stop();
+                    CityBean currentLocationCity = CityBean.generateCity(bdLocation.getCity());
+                    taskCompletionSource.setResult(currentLocationCity);
+                    getEventBus().post(GetCurrentLocationCityEvent.generateEvent(currentLocationCity));
+                }
+            }
+        };
+        locationClient.registerLocationListener(wrapperListener);
 
-		locationClient.start();
-		return taskCompletionSource.getTask();
-	}
+        locationClient.start();
+        return taskCompletionSource.getTask();
+    }
 
-	/**
-	 * 获取以首字母分组排序的全部城市
-     *
+    /**
+     * 获取以首字母分组排序的全部城市
+     * <p/>
      * 该方法会为ChooseCity页面提供城市列表
      * 返回的map，key是城市的首字母，value是该首字母对应的城市的list集合
-	 */
-	public Map<String, List<CityBean>> getAllCity() {
-		Map<String, List<CityBean>> cities = new ListOrderedMap<>();
+     */
+    public Map<String, List<CityBean>> getAllCity() {
+        Map<String, List<CityBean>> cities = new ListOrderedMap<>();
 
-		String citiesJson = locationPersist.getAllCitiesGroupByFirstChar();
-		Gson gson = new Gson();
-		List<CitiesGroupByFirstCharJsonBean> citiesGroupByFirstCharJsonBeans = gson.fromJson(citiesJson,
-				new TypeToken<List<CitiesGroupByFirstCharJsonBean>>() {
-				}.getType());
-		for (CitiesGroupByFirstCharJsonBean citiesGroupByFirstCharJsonBean : citiesGroupByFirstCharJsonBeans) {
-			List<CityBean> realCities = new ArrayList<>();
-			for (CityJsonBean cityJsonBean : citiesGroupByFirstCharJsonBean.getCities()) {
-				realCities.add(CityBean.generateCity(cityJsonBean.getName()));
-			}
-			if (realCities.size() > 0) {
-				cities.put(citiesGroupByFirstCharJsonBean.getSection(), realCities);
-			}
-		}
-		return cities;
-	}
+        String citiesJson = locationPersist.getAllCitiesGroupByFirstChar();
+        Gson gson = new Gson();
+        List<CitiesGroupByFirstCharJsonBean> citiesGroupByFirstCharJsonBeans = gson.fromJson(citiesJson,
+                new TypeToken<List<CitiesGroupByFirstCharJsonBean>>() {
+                }.getType());
+        for (CitiesGroupByFirstCharJsonBean citiesGroupByFirstCharJsonBean : citiesGroupByFirstCharJsonBeans) {
+            List<CityBean> realCities = new ArrayList<>();
+            for (CityJsonBean cityJsonBean : citiesGroupByFirstCharJsonBean.getCities()) {
+                realCities.add(CityBean.generateCity(cityJsonBean.getName()));
+            }
+            if (realCities.size() > 0) {
+                cities.put(citiesGroupByFirstCharJsonBean.getSection(), realCities);
+            }
+        }
+        return cities;
+    }
 
     private EventBus eventBus = EventBus.builder().build();
 

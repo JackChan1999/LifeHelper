@@ -20,7 +20,7 @@ import org.androidannotations.annotations.ViewById;
  * POI搜索结果详情页
  */
 @EActivity(R.layout.activity_poi_result_detail)
-public class POIResultDetailActivity extends ActionBarActivity{
+public class POIResultDetailActivity extends ActionBarActivity {
 
 
     @ViewById(R.id.poi_iv)
@@ -54,7 +54,7 @@ public class POIResultDetailActivity extends ActionBarActivity{
         POIResultBean poiResultBean = poiBusiness.getPOIResult(poiResultId);
         titleIv.setText(poiResultBean.title);
         telTv.setText("tel:" + poiResultBean.tel);
-        addTv.setText("add:"+ poiResultBean.address);
+        addTv.setText("add:" + poiResultBean.address);
         detailTv.setText(poiResultBean.detail);
         //TODO 设置图片
     }

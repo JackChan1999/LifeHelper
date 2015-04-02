@@ -9,10 +9,10 @@ import org.androidannotations.annotations.EBean;
 @EBean
 public class AppBusiness {
 
-	/**
-	 * 获取当前应用的版本号
-	 */
-	public String getVersionNumber() {
-		return "还没有去实现";
-	}
+    /**
+     * 获取当前应用的版本号
+     */
+    public String getVersionNumber() {
+        return "还没有去实现";
+    }
 }

@@ -1,18 +1,15 @@
 package com.qz.lifehelper.persist;
 
-import java.io.IOException;
-import java.io.InputStream;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.util.Log;
 
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
 import org.apache.commons.io.IOUtils;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.util.Log;
-import android.widget.Toast;
-
-import com.baidu.location.BDLocation;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * 该类用于维护与位置相关信息的数据
@@ -20,26 +17,26 @@ import com.baidu.location.BDLocation;
 @EBean
 public class LocationPersist {
 
-	@RootContext
-	Context context;
+    @RootContext
+    Context context;
 
-	static final public String TAG = LocationPersist.class.getSimpleName() + "TAG";
+    static final public String TAG = LocationPersist.class.getSimpleName() + "TAG";
 
-	/**
-	 * 获取本地存储的全国城市列表的json数据
-	 */
-	public String getAllCitiesGroupByFirstChar() {
-		String citiesJson = null;
-		try {
-			InputStream citiesInputStream = context.getAssets().open("cities");
-			citiesJson = IOUtils.toString(citiesInputStream);
-		} catch (IOException e) {
-			Log.e(TAG, "getAllCitiesGroupByFirstChar fail", e);
-			e.printStackTrace();
-		}
+    /**
+     * 获取本地存储的全国城市列表的json数据
+     */
+    public String getAllCitiesGroupByFirstChar() {
+        String citiesJson = null;
+        try {
+            InputStream citiesInputStream = context.getAssets().open("cities");
+            citiesJson = IOUtils.toString(citiesInputStream);
+        } catch (IOException e) {
+            Log.e(TAG, "getAllCitiesGroupByFirstChar fail", e);
+            e.printStackTrace();
+        }
 
-		return citiesJson;
-	}
+        return citiesJson;
+    }
 
     static final private String CURRENT_CITY = "CURRENT_CITY";
     static final private String LOCATION_SHARED_PREFERENCES = "LOCATION_SHARED_PREFERENCES";

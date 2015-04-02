@@ -248,17 +248,18 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <TextView android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="十大必去餐厅"
                     android:textStyle="bold"
-                    android:textSize="30sp"/>
+                    android:textSize="30sp" />
 
                 <TextView
                     android:textSize="20sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="最值得去的餐厅"/>
+                    android:text="最值得去的餐厅" />
 
 
             </LinearLayout>
@@ -269,7 +270,7 @@
                 android:layout_height="wrap_content"
                 android:minHeight="65dp"
                 android:minWidth="65dp"
-                android:background="@android:color/holo_blue_light"/>
+                android:background="@android:color/holo_blue_light" />
 
         </LinearLayout>
 
@@ -281,17 +282,18 @@
             android:layout_weight="5"
             android:orientation="vertical">
 
-            <TextView android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="特惠"
-            android:textStyle="bold"
-            android:textSize="30sp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="特惠"
+                android:textStyle="bold"
+                android:textSize="30sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="最便宜"
-                android:textSize="20sp"/>
+                android:textSize="20sp" />
 
         </LinearLayout>
 

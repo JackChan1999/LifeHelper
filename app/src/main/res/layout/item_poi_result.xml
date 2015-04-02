@@ -23,7 +23,7 @@
         android:padding="5dp"
         android:text="井山湖农庄"
         android:textSize="20sp"
-        android:textColor="@android:color/holo_blue_dark"/>
+        android:textColor="@android:color/holo_blue_dark" />
 
     <TextView
         android:id="@+id/tel_tv"
@@ -49,7 +49,7 @@
         android:layout_height="60dp"
         android:src="@android:drawable/arrow_up_float"
         android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"/>
+        android:layout_centerVertical="true" />
 
 
 </RelativeLayout>
