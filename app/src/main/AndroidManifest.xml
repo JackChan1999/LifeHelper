@@ -14,10 +14,12 @@
             android:value="Drjj8aQ7mvTgYYES5rMgdZUE" />
 
 
+        <activity android:name=".ui.activity.SearchPlaneActivity_" />
+
         <activity android:name=".ui.activity.ChooseCityActivity_" />
 
         <activity android:name=".ui.activity.HomeActivity_">
-        <intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
@@ -28,7 +30,7 @@
         <activity android:name=".ui.activity.POIResultDetailActivity_" />
 
         <activity android:name=".ui.activity.MainActivity_">
-        <intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>

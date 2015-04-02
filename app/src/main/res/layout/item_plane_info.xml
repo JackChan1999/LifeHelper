@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="10dp">
+
+    <TextView
+        android:textColor="@android:color/darker_gray"
+        android:layout_marginBottom="10dp"
+        android:textSize="20sp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:id="@+id/plane_info_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="厦航MF8178波音737（中）" />
+
+    <TextView
+        android:textSize="25sp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/plane_info_tv"
+        android:id="@+id/start_time_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="07:05" />
+
+    <TextView
+        android:textColor="@android:color/darker_gray"
+        android:layout_marginTop="10dp"
+        android:textSize="25sp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/start_time_tv"
+        android:id="@+id/end_time_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="12:43" />
+
+    <TextView
+        android:textSize="25sp"
+        android:drawablePadding="5dp"
+        android:gravity="center"
+        android:layout_toRightOf="@id/start_time_tv"
+        android:layout_alignBaseline="@id/start_time_tv"
+        android:id="@+id/start_airport_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@android:drawable/ic_input_add"
+        android:text="首都机场T2" />
+
+    <TextView
+        android:textColor="@android:color/darker_gray"
+        android:textSize="25sp"
+        android:gravity="center"
+        android:layout_alignBaseline="@id/end_time_tv"
+        android:layout_toRightOf="@id/end_time_tv"
+        android:id="@+id/end_airport_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@android:drawable/ic_input_add"
+        android:drawablePadding="5dp"
+        android:text="虹桥机场T2" />
+
+    <TextView
+        android:textStyle="bold"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="40sp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:id="@+id/plane_state_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="到达" />
+
+
+</RelativeLayout>

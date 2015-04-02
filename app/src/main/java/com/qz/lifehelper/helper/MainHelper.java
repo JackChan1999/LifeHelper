@@ -1,10 +1,5 @@
 package com.qz.lifehelper.helper;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.androidannotations.annotations.EBean;
-
 import android.app.Activity;
 import android.os.Bundle;
 
@@ -12,71 +7,79 @@ import com.qz.lifehelper.ui.activity.ChooseCityActivity_;
 import com.qz.lifehelper.ui.activity.HomeActivity_;
 import com.qz.lifehelper.ui.activity.POIResultActivity;
 import com.qz.lifehelper.ui.activity.POIResultActivity_;
+import com.qz.lifehelper.ui.activity.SearchPlaneActivity_;
+
+import org.androidannotations.annotations.EBean;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * MainActivity的助手
- *
+ * <p/>
  * 帮助MainActivity实现一部分业务逻辑
  */
 @EBean
 public class MainHelper {
 
-	private List<ActivityClass> activityClasses;
+    private List<ActivityClass> activityClasses;
 
-	/**
-	 * 获取Activity目录信息
-	 */
-	public List<ActivityClass> getActivityClasses() {
+    /**
+     * 获取Activity目录信息
+     */
+    public List<ActivityClass> getActivityClasses() {
 
-		if (activityClasses == null) {
-			activityClasses = new ArrayList<ActivityClass>();
-			activityClasses.add(new ActivityClass("ChooseCityActivity", ChooseCityActivity_.class));
-			activityClasses.add(new ActivityClass("HomeActivity", HomeActivity_.class));
+        if (activityClasses == null) {
+            activityClasses = new ArrayList<ActivityClass>();
+            activityClasses.add(new ActivityClass("ChooseCityActivity", ChooseCityActivity_.class));
+            activityClasses.add(new ActivityClass("HomeActivity", HomeActivity_.class));
 
-			Bundle extra = new Bundle();
-			extra.putString(POIResultActivity.CATEGORY, "酒店");
-			extra.putString(POIResultActivity.LOCATION, "上海");
-			activityClasses.add(new ActivityClass("POIResultActivity", POIResultActivity_.class, extra));
-		}
+            Bundle extra = new Bundle();
+            extra.putString(POIResultActivity.CATEGORY, "酒店");
+            extra.putString(POIResultActivity.LOCATION, "上海");
+            activityClasses.add(new ActivityClass("POIResultActivity", POIResultActivity_.class, extra));
 
-		return activityClasses;
-	}
+            activityClasses.add(new ActivityClass("SearchPlaen", SearchPlaneActivity_.class));
+        }
 
-	/**
-	 * 该类封装类Activity到信息，包括名字和类
-	 */
-	public class ActivityClass {
-		private String name;
-		private Class<? extends Activity> activityClass;
-		private Bundle extra;
+        return activityClasses;
+    }
 
-		public Bundle getExtra() {
-			return extra;
-		}
+    /**
+     * 该类封装类Activity到信息，包括名字和类
+     */
+    public class ActivityClass {
+        private String name;
+        private Class<? extends Activity> activityClass;
+        private Bundle extra;
 
-		public String getName() {
-			return name;
-		}
+        public Bundle getExtra() {
+            return extra;
+        }
 
-		public Class<? extends Activity> getActivityClass() {
-			return activityClass;
-		}
+        public String getName() {
+            return name;
+        }
 
-		ActivityClass(String name, Class<? extends Activity> activityClass) {
-			this.name = name;
-			this.activityClass = activityClass;
-		}
+        public Class<? extends Activity> getActivityClass() {
+            return activityClass;
+        }
 
-		public ActivityClass(String name, Class<? extends Activity> activityClass, Bundle extra) {
-			this.name = name;
-			this.activityClass = activityClass;
-			this.extra = extra;
-		}
+        ActivityClass(String name, Class<? extends Activity> activityClass) {
+            this.name = name;
+            this.activityClass = activityClass;
+        }
 
-		@Override
-		public String toString() {
-			return name;
-		}
-	}
+        public ActivityClass(String name, Class<? extends Activity> activityClass, Bundle extra) {
+            this.name = name;
+            this.activityClass = activityClass;
+            this.extra = extra;
+        }
+
+        @Override
+        public String toString() {
+            return name;
+        }
+    }
 
 }
