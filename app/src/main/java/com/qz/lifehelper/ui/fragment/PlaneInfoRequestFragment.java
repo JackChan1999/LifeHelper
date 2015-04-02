@@ -4,9 +4,10 @@ import android.support.v4.app.Fragment;
 import android.widget.TextView;
 
 import com.qz.lifehelper.R;
-import com.qz.lifehelper.entity.AirPortBean;
-import com.qz.lifehelper.helper.SearchPlaneHelper;
+import com.qz.lifehelper.entity.AirportBean;
+import com.qz.lifehelper.helper.PlaneInfoHelper;
 
+import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.Click;
@@ -17,22 +18,45 @@ import bolts.Continuation;
 import bolts.Task;
 
 /**
- * 机票时时信息搜索
+ * 航班信息搜索参数填写页面
+ * 在该页面设置要搜索的相关信息，然后根据这些信息搜索航班的信息
  */
-@EFragment(R.layout.fragment_search_plane)
-public class SearchPlaneFragment extends Fragment {
+@EFragment(R.layout.fragment_plane_info_request)
+public class PlaneInfoRequestFragment extends Fragment {
 
     @Bean
-    SearchPlaneHelper searchPlaneHelper;
+    PlaneInfoHelper planeInfoHelper;
 
-    private AirPortBean startAirport = AirPortBean.generateAirport("北京", "PEK");
-    private AirPortBean endAirport = AirPortBean.generateAirport("上海", "SHA");
+    /**
+     * 当前选择的出发机场
+     */
+    private AirportBean startAirport;
+    /**
+     * 当前选择的目的地机场
+     */
+    private AirportBean endAirport;
 
+    @AfterInject
+    void setDefaultStartAirport() {
+        startAirport = planeInfoHelper.getDefaultStartAirport();
+    }
+
+    @AfterInject
+    void setDefaulteEndAirport() {
+        endAirport = planeInfoHelper.getDefaultEndAirport();
+    }
+
+    /**
+     * 设置出发机场信息
+     */
     @AfterViews
     void setStartAirport() {
         startAirportTv.setText(startAirport.airpory);
     }
 
+    /**
+     * 设置目的地机场信息
+     */
     @AfterViews
     void setEndAirport() {
         endAirportTv.setText(endAirport.airpory);
@@ -43,9 +67,9 @@ public class SearchPlaneFragment extends Fragment {
      */
     @Click(R.id.strat_loaction)
     void chooseStartLoaction() {
-        searchPlaneHelper.chooseAirport().onSuccess(new Continuation<AirPortBean, Void>() {
+        planeInfoHelper.chooseAirport().onSuccess(new Continuation<AirportBean, Void>() {
             @Override
-            public Void then(Task<AirPortBean> task) throws Exception {
+            public Void then(Task<AirportBean> task) throws Exception {
                 startAirport = task.getResult();
                 setStartAirport();
                 return null;
@@ -59,9 +83,9 @@ public class SearchPlaneFragment extends Fragment {
      */
     @Click(R.id.end_loaction)
     void chooseEndLoaction() {
-        searchPlaneHelper.chooseAirport().onSuccess(new Continuation<AirPortBean, Void>() {
+        planeInfoHelper.chooseAirport().onSuccess(new Continuation<AirportBean, Void>() {
             @Override
-            public Void then(Task<AirPortBean> task) throws Exception {
+            public Void then(Task<AirportBean> task) throws Exception {
                 endAirport = task.getResult();
                 setEndAirport();
                 return null;
@@ -75,7 +99,7 @@ public class SearchPlaneFragment extends Fragment {
     @Click(R.id.choose_date)
     void chooseDate() {
         String currentDate = dateTv.getText().toString();
-        searchPlaneHelper.chooseDate(currentDate).onSuccess(new Continuation<String, Void>() {
+        planeInfoHelper.chooseDate(currentDate).onSuccess(new Continuation<String, Void>() {
             @Override
             public Void then(Task<String> task) throws Exception {
                 dateTv.setText(task.getResult());
@@ -85,12 +109,12 @@ public class SearchPlaneFragment extends Fragment {
     }
 
     /**
-     * 搜索航班日期
+     * 搜索航班的信息
      */
     @Click(R.id.search)
     void searchPlaneInfo() {
         String date = dateTv.getText().toString();
-        searchPlaneHelper.searchPlaneInfo(startAirport, endAirport, date);
+        planeInfoHelper.searchPlaneInfo(startAirport, endAirport, date);
     }
 
     @ViewById(R.id.strat_loaction_tv)
@@ -109,6 +133,6 @@ public class SearchPlaneFragment extends Fragment {
      */
     @AfterViews
     void setDefaultDate() {
-        dateTv.setText(searchPlaneHelper.getCurrentDate());
+        dateTv.setText(planeInfoHelper.getCurrentDate());
     }
 }

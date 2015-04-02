@@ -7,7 +7,7 @@ import com.qz.lifehelper.ui.activity.ChooseCityActivity_;
 import com.qz.lifehelper.ui.activity.HomeActivity_;
 import com.qz.lifehelper.ui.activity.POIResultActivity;
 import com.qz.lifehelper.ui.activity.POIResultActivity_;
-import com.qz.lifehelper.ui.activity.SearchPlaneActivity_;
+import com.qz.lifehelper.ui.activity.PlaneInfoActivity_;
 
 import org.androidannotations.annotations.EBean;
 
@@ -39,7 +39,7 @@ public class MainHelper {
             extra.putString(POIResultActivity.LOCATION, "上海");
             activityClasses.add(new ActivityClass("POIResultActivity", POIResultActivity_.class, extra));
 
-            activityClasses.add(new ActivityClass("SearchPlaen", SearchPlaneActivity_.class));
+            activityClasses.add(new ActivityClass("SearchPlaen", PlaneInfoActivity_.class));
         }
 
         return activityClasses;

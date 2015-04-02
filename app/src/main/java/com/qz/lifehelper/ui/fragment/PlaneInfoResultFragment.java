@@ -3,7 +3,7 @@ package com.qz.lifehelper.ui.fragment;
 import android.support.v4.app.ListFragment;
 
 import com.qz.lifehelper.business.PlaneBusiness;
-import com.qz.lifehelper.entity.AirPortBean;
+import com.qz.lifehelper.entity.AirportBean;
 import com.qz.lifehelper.entity.PlaneInfoBean;
 import com.qz.lifehelper.ui.adapter.PlaneInfoAdapter;
 
@@ -22,16 +22,32 @@ import bolts.Task;
  * 航班信息结果页
  */
 @EFragment
-public class PlaneInfoFragment extends ListFragment {
+public class PlaneInfoResultFragment extends ListFragment {
 
-    private AirPortBean statrAirport;
-    private AirPortBean endAirport;
+    /**
+     * 出发机场
+     */
+    private AirportBean statrAirport;
+    /**
+     * 目的地机场
+     */
+    private AirportBean endAirport;
+    /**
+     * 出发日期
+     */
     private Date dateFly;
 
 
-    public static PlaneInfoFragment generateFragment(AirPortBean startAirport, AirPortBean endAirport, Date dateFly) {
+    /**
+     * 生成PlaneInfoResultFragment
+     *
+     * @param startAirport 出发机场
+     * @param endAirport   目的地机场
+     * @param dateFly      出发日期
+     */
+    public static PlaneInfoResultFragment generateFragment(AirportBean startAirport, AirportBean endAirport, Date dateFly) {
 
-        PlaneInfoFragment fragment = new PlaneInfoFragment_();
+        PlaneInfoResultFragment fragment = new PlaneInfoResultFragment_();
         fragment.statrAirport = startAirport;
         fragment.endAirport = endAirport;
         fragment.dateFly = dateFly;
@@ -46,6 +62,9 @@ public class PlaneInfoFragment extends ListFragment {
 
     List<PlaneInfoBean> data = new ArrayList<>();
 
+    /**
+     * 配置航班信息搜索结果列表
+     */
     @AfterViews
     public void setListView() {
         setListAdapter(adapter);

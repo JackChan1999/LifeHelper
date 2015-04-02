@@ -1,5 +1,8 @@
-package com.qz.lifehelper.entity;
+package com.qz.lifehelper.entity.json;
 
+/**
+ * 这是聚合网的航班信息数据
+ */
 public class PlaneInfoJsonBean {
 
     private String name;

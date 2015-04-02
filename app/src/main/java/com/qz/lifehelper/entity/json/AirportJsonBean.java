@@ -1,7 +1,7 @@
 package com.qz.lifehelper.entity.json;
 
 /**
- * 这是机场的json数据
+ * 这是聚合网的机场的json数据
  */
 public class AirportJsonBean {
 

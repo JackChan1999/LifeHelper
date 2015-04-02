@@ -15,7 +15,9 @@ import java.util.Calendar;
 import de.greenrobot.event.EventBus;
 
 /**
- * 选择日期
+ * 选择日期页面
+ * <p/>
+ * 该页面会弹出一个DatePickerDialog
  */
 @EFragment
 public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
@@ -38,6 +40,11 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         EventBus.getDefault().post(GetDateEvent.generateEvent(calendar));
     }
 
+    /**
+     * 生成一个DatePickerFragment
+     *
+     * @param baseCalendar 基准日期
+     */
     public static DatePickerFragment generateFragment(Calendar baseCalendar) {
         DatePickerFragment datePickerFragment = new DatePickerFragment();
         Bundle bundle = new Bundle();

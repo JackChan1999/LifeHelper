@@ -9,8 +9,8 @@ import android.widget.ListView;
 
 import com.qz.lifehelper.R;
 import com.qz.lifehelper.business.PlaneBusiness;
-import com.qz.lifehelper.entity.AirPortBean;
-import com.qz.lifehelper.helper.SearchPlaneHelper;
+import com.qz.lifehelper.entity.AirportBean;
+import com.qz.lifehelper.helper.PlaneInfoHelper;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
@@ -22,32 +22,35 @@ import bolts.Continuation;
 import bolts.Task;
 
 /**
- * 选择机场
+ * 选择机场页
  */
 @EFragment(R.layout.layout_listview)
-public class ChooseAirPortFragment extends ListFragment {
+public class ChooseAirportFragment extends ListFragment {
 
     @Bean
-    SearchPlaneHelper searchPlaneHelper;
+    PlaneInfoHelper planeInfoHelper;
 
     @Bean
     PlaneBusiness planeBusiness;
 
+    /**
+     * 配置机场列表页面
+     */
     @AfterViews
     void setListView() {
         final ListView listView = getListView();
-        final ArrayAdapter<AirPortBean> adapter = new ArrayAdapter<AirPortBean>(getActivity(), android.R.layout.simple_list_item_1);
+        final ArrayAdapter<AirportBean> adapter = new ArrayAdapter<AirportBean>(getActivity(), android.R.layout.simple_list_item_1);
         this.setListAdapter(adapter);
-        planeBusiness.getAirports().onSuccess(new Continuation<List<AirPortBean>, Object>() {
+        planeBusiness.getAirports().onSuccess(new Continuation<List<AirportBean>, Object>() {
             @Override
-            public Object then(Task<List<AirPortBean>> task) throws Exception {
-                final List<AirPortBean> airports = task.getResult();
+            public Object then(Task<List<AirportBean>> task) throws Exception {
+                final List<AirportBean> airports = task.getResult();
                 adapter.addAll(airports);
                 adapter.notifyDataSetChanged();
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        searchPlaneHelper.setAirPort(airports.get(position));
+                        planeInfoHelper.setAirPort(airports.get(position));
                     }
                 });
                 return null;

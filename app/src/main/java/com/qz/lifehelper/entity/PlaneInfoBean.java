@@ -4,11 +4,29 @@ package com.qz.lifehelper.entity;
  * 封装航班信息数据
  */
 public class PlaneInfoBean {
+    /**
+     * 飞机的信息
+     */
     public String planeInfo;
+    /**
+     * 出发时间
+     */
     public String startTime;
+    /**
+     * 抵达时间
+     */
     public String endTime;
+    /**
+     * 出发机场
+     */
     public String startAirport;
+    /**
+     * 目的地机场
+     */
     public String endAirport;
+    /**
+     * 航班状态
+     */
     public String planeState;
 
     public PlaneInfoBean setPlaneInfo(String planeInfo) {

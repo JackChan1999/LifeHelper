@@ -1,7 +1,7 @@
-package com.qz.lifehelper.business;
+package com.qz.lifehelper.service;
 
 /**
- * Created by kohoh on 15/4/2.
+ * 该类存储的是聚合网的相关常量
  */
 public class JuheConstant {
 

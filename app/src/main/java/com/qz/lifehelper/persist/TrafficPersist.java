@@ -21,6 +21,9 @@ public class TrafficPersist {
     @RootContext
     Context context;
 
+    /**
+     * 获取机场列表的json数据
+     */
     public String getAirport() {
         String airportJson = null;
         try {

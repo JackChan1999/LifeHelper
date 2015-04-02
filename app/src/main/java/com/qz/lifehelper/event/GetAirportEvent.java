@@ -1,16 +1,21 @@
 package com.qz.lifehelper.event;
 
-import com.qz.lifehelper.entity.AirPortBean;
+import com.qz.lifehelper.entity.AirportBean;
 
 /**
- * Created by kohoh on 15/4/1.
+ * 选中机场时发出该Event
+ * <p/>
+ * ChooseAirportFragmnet会发送该Event
  */
 public class GetAirportEvent {
-    public AirPortBean airPortBean;
+    /**
+     * 选中的机场
+     */
+    public AirportBean airportBean;
 
-    static public GetAirportEvent generateEvent(AirPortBean airPortBean) {
+    static public GetAirportEvent generateEvent(AirportBean airportBean) {
         GetAirportEvent event = new GetAirportEvent();
-        event.airPortBean = airPortBean;
+        event.airportBean = airportBean;
         return event;
     }
 }

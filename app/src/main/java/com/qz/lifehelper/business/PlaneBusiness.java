@@ -2,11 +2,12 @@ package com.qz.lifehelper.business;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.qz.lifehelper.entity.AirPortBean;
+import com.qz.lifehelper.entity.AirportBean;
 import com.qz.lifehelper.entity.PlaneInfoBean;
-import com.qz.lifehelper.entity.PlaneInfoJsonBean;
 import com.qz.lifehelper.entity.json.AirportJsonBean;
+import com.qz.lifehelper.entity.json.PlaneInfoJsonBean;
 import com.qz.lifehelper.persist.TrafficPersist;
+import com.qz.lifehelper.service.JuheConstant;
 import com.qz.lifehelper.service.PlaneService;
 
 import org.androidannotations.annotations.AfterInject;
@@ -34,31 +35,44 @@ public class PlaneBusiness {
 
     private PlaneService planeService;
 
+    /**
+     * 设置PlaneService，PlaneService负责与服务器的链接
+     */
     @AfterInject
     void setPlaneService() {
         RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(JuheConstant.BASE_URL).build();
         planeService = restAdapter.create(PlaneService.class);
     }
 
-    public Task<List<AirPortBean>> getAirports() {
-        return Task.callInBackground(new Callable<List<AirPortBean>>() {
+    /**
+     * 获取机场列表
+     */
+    public Task<List<AirportBean>> getAirports() {
+        return Task.callInBackground(new Callable<List<AirportBean>>() {
             @Override
-            public List<AirPortBean> call() throws Exception {
+            public List<AirportBean> call() throws Exception {
                 String airportJson = trafficPersist.getAirport();
                 Gson gson = new Gson();
                 List<AirportJsonBean> airportJsonBeans = gson.fromJson(airportJson, new TypeToken<List<AirportJsonBean>>() {
                 }.getType());
 
-                List<AirPortBean> airPortBeans = new ArrayList<AirPortBean>();
+                List<AirportBean> airportBeans = new ArrayList<AirportBean>();
                 for (AirportJsonBean airportJsonBean : airportJsonBeans) {
-                    airPortBeans.add(AirPortBean.generateAirport(airportJsonBean.getCity(), airportJsonBean.getSpell()));
+                    airportBeans.add(AirportBean.generateAirport(airportJsonBean.getCity(), airportJsonBean.getSpell()));
                 }
-                return airPortBeans;
+                return airportBeans;
             }
         });
     }
 
-    public Task<List<PlaneInfoBean>> getPlaneInfo(final AirPortBean statrAirport, final AirPortBean endAirport, final Date dateFly) {
+    /**
+     * 获取航班信息
+     *
+     * @param statrAirport 出发机场
+     * @param endAirport   目的地机场
+     * @param dateFly      出发日期
+     */
+    public Task<List<PlaneInfoBean>> getPlaneInfo(final AirportBean statrAirport, final AirportBean endAirport, final Date dateFly) {
         return Task.callInBackground(new Callable<List<PlaneInfoBean>>() {
             @Override
             public List<PlaneInfoBean> call() throws Exception {
@@ -77,6 +91,9 @@ public class PlaneBusiness {
         });
     }
 
+    /**
+     * JsonBena与Bean之间的转换
+     */
     private PlaneInfoBean convert2PlaneInfoBena(PlaneInfoJsonBean planeInfoJsonBean) throws ParseException {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat();
         String planeInfo = planeInfoJsonBean.getComplany() + " " + planeInfoJsonBean.getAirModel();

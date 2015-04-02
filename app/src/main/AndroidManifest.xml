@@ -14,7 +14,7 @@
             android:value="Drjj8aQ7mvTgYYES5rMgdZUE" />
 
 
-        <activity android:name=".ui.activity.SearchPlaneActivity_" />
+        <activity android:name=".ui.activity.PlaneInfoActivity_" />
 
         <activity android:name=".ui.activity.ChooseCityActivity_" />
 
