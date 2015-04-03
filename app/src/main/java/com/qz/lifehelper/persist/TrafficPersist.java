@@ -36,4 +36,14 @@ public class TrafficPersist {
         return airportJson;
     }
 
+    public String getTrainStation() {
+        String stationJson = null;
+        try {
+            InputStream stationIs = context.getAssets().open("train_station");
+            stationJson = IOUtils.toString(stationIs);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return stationJson;
+    }
 }

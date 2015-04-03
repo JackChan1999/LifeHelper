@@ -8,6 +8,7 @@ import com.qz.lifehelper.ui.activity.HomeActivity_;
 import com.qz.lifehelper.ui.activity.POIResultActivity;
 import com.qz.lifehelper.ui.activity.POIResultActivity_;
 import com.qz.lifehelper.ui.activity.PlaneInfoActivity_;
+import com.qz.lifehelper.ui.activity.TrainInfoActivity_;
 
 import org.androidannotations.annotations.EBean;
 
@@ -40,6 +41,7 @@ public class MainHelper {
             activityClasses.add(new ActivityClass("POIResultActivity", POIResultActivity_.class, extra));
 
             activityClasses.add(new ActivityClass("SearchPlaen", PlaneInfoActivity_.class));
+            activityClasses.add(new ActivityClass("SearchTrain", TrainInfoActivity_.class));
         }
 
         return activityClasses;

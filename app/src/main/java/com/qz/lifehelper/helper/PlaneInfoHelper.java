@@ -51,6 +51,8 @@ public class PlaneInfoHelper {
      */
     private static final String CHOOSE_AITPORT_FRAGMNET = "CHOOSE_AITPORT_FRAGMNET";
 
+    //TODO 使用DateBusiness实现
+
     /**
      * 选择日期
      *
@@ -143,7 +145,7 @@ public class PlaneInfoHelper {
 
     /**
      * 获取当前当日期
-     *
+     * <p/>
      * 第一次打开设置航班信息搜索结果页的时候，显示的都是当前的日期
      */
     public String getCurrentDate() {
@@ -175,7 +177,7 @@ public class PlaneInfoHelper {
 
     /**
      * 配置航班搜索的参数，跳转到PlaneInfoRequestFragment
-     *
+     * <p/>
      * 在该页面设置搜索的信息
      */
     public void setPlaneInfoSearchArgument() {

@@ -32,12 +32,12 @@ public class PlaneInfoActivity extends ActionBarActivity {
     }
 
     /**
-     * 一开始先跳转到SearchPlaneInfoFragment
-     *
+     * 一开始先跳转到PlaneInfoRequestFragment
+     * <p/>
      * 该页面用于配置要搜索的信息参数
      */
     @AfterViews()
-    void showSearchPlaneInfoFragmnet() {
+    void setPlaneInfoSearchArgument() {
         planeInfoHelper.setPlaneInfoSearchArgument();
     }
 
