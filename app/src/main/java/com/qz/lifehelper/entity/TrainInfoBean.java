@@ -1,15 +1,37 @@
 package com.qz.lifehelper.entity;
 
 /**
- * Created by kohoh on 15/4/3.
+ * 该类封装了火车信息
  */
 public class TrainInfoBean {
+    /**
+     * 火车车号
+     * 例如：G30
+     */
     public String trainInfo;
+    /**
+     * 发车时间
+     */
     public String startTime;
+    /**
+     * 抵达时间
+     */
     public String endTime;
+    /**
+     * 出发火车站
+     */
     public String startStation;
+    /**
+     * 到达火车站
+     */
     public String endStation;
+    /**
+     * 历时
+     */
     public String duration;
+    /**
+     * 余票
+     */
     public String surplusTicketCount;
 
     public TrainInfoBean setTrainInfo(String trainInfo) {

@@ -10,6 +10,7 @@ import com.qz.lifehelper.entity.json.TrainStationJsonBean;
 import com.qz.lifehelper.persist.TrafficPersist;
 import com.qz.lifehelper.service.JuheConstant;
 import com.qz.lifehelper.service.TrainService;
+import com.qz.lifehelper.utils.DateUtil;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.Bean;
@@ -33,6 +34,11 @@ public class TrainBusiness {
     @Bean
     TrafficPersist trafficPersist;
 
+    /**
+     * 配置TrainService
+     * <p/>
+     * trainService负责与服务器沟通，获取数据
+     */
     @AfterInject
     void setTrainService() {
         RestAdapter restAdapter = new RestAdapter.Builder()
@@ -41,6 +47,11 @@ public class TrainBusiness {
         trainService = restAdapter.create(TrainService.class);
     }
 
+    /**
+     * 获取火车站
+     * <p/>
+     * 这里使用的是离线的json数据
+     */
     public Task<List<TrainStationBean>> getStations() {
         return Task.callInBackground(new Callable<List<TrainStationBean>>() {
             @Override
@@ -61,6 +72,13 @@ public class TrainBusiness {
         });
     }
 
+    /**
+     * 获取相应的火车信息
+     *
+     * @param startStation 始发火车站
+     * @param endStation   目的地火车站
+     * @param dateStart    出发日期
+     */
     public Task<List<TrainInfoBean>> getTrainInfo(final TrainStationBean startStation, final TrainStationBean endStation, final Date dateStart) {
         return Task.callInBackground(new Callable<List<TrainInfoBean>>() {
             @Override
@@ -68,7 +86,7 @@ public class TrainBusiness {
                 JuheResponseJsonBean<TrainInfoJsonBean> responseJsonBean = trainService.getTrainInfo(
                         startStation.stationName,
                         endStation.stationName,
-                        DateBusiness.formatDate(JuheConstant.QUERY_DATE_FORMAT_PATTERN, dateStart));
+                        DateUtil.formatDate(JuheConstant.QUERY_DATE_FORMAT_PATTERN, dateStart));
 
                 List<TrainInfoJsonBean> trainStationJsonBeans = responseJsonBean.getResult();
                 List<TrainInfoBean> trainInfoBeans = new ArrayList<>();
@@ -81,8 +99,11 @@ public class TrainBusiness {
         });
     }
 
+    /**
+     * 将TrainInfoJsonBean转换为TrainInfoBean
+     */
     private TrainInfoBean convertToTrainInfoBean(TrainInfoJsonBean trainInfoJsonBean) {
-        String duration = DateBusiness.formatDate("hh时mm分", DateBusiness.parseDate("hh:mm", trainInfoJsonBean.getLishi()));
+        String duration = DateUtil.formatDate("hh时mm分", DateUtil.parseDate("hh:mm", trainInfoJsonBean.getLishi()));
         String surplusTicketCount = getsurplusTicketCount(trainInfoJsonBean) + "张";
         String startStation = trainInfoJsonBean.getStartStationName();
         String endStation = trainInfoJsonBean.getEndStationName();
@@ -100,6 +121,11 @@ public class TrainBusiness {
                 .setTrainInfo(trainInfo);
     }
 
+    /**
+     * 计算出余票信息
+     * <p/>
+     * 由于返回的数据中没有总的余票数据，因此该数据需要在这里计算
+     */
     private Integer getsurplusTicketCount(TrainInfoJsonBean trainInfoJsonBean) {
         Integer count = 0;
 

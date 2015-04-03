@@ -1,7 +1,7 @@
 package com.qz.lifehelper.entity.json;
 
 /**
- * Created by kohoh on 15/4/3.
+ * 这里封装的是聚合网提供给的火车站信息
  */
 public class TrainStationJsonBean {
     private String sta_name;

@@ -4,8 +4,11 @@ import android.support.v4.app.Fragment;
 import android.widget.TextView;
 
 import com.qz.lifehelper.R;
+import com.qz.lifehelper.business.DateBusiness;
 import com.qz.lifehelper.entity.AirportBean;
 import com.qz.lifehelper.helper.PlaneInfoHelper;
+import com.qz.lifehelper.helper.TrainInfoHelper;
+import com.qz.lifehelper.utils.DateUtil;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
@@ -13,6 +16,8 @@ import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
+
+import java.util.Date;
 
 import bolts.Continuation;
 import bolts.Task;
@@ -93,16 +98,21 @@ public class PlaneInfoRequestFragment extends Fragment {
         }, Task.UI_THREAD_EXECUTOR);
     }
 
+    @Bean
+    DateBusiness dateBusiness;
+
     /**
      * 选择出发日期
      */
     @Click(R.id.choose_date)
     void chooseDate() {
         String currentDate = dateTv.getText().toString();
-        planeInfoHelper.chooseDate(currentDate).onSuccess(new Continuation<String, Void>() {
+        dateBusiness.chooseDate(DateUtil.parseDate(PlaneInfoHelper.dateFormatPattern, currentDate),
+                getFragmentManager()).onSuccess(new Continuation<Date, Void>() {
             @Override
-            public Void then(Task<String> task) throws Exception {
-                dateTv.setText(task.getResult());
+            public Void then(Task<Date> task) throws Exception {
+                Date chooseDate = task.getResult();
+                dateTv.setText(DateUtil.formatDate(TrainInfoHelper.dateFormatPattern, chooseDate));
                 return null;
             }
         }, Task.UI_THREAD_EXECUTOR);
@@ -133,6 +143,6 @@ public class PlaneInfoRequestFragment extends Fragment {
      */
     @AfterViews
     void setDefaultDate() {
-        dateTv.setText(planeInfoHelper.getCurrentDate());
+        dateTv.setText(DateUtil.getCurrentDate(PlaneInfoHelper.dateFormatPattern));
     }
 }

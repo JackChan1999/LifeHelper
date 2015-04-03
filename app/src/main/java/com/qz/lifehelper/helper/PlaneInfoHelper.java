@@ -2,24 +2,18 @@ package com.qz.lifehelper.helper;
 
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 
 import com.qz.lifehelper.R;
 import com.qz.lifehelper.entity.AirportBean;
 import com.qz.lifehelper.event.GetAirportEvent;
-import com.qz.lifehelper.event.GetDateEvent;
 import com.qz.lifehelper.ui.fragment.ChooseAirportFragment_;
-import com.qz.lifehelper.ui.fragment.DatePickerFragment;
 import com.qz.lifehelper.ui.fragment.PlaneInfoRequestFragment_;
 import com.qz.lifehelper.ui.fragment.PlaneInfoResultFragment;
+import com.qz.lifehelper.utils.DateUtil;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.EBean;
-import org.apache.commons.lang3.time.DateFormatUtils;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 import bolts.Task;
@@ -35,12 +29,7 @@ public class PlaneInfoHelper {
     /**
      * 这是选择出发日期的日期格式
      */
-    private static final String dateFormatPattern = "yyyy'-'MM'-'dd EE";
-
-    /**
-     * 选择日期的task
-     */
-    private Task<String>.TaskCompletionSource chooseDateTask;
+    public static final String dateFormatPattern = "yyyy'-'MM'-'dd EE";
 
     /**
      * 设置搜索航班信息结果的frgamnet的TAG
@@ -51,45 +40,9 @@ public class PlaneInfoHelper {
      */
     private static final String CHOOSE_AITPORT_FRAGMNET = "CHOOSE_AITPORT_FRAGMNET";
 
-    //TODO 使用DateBusiness实现
-
-    /**
-     * 选择日期
-     *
-     * @param baseDate 基础日期，会以此日期为中心，选择日期
-     */
-    public Task<String> chooseDate(String baseDate) {
-        chooseDateTask = Task.create();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormatPattern);
-        try {
-            Date date = simpleDateFormat.parse(baseDate);
-            Calendar baseCalendar = Calendar.getInstance();
-            baseCalendar.setTime(date);
-            DatePickerFragment datePickerFragment = DatePickerFragment.generateFragment(baseCalendar);
-            datePickerFragment.show(fragmentManager, "date_picker_fragmnet");
-        } catch (ParseException e) {
-            e.printStackTrace();
-            chooseDateTask.setError(e);
-        } finally {
-            return chooseDateTask.getTask();
-
-        }
-    }
-
     @AfterInject
     void registerEventBus() {
         EventBus.getDefault().register(this);
-    }
-
-    /**
-     * 当成功选择了日期后会发送GetDateEvent，因此在这里设置选择日期的结果
-     */
-    public void onEvent(GetDateEvent event) {
-        if (chooseDateTask != null) {
-            String date = DateFormatUtils.format(event.calendar, dateFormatPattern);
-            chooseDateTask.setResult(date);
-            chooseDateTask = null;
-        }
     }
 
 
@@ -130,27 +83,12 @@ public class PlaneInfoHelper {
      * @param date          出发时间 该时间格式是 #dateFormatPattern
      */
     public void searchPlaneInfo(AirportBean startLoaction, AirportBean endLocation, String date) {
-        try {
-            Date dateFly = new SimpleDateFormat(dateFormatPattern).parse(date);
-            PlaneInfoResultFragment planeInfoResultFragment = PlaneInfoResultFragment.generateFragment(startLoaction, endLocation, dateFly);
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.addToBackStack("");
-            transaction.replace(R.id.fragmrnt_container, planeInfoResultFragment);
-            transaction.commit();
-        } catch (ParseException e) {
-            Log.e(TAG, "searchPlaneInfo fail", e);
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * 获取当前当日期
-     * <p/>
-     * 第一次打开设置航班信息搜索结果页的时候，显示的都是当前的日期
-     */
-    public String getCurrentDate() {
-        Date date = new Date();
-        return DateFormatUtils.format(date, dateFormatPattern);
+        Date dateFly = DateUtil.parseDate(dateFormatPattern, date);
+        PlaneInfoResultFragment planeInfoResultFragment = PlaneInfoResultFragment.generateFragment(startLoaction, endLocation, dateFly);
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.addToBackStack("");
+        transaction.replace(R.id.fragmrnt_container, planeInfoResultFragment);
+        transaction.commit();
     }
 
     FragmentManager fragmentManager;

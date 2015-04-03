@@ -7,6 +7,7 @@ import com.qz.lifehelper.R;
 import com.qz.lifehelper.business.DateBusiness;
 import com.qz.lifehelper.entity.TrainStationBean;
 import com.qz.lifehelper.helper.TrainInfoHelper;
+import com.qz.lifehelper.utils.DateUtil;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
@@ -14,6 +15,8 @@ import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
+
+import java.util.Date;
 
 import bolts.Continuation;
 import bolts.Task;
@@ -93,16 +96,21 @@ public class TrainInfoRequestFragment extends Fragment {
         }, Task.UI_THREAD_EXECUTOR);
     }
 
+    @Bean
+    DateBusiness dateBusiness;
+
     /**
      * 选择出发日期
      */
     @Click(R.id.choose_date)
     void chooseDate() {
         String currentDate = dateTv.getText().toString();
-        trainInfoHelper.chooseDate(currentDate).onSuccess(new Continuation<String, Void>() {
+        dateBusiness.chooseDate(DateUtil.parseDate(TrainInfoHelper.dateFormatPattern, currentDate),
+                getFragmentManager()).onSuccess(new Continuation<Date, Void>() {
             @Override
-            public Void then(Task<String> task) throws Exception {
-                dateTv.setText(task.getResult());
+            public Void then(Task<Date> task) throws Exception {
+                Date chooseDate = task.getResult();
+                dateTv.setText(DateUtil.formatDate(TrainInfoHelper.dateFormatPattern, chooseDate));
                 return null;
             }
         }, Task.UI_THREAD_EXECUTOR);
@@ -133,6 +141,6 @@ public class TrainInfoRequestFragment extends Fragment {
      */
     @AfterViews
     void setDefaultDate() {
-        dateTv.setText(DateBusiness.getCurrentDate(TrainInfoHelper.dateFormatPattern));
+        dateTv.setText(DateUtil.getCurrentDate(TrainInfoHelper.dateFormatPattern));
     }
 }

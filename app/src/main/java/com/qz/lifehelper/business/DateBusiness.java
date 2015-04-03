@@ -7,10 +7,7 @@ import com.qz.lifehelper.ui.fragment.DatePickerFragment;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.EBean;
-import org.apache.commons.lang3.time.DateFormatUtils;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -57,31 +54,6 @@ public class DateBusiness {
         if (chooseDateTask != null) {
             chooseDateTask.setResult(event.calendar.getTime());
             chooseDateTask = null;
-        }
-    }
-
-    /**
-     * 获取当前的日期
-     */
-    static public String getCurrentDate(String dateFormatPattern) {
-        Date date = new Date();
-        return DateFormatUtils.format(date, dateFormatPattern);
-    }
-
-    static public String formatDate(String dateFormatPattern, Date date) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormatPattern);
-        return simpleDateFormat.format(date);
-    }
-
-    static public Date parseDate(String dateFormatPattern, String date) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormatPattern);
-        Date dateParsed = new Date();
-        try {
-            dateParsed = simpleDateFormat.parse(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        } finally {
-            return dateParsed;
         }
     }
 

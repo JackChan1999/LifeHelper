@@ -9,13 +9,13 @@ import com.qz.lifehelper.entity.json.PlaneInfoJsonBean;
 import com.qz.lifehelper.persist.TrafficPersist;
 import com.qz.lifehelper.service.JuheConstant;
 import com.qz.lifehelper.service.PlaneService;
+import com.qz.lifehelper.utils.DateUtil;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -76,8 +76,7 @@ public class PlaneBusiness {
         return Task.callInBackground(new Callable<List<PlaneInfoBean>>() {
             @Override
             public List<PlaneInfoBean> call() throws Exception {
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(JuheConstant.QUERY_DATE_FORMAT_PATTERN);
-                String date = simpleDateFormat.format(dateFly);
+                String date = DateUtil.formatDate(JuheConstant.QUERY_DATE_FORMAT_PATTERN, dateFly);
                 String start = statrAirport.airpory;
                 String end = endAirport.airpory;
                 List<PlaneInfoJsonBean> planeInfoJsonBeans = planeService.getPlaneInfo(start, end, date).getResult();
@@ -95,14 +94,11 @@ public class PlaneBusiness {
      * JsonBena与Bean之间的转换
      */
     private PlaneInfoBean convert2PlaneInfoBena(PlaneInfoJsonBean planeInfoJsonBean) throws ParseException {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat();
         String planeInfo = planeInfoJsonBean.getComplany() + " " + planeInfoJsonBean.getAirModel();
-        simpleDateFormat.applyPattern(JuheConstant.RESPONSE_DATE_FORMAT_PATTERN);
-        Date dactualDate = simpleDateFormat.parse(planeInfoJsonBean.getDepTime());
-        Date aactualDate = simpleDateFormat.parse(planeInfoJsonBean.getArrTime());
-        simpleDateFormat.applyPattern("hh:mm");
-        String startTime = simpleDateFormat.format(dactualDate);
-        String endTime = simpleDateFormat.format(aactualDate);
+        Date dactualDate = DateUtil.parseDate(JuheConstant.RESPONSE_DATE_FORMAT_PATTERN, planeInfoJsonBean.getDepTime());
+        Date aactualDate = DateUtil.parseDate(JuheConstant.RESPONSE_DATE_FORMAT_PATTERN, planeInfoJsonBean.getArrTime());
+        String startTime = DateUtil.formatDate("hh:mm", dactualDate);
+        String endTime = DateUtil.formatDate("hh:mm", aactualDate);
         String startAirport = planeInfoJsonBean.getDepAirport();
         if (startAirport.equals("")) {
             startAirport = planeInfoJsonBean.getStart();

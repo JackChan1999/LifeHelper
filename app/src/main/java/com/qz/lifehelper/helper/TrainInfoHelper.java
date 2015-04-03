@@ -4,7 +4,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
 import com.qz.lifehelper.R;
-import com.qz.lifehelper.business.DateBusiness;
 import com.qz.lifehelper.entity.TrainStationBean;
 import com.qz.lifehelper.event.GetStationEvent;
 import com.qz.lifehelper.ui.fragment.ChooseTrainStationFragment;
@@ -12,16 +11,11 @@ import com.qz.lifehelper.ui.fragment.ChooseTrainStationFragment_;
 import com.qz.lifehelper.ui.fragment.TrainInfoRequestFragment;
 import com.qz.lifehelper.ui.fragment.TrainInfoRequestFragment_;
 import com.qz.lifehelper.ui.fragment.TrainInfoResultFragment;
+import com.qz.lifehelper.utils.DateUtil;
 
 import org.androidannotations.annotations.AfterInject;
-import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import bolts.Continuation;
 import bolts.Task;
 import de.greenrobot.event.EventBus;
 
@@ -105,35 +99,10 @@ public class TrainInfoHelper {
 
     }
 
-    @Bean
-    DateBusiness dateBusiness;
-
     /**
      * 这是选择出发日期的日期格式
      */
     public static final String dateFormatPattern = "yyyy'-'MM'-'dd EE";
-
-    /**
-     * 选择日期
-     *
-     * @param baseDate 基础日期，会以此日期为中心，选择日期
-     */
-    public Task<String> chooseDate(String baseDate) {
-        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormatPattern);
-        Date date = new Date();
-        try {
-            date = simpleDateFormat.parse(baseDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return dateBusiness.chooseDate(date, fragmentManager).onSuccess(new Continuation<Date, String>() {
-            @Override
-            public String then(Task<Date> task) throws Exception {
-                Date chooseDate = task.getResult();
-                return simpleDateFormat.format(chooseDate);
-            }
-        });
-    }
 
 
     /**
@@ -147,7 +116,7 @@ public class TrainInfoHelper {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.addToBackStack("");
         TrainInfoResultFragment fragment = TrainInfoResultFragment.generateFragment(startStation,
-                endStation, DateBusiness.parseDate(dateFormatPattern, date));
+                endStation, DateUtil.parseDate(dateFormatPattern, date));
         transaction.replace(R.id.fragmrnt_container, fragment);
         transaction.commit();
     }
@@ -155,7 +124,7 @@ public class TrainInfoHelper {
     /**
      * 设置选择的火车站
      * <p/>
-     * ChosoeStationFragment会使用该方法，设置用户选择的火车站
+     * ChosoeSTraintationFragment会使用该方法，设置用户选择的火车站
      */
     public void setStation(TrainStationBean trainStationBean) {
         fragmentManager.popBackStack();

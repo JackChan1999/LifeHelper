@@ -3,6 +3,9 @@ package com.qz.lifehelper.entity.json;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * 这里封装的是聚合网的火车信息
+ */
 public class TrainInfoJsonBean {
 
     @SerializedName("train_no")

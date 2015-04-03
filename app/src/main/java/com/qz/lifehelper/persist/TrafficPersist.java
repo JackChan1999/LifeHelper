@@ -36,6 +36,9 @@ public class TrafficPersist {
         return airportJson;
     }
 
+    /**
+     * 获取火车站列表的json数据
+     */
     public String getTrainStation() {
         String stationJson = null;
         try {

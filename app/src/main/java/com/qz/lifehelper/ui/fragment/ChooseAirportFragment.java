@@ -7,7 +7,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.qz.lifehelper.R;
 import com.qz.lifehelper.business.PlaneBusiness;
 import com.qz.lifehelper.entity.AirportBean;
 import com.qz.lifehelper.helper.PlaneInfoHelper;
@@ -24,7 +23,7 @@ import bolts.Task;
 /**
  * 选择机场页
  */
-@EFragment(R.layout.layout_listview)
+@EFragment
 public class ChooseAirportFragment extends ListFragment {
 
     @Bean

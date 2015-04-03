@@ -2,7 +2,6 @@ package com.qz.lifehelper.ui.fragment;
 
 import android.support.v4.app.ListFragment;
 
-import com.qz.lifehelper.R;
 import com.qz.lifehelper.business.TrainBusiness;
 import com.qz.lifehelper.entity.TrainInfoBean;
 import com.qz.lifehelper.entity.TrainStationBean;
@@ -22,7 +21,7 @@ import bolts.Task;
 /**
  * 火车票信息搜索结果页
  */
-@EFragment(R.layout.layout_listview)
+@EFragment
 public class TrainInfoResultFragment extends ListFragment {
 
     /**
