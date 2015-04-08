@@ -13,6 +13,7 @@ import com.qz.lifehelper.ui.fragment.ArroundFragmnet_;
 import com.qz.lifehelper.ui.fragment.LifeFragment_;
 import com.qz.lifehelper.ui.fragment.PersonalFragment_;
 
+
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;

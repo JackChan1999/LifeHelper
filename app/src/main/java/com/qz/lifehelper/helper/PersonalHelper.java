@@ -1,11 +1,15 @@
 package com.qz.lifehelper.helper;
 
 import android.content.Context;
+import android.content.Intent;
 import android.widget.Toast;
 
 import com.qz.lifehelper.business.AuthenticationBusiness;
 import com.qz.lifehelper.entity.UserInfoBean;
 import com.qz.lifehelper.event.GetAuthEvent;
+import com.qz.lifehelper.ui.activity.LoginActivity;
+import com.qz.lifehelper.ui.activity.LoginActivity_;
+import com.qz.lifehelper.ui.activity.MainActivity;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.Bean;
@@ -36,7 +40,10 @@ public class PersonalHelper {
      */
     public Task<UserInfoBean> login() {
         loginTaskSource = Task.create();
-        Toast.makeText(context, "前往登录和注册页面", Toast.LENGTH_SHORT).show();
+
+        Intent intent =new Intent(context, LoginActivity_.class);
+        context.startActivity(intent);
+
         return loginTaskSource.getTask();
     }
 

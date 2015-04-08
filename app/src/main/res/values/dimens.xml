@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="home_page_navigate_button_size">80dp</dimen>
+    <dimen name="login_page_title_login">16dp</dimen>
+    <dimen name="login_page_title_register">14dp</dimen>
 </resources>

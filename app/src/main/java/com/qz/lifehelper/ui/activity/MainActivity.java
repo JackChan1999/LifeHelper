@@ -38,7 +38,6 @@ public class MainActivity extends ActionBarActivity {
         ArrayAdapter<MainHelper.ActivityClass> activitiesAdapter = new ArrayAdapter<MainHelper.ActivityClass>(
                 this, android.R.layout.simple_list_item_1);
         activitiesAdapter.addAll(mainHelper.getActivityClasses());
-
         activitiesLv.setAdapter(activitiesAdapter);
     }
 
