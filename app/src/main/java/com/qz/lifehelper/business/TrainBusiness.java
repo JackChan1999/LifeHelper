@@ -1,7 +1,11 @@
 package com.qz.lifehelper.business;
 
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.qz.lifehelper.R;
 import com.qz.lifehelper.entity.CityBean;
 import com.qz.lifehelper.entity.TrainInfoBean;
 import com.qz.lifehelper.entity.TrainStationBean;
@@ -11,6 +15,9 @@ import com.qz.lifehelper.entity.json.TrainStationJsonBean;
 import com.qz.lifehelper.persist.TrafficPersist;
 import com.qz.lifehelper.service.JuheConstant;
 import com.qz.lifehelper.service.TrainService;
+import com.qz.lifehelper.ui.fragment.TrainInfoRequestFragment;
+import com.qz.lifehelper.ui.fragment.TrainInfoRequestFragment_;
+import com.qz.lifehelper.ui.fragment.TrainInfoResultFragment;
 import com.qz.lifehelper.utils.DateUtil;
 
 import org.androidannotations.annotations.AfterInject;
@@ -76,9 +83,9 @@ public class TrainBusiness {
     /**
      * 获取相应的火车信息
      *
-     * @param startCity 始发火车站
-     * @param endCity   目的地火车站
-     * @param dateStart    出发日期
+     * @param startCity 始发城市
+     * @param endCity   目的城市
+     * @param dateStart 出发日期
      */
     public Task<List<TrainInfoBean>> getTrainInfo(final CityBean startCity, final CityBean endCity, final Date dateStart) {
         return Task.callInBackground(new Callable<List<TrainInfoBean>>() {
@@ -198,5 +205,54 @@ public class TrainBusiness {
 
 
         return count;
+    }
+
+    /**
+     * 跳转到TrainInfoRequestFragment
+     * <p/>
+     * 到该页面设置查询火车票的搜索信息
+     */
+    public void toTrainInfoRequestFragment(FragmentManager fragmentManager) {
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        TrainInfoRequestFragment fragment = new TrainInfoRequestFragment_();
+        transaction.replace(R.id.fragmrnt_container, fragment);
+        transaction.commit();
+    }
+
+    /**
+     * 获取默认的出发城市
+     */
+    public CityBean getDefaultStartCity() {
+        return CityBean.generateCity("北京");
+    }
+
+    /**
+     * 获取默认的到达城市
+     */
+    public CityBean getDefaultEndCity() {
+        return CityBean.generateCity("上海");
+    }
+
+    /**
+     * 这是选择出发日期的日期格式
+     */
+    public static final String dateFormatPattern = "yyyy'-'MM'-'dd EE";
+
+
+    /**
+     * 跳转到TrainInfoResultFragment，更具参数搜索相应到火车信息
+     *
+     * @param fragmentManager
+     * @param startCity       出发城市
+     * @param endCity         目的城市
+     * @param date            出发日期
+     */
+    public void toTrainInfoResultFragment(FragmentManager fragmentManager, CityBean startCity, CityBean endCity, String date) {
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.addToBackStack("");
+        TrainInfoResultFragment fragment = TrainInfoResultFragment.generateFragment(startCity,
+                endCity, DateUtil.parseDate(dateFormatPattern, date));
+        transaction.replace(R.id.fragmrnt_container, fragment);
+        transaction.commit();
     }
 }

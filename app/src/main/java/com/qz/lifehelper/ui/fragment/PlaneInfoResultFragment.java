@@ -25,11 +25,11 @@ import bolts.Task;
 public class PlaneInfoResultFragment extends ListFragment {
 
     /**
-     * 出发机场
+     * 出发城市
      */
     private CityBean statrCity;
     /**
-     * 目的地机场
+     * 目的城市
      */
     private CityBean endCity;
     /**
@@ -41,9 +41,9 @@ public class PlaneInfoResultFragment extends ListFragment {
     /**
      * 生成PlaneInfoResultFragment
      *
-     * @param startCity 出发机场
-     * @param endCity   目的地机场
-     * @param dateFly      出发日期
+     * @param startCity 出发城市
+     * @param endCity   目的城市
+     * @param dateFly   出发日期
      */
     public static PlaneInfoResultFragment generateFragment(CityBean startCity, CityBean endCity, Date dateFly) {
 

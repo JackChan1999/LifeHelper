@@ -3,9 +3,8 @@ package com.qz.lifehelper.ui.activity;
 import android.support.v7.app.ActionBarActivity;
 
 import com.qz.lifehelper.R;
-import com.qz.lifehelper.helper.TrainInfoHelper;
+import com.qz.lifehelper.business.TrainBusiness;
 
-import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
@@ -15,21 +14,11 @@ import org.androidannotations.annotations.EActivity;
  * <p/>
  * 它只是一个wrapper，具体的业务逻辑是由Fragment实现的
  */
-@EActivity(R.layout.activity_train_info)
+@EActivity(R.layout.layout_fragment_container)
 public class TrainInfoActivity extends ActionBarActivity {
 
     @Bean
-    TrainInfoHelper trainInfoHelper;
-
-    /**
-     * 配置TrainInfoHelper
-     * <p/>
-     * 需要在这里配置FragmentManager
-     */
-    @AfterInject
-    void setTrainInfoHelper() {
-        trainInfoHelper.setFragmentManager(this.getSupportFragmentManager());
-    }
+    TrainBusiness trainBusiness;
 
     /**
      * 跳转到TrainInfoRequestFragment
@@ -38,7 +27,7 @@ public class TrainInfoActivity extends ActionBarActivity {
      */
     @AfterViews
     void setTrainInfoSearchArgument() {
-        trainInfoHelper.setTrainInfoSearchArgument();
+        trainBusiness.toTrainInfoRequestFragment(getSupportFragmentManager());
     }
 
 }

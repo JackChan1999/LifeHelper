@@ -1,7 +1,11 @@
 package com.qz.lifehelper.business;
 
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.qz.lifehelper.R;
 import com.qz.lifehelper.entity.AirportBean;
 import com.qz.lifehelper.entity.CityBean;
 import com.qz.lifehelper.entity.PlaneInfoBean;
@@ -10,6 +14,8 @@ import com.qz.lifehelper.entity.json.PlaneInfoJsonBean;
 import com.qz.lifehelper.persist.TrafficPersist;
 import com.qz.lifehelper.service.JuheConstant;
 import com.qz.lifehelper.service.PlaneService;
+import com.qz.lifehelper.ui.fragment.PlaneInfoRequestFragment_;
+import com.qz.lifehelper.ui.fragment.PlaneInfoResultFragment;
 import com.qz.lifehelper.utils.DateUtil;
 
 import org.androidannotations.annotations.AfterInject;
@@ -69,9 +75,9 @@ public class PlaneBusiness {
     /**
      * 获取航班信息
      *
-     * @param statrCity 出发机场
-     * @param endCity   目的地机场
-     * @param dateFly      出发日期
+     * @param statrCity 出发城市
+     * @param endCity   目的城市
+     * @param dateFly   出发日期
      */
     public Task<List<PlaneInfoBean>> getPlaneInfo(final CityBean statrCity, final CityBean endCity, final Date dateFly) {
         return Task.callInBackground(new Callable<List<PlaneInfoBean>>() {
@@ -111,5 +117,51 @@ public class PlaneBusiness {
                 .setEndAirport(endAirport)
                 .setOnTimeRate(onTimeRate);
         return planeInfoBean;
+    }
+
+    /**
+     * 这是选择出发日期的日期格式
+     */
+    public static final String dateFormatPattern = "yyyy'-'MM'-'dd EE";
+
+
+    /**
+     * 搜索相关当航班信息，跳转到PlaneInfoResultFragment
+     *
+     * @param startCity 出发城市
+     * @param endCity   目的城市
+     * @param date      出发时间 该时间格式是 #dateFormatPattern
+     */
+    public void toPlaneInfoResultFragment(FragmentManager fragmentManager, CityBean startCity, CityBean endCity, String date) {
+        Date dateFly = DateUtil.parseDate(dateFormatPattern, date);
+        PlaneInfoResultFragment planeInfoResultFragment = PlaneInfoResultFragment.generateFragment(startCity, endCity, dateFly);
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.addToBackStack("");
+        transaction.replace(R.id.fragmrnt_container, planeInfoResultFragment);
+        transaction.commit();
+    }
+
+
+    /**
+     * 配置航班搜索的参数，跳转到PlaneInfoRequestFragment
+     * <p/>
+     * 在该页面设置搜索的信息
+     */
+    public void toPlaneInfoRequestFragment(FragmentManager fragmentManager) {
+        fragmentManager.beginTransaction().replace(R.id.fragmrnt_container, new PlaneInfoRequestFragment_()).commit();
+    }
+
+    /**
+     * 获取默认的出发城市
+     */
+    public CityBean getDefaultStartCity() {
+        return CityBean.generateCity("北京");
+    }
+
+    /**
+     * 获取默认的目的城市
+     */
+    public CityBean getDefaultEndCity() {
+        return CityBean.generateCity("上海");
     }
 }

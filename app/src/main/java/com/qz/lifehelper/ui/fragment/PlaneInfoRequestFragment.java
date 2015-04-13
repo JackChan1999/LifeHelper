@@ -6,9 +6,8 @@ import android.widget.TextView;
 import com.qz.lifehelper.R;
 import com.qz.lifehelper.business.DateBusiness;
 import com.qz.lifehelper.business.LocationBusiness;
+import com.qz.lifehelper.business.PlaneBusiness;
 import com.qz.lifehelper.entity.CityBean;
-import com.qz.lifehelper.helper.PlaneInfoHelper;
-import com.qz.lifehelper.helper.TrainInfoHelper;
 import com.qz.lifehelper.utils.DateUtil;
 
 import org.androidannotations.annotations.AfterInject;
@@ -31,7 +30,7 @@ import bolts.Task;
 public class PlaneInfoRequestFragment extends Fragment {
 
     @Bean
-    PlaneInfoHelper planeInfoHelper;
+    PlaneBusiness planeBusiness;
 
     /**
      * 当前选择的出发机场
@@ -44,16 +43,16 @@ public class PlaneInfoRequestFragment extends Fragment {
 
     @AfterInject
     void setDefaultStartCity() {
-        startCity = planeInfoHelper.getDefaultStartCity();
+        startCity = planeBusiness.getDefaultStartCity();
     }
 
     @AfterInject
     void setDefaulteEndCity() {
-        endCity = planeInfoHelper.getDefaultEndCity();
+        endCity = planeBusiness.getDefaultEndCity();
     }
 
     /**
-     * 设置出发机场信息
+     * 设置出发城市
      */
     @AfterViews
     void setStartCity() {
@@ -61,7 +60,7 @@ public class PlaneInfoRequestFragment extends Fragment {
     }
 
     /**
-     * 设置目的地机场信息
+     * 设置目的城市
      */
     @AfterViews
     void setEndCity() {
@@ -72,7 +71,7 @@ public class PlaneInfoRequestFragment extends Fragment {
     LocationBusiness locationBusiness;
 
     /**
-     * 选择出发机场
+     * 选择出发城市
      */
     @Click(R.id.strat_loaction)
     void chooseStartCity() {
@@ -88,7 +87,7 @@ public class PlaneInfoRequestFragment extends Fragment {
     }
 
     /**
-     * 选择目的机场
+     * 选择目的城市
      */
     @Click(R.id.end_loaction)
     void chooseEndCity() {
@@ -111,12 +110,12 @@ public class PlaneInfoRequestFragment extends Fragment {
     @Click(R.id.choose_date)
     void chooseDate() {
         String currentDate = dateTv.getText().toString();
-        dateBusiness.chooseDate(DateUtil.parseDate(PlaneInfoHelper.dateFormatPattern, currentDate),
+        dateBusiness.chooseDate(DateUtil.parseDate(PlaneBusiness.dateFormatPattern, currentDate),
                 getFragmentManager()).onSuccess(new Continuation<Date, Void>() {
             @Override
             public Void then(Task<Date> task) throws Exception {
                 Date chooseDate = task.getResult();
-                dateTv.setText(DateUtil.formatDate(TrainInfoHelper.dateFormatPattern, chooseDate));
+                dateTv.setText(DateUtil.formatDate(PlaneBusiness.dateFormatPattern, chooseDate));
                 return null;
             }
         }, Task.UI_THREAD_EXECUTOR);
@@ -128,7 +127,7 @@ public class PlaneInfoRequestFragment extends Fragment {
     @Click(R.id.search)
     void searchPlaneInfo() {
         String date = dateTv.getText().toString();
-        planeInfoHelper.searchPlaneInfo(startCity, endCity, date);
+        planeBusiness.toPlaneInfoResultFragment(getFragmentManager(), startCity, endCity, date);
     }
 
     @ViewById(R.id.strat_loaction_tv)
@@ -147,6 +146,6 @@ public class PlaneInfoRequestFragment extends Fragment {
      */
     @AfterViews
     void setDefaultDate() {
-        dateTv.setText(DateUtil.getCurrentDate(PlaneInfoHelper.dateFormatPattern));
+        dateTv.setText(DateUtil.getCurrentDate(PlaneBusiness.dateFormatPattern));
     }
 }

@@ -6,8 +6,8 @@ import android.widget.TextView;
 import com.qz.lifehelper.R;
 import com.qz.lifehelper.business.DateBusiness;
 import com.qz.lifehelper.business.LocationBusiness;
+import com.qz.lifehelper.business.TrainBusiness;
 import com.qz.lifehelper.entity.CityBean;
-import com.qz.lifehelper.helper.TrainInfoHelper;
 import com.qz.lifehelper.utils.DateUtil;
 
 import org.androidannotations.annotations.AfterInject;
@@ -29,7 +29,7 @@ import bolts.Task;
 public class TrainInfoRequestFragment extends Fragment {
 
     @Bean
-    TrainInfoHelper trainInfoHelper;
+    TrainBusiness trainBusiness;
 
     /**
      * 当前选择的出发火车站
@@ -42,12 +42,12 @@ public class TrainInfoRequestFragment extends Fragment {
 
     @AfterInject
     void setDefaultStartCity() {
-        startCity = trainInfoHelper.getDefaultStartCity();
+        startCity = trainBusiness.getDefaultStartCity();
     }
 
     @AfterInject
     void setDefaulteEndCity() {
-        endCity = trainInfoHelper.getDefaultEndCity();
+        endCity = trainBusiness.getDefaultEndCity();
     }
 
     /**
@@ -109,12 +109,12 @@ public class TrainInfoRequestFragment extends Fragment {
     @Click(R.id.choose_date)
     void chooseDate() {
         String currentDate = dateTv.getText().toString();
-        dateBusiness.chooseDate(DateUtil.parseDate(TrainInfoHelper.dateFormatPattern, currentDate),
+        dateBusiness.chooseDate(DateUtil.parseDate(TrainBusiness.dateFormatPattern, currentDate),
                 getFragmentManager()).onSuccess(new Continuation<Date, Void>() {
             @Override
             public Void then(Task<Date> task) throws Exception {
                 Date chooseDate = task.getResult();
-                dateTv.setText(DateUtil.formatDate(TrainInfoHelper.dateFormatPattern, chooseDate));
+                dateTv.setText(DateUtil.formatDate(TrainBusiness.dateFormatPattern, chooseDate));
                 return null;
             }
         }, Task.UI_THREAD_EXECUTOR);
@@ -126,7 +126,7 @@ public class TrainInfoRequestFragment extends Fragment {
     @Click(R.id.search)
     void searchTarinInfo() {
         String date = dateTv.getText().toString();
-        trainInfoHelper.searchTrainInfo(startCity, endCity, date);
+        trainBusiness.toTrainInfoResultFragment(getFragmentManager(), startCity, endCity, date);
     }
 
     @ViewById(R.id.strat_loaction_tv)
@@ -145,6 +145,6 @@ public class TrainInfoRequestFragment extends Fragment {
      */
     @AfterViews
     void setDefaultDate() {
-        dateTv.setText(DateUtil.getCurrentDate(TrainInfoHelper.dateFormatPattern));
+        dateTv.setText(DateUtil.getCurrentDate(TrainBusiness.dateFormatPattern));
     }
 }
