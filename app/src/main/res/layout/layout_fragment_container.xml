@@ -2,8 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/fragmrnt_container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:name="com.qz.lifehelper.ui.fragment.SearchPlaneFragment_" />
+    android:layout_height="match_parent" />
 
 
 

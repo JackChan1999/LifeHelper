@@ -14,7 +14,7 @@ import org.androidannotations.annotations.EActivity;
  * <p/>
  * 它只是一个wrapper，具体的业务逻辑是由Fragment实现的
  */
-@EActivity(R.layout.activity_bus_info)
+@EActivity(R.layout.layout_fragment_container)
 public class BusInfoActivity extends ActionBarActivity {
 
     @Bean
