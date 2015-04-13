@@ -21,41 +21,66 @@ import java.util.List;
 /**
  * 选择城市列表对应的适配器
  */
-public class BusChooseCityAdapter extends BaseAdapter {
+public class ChooseCityAdapter extends BaseAdapter {
     private List<ChooseCityListItemData> itemDatas = new ArrayList<>();
 
+    /**
+     * ChooseCityAdapter的回调接口
+     */
     public interface Callback {
+        /**
+         * 当选中一个城市后，会回调该方法
+         */
         void onChooseCity(CityBean cityBean);
 
+        /**
+         * 当开始定位当前位置时，会回调该方法
+         */
         void onFindCurrentLoactionCity();
     }
 
+    /**
+     * ChooseCityAdapter的构造器
+     */
     static public class Builder {
 
-        private BusChooseCityAdapter adapter;
+        private ChooseCityAdapter adapter;
 
         public Builder() {
-            adapter = new BusChooseCityAdapter();
+            adapter = new ChooseCityAdapter();
         }
 
+        /**
+         * 设置Context
+         */
         public Builder setContext(Context context) {
             adapter.context = context;
             return this;
         }
 
+        /**
+         * 设置回调接口
+         */
         public Builder setCallBack(Callback callBack) {
             adapter.callback = callBack;
             return this;
         }
 
-        public BusChooseCityAdapter create() {
+        public ChooseCityAdapter create() {
+            if (adapter.context == null) {
+                throw new RuntimeException("没有设置Context");
+            }
+
+            if (adapter.callback == null) {
+                throw new RuntimeException("没有设置回调接口");
+            }
+
             return adapter;
         }
     }
 
     private Context context;
     private Callback callback;
-
 
     public void setData(List<ChooseCityListItemData> itemDatas) {
         this.itemDatas.clear();

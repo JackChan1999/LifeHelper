@@ -5,15 +5,12 @@ import android.support.v4.app.FragmentTransaction;
 
 import com.qz.lifehelper.R;
 import com.qz.lifehelper.entity.CityBean;
-import com.qz.lifehelper.ui.fragment.ChooseCityFragment;
 import com.qz.lifehelper.ui.fragment.TrainInfoRequestFragment;
 import com.qz.lifehelper.ui.fragment.TrainInfoRequestFragment_;
 import com.qz.lifehelper.ui.fragment.TrainInfoResultFragment;
 import com.qz.lifehelper.utils.DateUtil;
 
 import org.androidannotations.annotations.EBean;
-
-import bolts.Task;
 
 /**
  * 该类帮助TrainInfoActivity,TrainInfoRequestFragment,TrainInfoResultFragment,
@@ -56,34 +53,6 @@ public class TrainInfoHelper {
      */
     public CityBean getDefaultEndCity() {
         return CityBean.generateCity("上海");
-    }
-
-    /**
-     * 选择火车站
-     * <p/>
-     * 会跳转到ChooseTrainStation
-     */
-    public Task<CityBean> chooseCity() {
-        final Task<CityBean>.TaskCompletionSource taskCompletionSource = Task.create();
-
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.addToBackStack("");
-        ChooseCityFragment fragment = new ChooseCityFragment.Builder()
-                .setCallback(new ChooseCityFragment.CallBcak() {
-                    @Override
-                    public void onCityChoosed(CityBean cityBean) {
-                        fragmentManager.popBackStack();
-                        taskCompletionSource.setResult(cityBean);
-
-                    }
-                })
-                .create();
-
-
-        transaction.replace(R.id.fragmrnt_container, fragment);
-        transaction.commit();
-
-        return taskCompletionSource.getTask();
     }
 
     /**

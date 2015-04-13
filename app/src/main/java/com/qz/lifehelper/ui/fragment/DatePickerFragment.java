@@ -6,13 +6,10 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.widget.DatePicker;
 
-import com.qz.lifehelper.event.GetDateEvent;
-
 import org.androidannotations.annotations.EFragment;
 
 import java.util.Calendar;
-
-import de.greenrobot.event.EventBus;
+import java.util.Date;
 
 /**
  * 选择日期页面
@@ -22,11 +19,44 @@ import de.greenrobot.event.EventBus;
 @EFragment
 public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
-    private static final String BASE_DATE = "BASE_DATE";
+    private Date baseDate;
+    private Callback callback;
+
+    public interface Callback {
+        void onDateChoosed(Date date);
+    }
+
+    static public class Builder {
+        private DatePickerFragment fragment = new DatePickerFragment_();
+
+        public Builder setBaseDate(Date baseDate) {
+            fragment.baseDate = baseDate;
+            return this;
+        }
+
+        public Builder setCallback(Callback callback) {
+            fragment.callback = callback;
+            return this;
+        }
+
+        public DatePickerFragment create() {
+
+            if (fragment.baseDate == null) {
+                throw new RuntimeException("没有设置基准日期");
+            }
+
+            if (fragment.callback == null) {
+                throw new RuntimeException("没有设置回调接口");
+            }
+
+            return fragment;
+        }
+    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        Calendar baseCalendar = (Calendar) getArguments().getSerializable(BASE_DATE);
+        Calendar baseCalendar = Calendar.getInstance();
+        baseCalendar.setTime(baseDate);
         int year = baseCalendar.get(Calendar.YEAR);
         int month = baseCalendar.get(Calendar.MONTH);
         int day = baseCalendar.get(Calendar.DAY_OF_MONTH);
@@ -37,19 +67,7 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, monthOfYear, dayOfMonth);
-        EventBus.getDefault().post(GetDateEvent.generateEvent(calendar));
-    }
-
-    /**
-     * 生成一个DatePickerFragment
-     *
-     * @param baseCalendar 基准日期
-     */
-    public static DatePickerFragment generateFragment(Calendar baseCalendar) {
-        DatePickerFragment datePickerFragment = new DatePickerFragment();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(BASE_DATE, baseCalendar);
-        datePickerFragment.setArguments(bundle);
-        return datePickerFragment;
+        Date date = calendar.getTime();
+        callback.onDateChoosed(date);
     }
 }

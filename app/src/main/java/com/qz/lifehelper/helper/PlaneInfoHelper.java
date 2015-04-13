@@ -5,7 +5,6 @@ import android.support.v4.app.FragmentTransaction;
 
 import com.qz.lifehelper.R;
 import com.qz.lifehelper.entity.CityBean;
-import com.qz.lifehelper.ui.fragment.ChooseCityFragment;
 import com.qz.lifehelper.ui.fragment.PlaneInfoRequestFragment_;
 import com.qz.lifehelper.ui.fragment.PlaneInfoResultFragment;
 import com.qz.lifehelper.utils.DateUtil;
@@ -13,8 +12,6 @@ import com.qz.lifehelper.utils.DateUtil;
 import org.androidannotations.annotations.EBean;
 
 import java.util.Date;
-
-import bolts.Task;
 
 /**
  * 该类帮助PlaneInfoActivity,SearchPlaneInfoFragment,PlaneInfoResultFragment,ChooseAirportFragment实现相关当业务逻辑
@@ -27,30 +24,6 @@ public class PlaneInfoHelper {
      * 这是选择出发日期的日期格式
      */
     public static final String dateFormatPattern = "yyyy'-'MM'-'dd EE";
-
-
-    /**
-     * 选择机场，跳转到ChooseAirportFragment
-     */
-    public Task<CityBean> chooseCity() {
-        final Task<CityBean>.TaskCompletionSource taskCompletionSource = Task.create();
-
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.addToBackStack("");
-        ChooseCityFragment fragment = new ChooseCityFragment.Builder()
-                .setCallback(new ChooseCityFragment.CallBcak() {
-                    @Override
-                    public void onCityChoosed(CityBean cityBean) {
-                        fragmentManager.popBackStack();
-                        taskCompletionSource.setResult(cityBean);
-                    }
-                })
-                .create();
-        transaction.replace(R.id.fragmrnt_container, fragment);
-        transaction.commit();
-
-        return taskCompletionSource.getTask();
-    }
 
 
     /**

@@ -18,17 +18,17 @@ import bolts.Continuation;
 import bolts.Task;
 
 /**
- * 火车票信息搜索结果页
+ * 长途大巴搜索结果页
  */
 @EFragment
 public class BusInfoResultFragment extends ListFragment {
 
     /**
-     * 出发火车站
+     * 出发城市
      */
     private CityBean startCity;
     /**
-     * 目的地火车站
+     * 目的城市
      */
     private CityBean endCity;
 
@@ -36,8 +36,8 @@ public class BusInfoResultFragment extends ListFragment {
     /**
      * 生成BusInfoResultFragment
      *
-     * @param startCity 出发火车站
-     * @param endCity   目的地火车站
+     * @param startCity 出发城市
+     * @param endCity   目的城市
      */
     public static BusInfoResultFragment generateFragment(CityBean startCity, CityBean endCity) {
 
@@ -56,7 +56,7 @@ public class BusInfoResultFragment extends ListFragment {
     List<BusInfoBean> data = new ArrayList<>();
 
     /**
-     * 配置火车票信息搜索结果列表
+     * 配置长途大巴信息搜索结果列表
      */
     @AfterViews
     public void setListView() {

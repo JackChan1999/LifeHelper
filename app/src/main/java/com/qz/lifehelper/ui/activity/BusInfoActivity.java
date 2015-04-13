@@ -3,9 +3,8 @@ package com.qz.lifehelper.ui.activity;
 import android.support.v7.app.ActionBarActivity;
 
 import com.qz.lifehelper.R;
-import com.qz.lifehelper.helper.BusInfoHelper;
+import com.qz.lifehelper.business.BusBusiness;
 
-import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
@@ -19,17 +18,7 @@ import org.androidannotations.annotations.EActivity;
 public class BusInfoActivity extends ActionBarActivity {
 
     @Bean
-    BusInfoHelper busInfoHelper;
-
-    /**
-     * 配置BusInfoHelper
-     * <p/>
-     * 需要在这里配置FragmentManager
-     */
-    @AfterInject
-    void setTrainInfoHelper() {
-        busInfoHelper.setFragmentManager(this.getSupportFragmentManager());
-    }
+    BusBusiness busBusiness;
 
     /**
      * 跳转到TrainInfoRequestFragment
@@ -38,7 +27,7 @@ public class BusInfoActivity extends ActionBarActivity {
      */
     @AfterViews
     void setTrainInfoSearchArgument() {
-        busInfoHelper.setBusInfoSearchArgument();
+        busBusiness.toBusInfoRequestFragment(this.getSupportFragmentManager());
     }
 
 }

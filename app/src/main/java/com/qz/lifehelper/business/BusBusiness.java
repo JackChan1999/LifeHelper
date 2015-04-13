@@ -1,18 +1,20 @@
 package com.qz.lifehelper.business;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+
+import com.qz.lifehelper.R;
 import com.qz.lifehelper.entity.CityBean;
 import com.qz.lifehelper.entity.json.BusInfoBean;
 import com.qz.lifehelper.entity.json.BusInfoJsonBean;
 import com.qz.lifehelper.entity.json.JuheResponseJsonBean2;
-import com.qz.lifehelper.entity.json.TrainStationJsonBean;
-import com.qz.lifehelper.persist.TrafficPersist;
 import com.qz.lifehelper.service.BusService;
 import com.qz.lifehelper.service.JuheConstant;
+import com.qz.lifehelper.ui.fragment.BusInfoRequestFragment;
+import com.qz.lifehelper.ui.fragment.BusInfoRequestFragment_;
+import com.qz.lifehelper.ui.fragment.BusInfoResultFragment;
 
 import org.androidannotations.annotations.AfterInject;
-import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 
 import java.util.ArrayList;
@@ -69,7 +71,7 @@ public class BusBusiness {
     }
 
     /**
-     * 将TrainInfoJsonBean转换为TrainInfoBean
+     * 将BusInfoJsonBean转换为BusInfoBean
      */
     private BusInfoBean convertToBusInfoBean(BusInfoJsonBean busInfoJsonBean) {
 
@@ -85,28 +87,44 @@ public class BusBusiness {
                 .setTicketPrice(ticketPrice);
     }
 
-    @Bean
-    TrafficPersist trafficPersist;
+    /**
+     * 跳转到BusInfoRequestFragment
+     * <p/>
+     * 到该页面设置查询长途大巴票的搜索信息
+     */
+    public void toBusInfoRequestFragment(FragmentManager fragmentManager) {
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        BusInfoRequestFragment fragment = new BusInfoRequestFragment_();
+        transaction.replace(R.id.fragmrnt_container, fragment);
+        transaction.commit();
+    }
 
     /**
-     * 获取城市列表
+     * 获取默认的出发城市
      */
-    public Task<List<CityBean>> getBusCity() {
-        return Task.callInBackground(new Callable<List<CityBean>>() {
-            @Override
-            public List<CityBean> call() throws Exception {
-                String stationJson = trafficPersist.getTrainStation();
-                Gson gson = new Gson();
-                List<TrainStationJsonBean> trainStationJsonBeans = gson.fromJson(stationJson, new TypeToken<List<TrainStationJsonBean>>() {
-                }.getType());
-                List<CityBean> cityBeans = new ArrayList<CityBean>();
+    public CityBean getDefaultStartCity() {
+        return CityBean.generateCity("杭州");
+    }
 
-                for (TrainStationJsonBean trainStationJsonBean : trainStationJsonBeans) {
-                    cityBeans.add(CityBean.generateCity(trainStationJsonBean.getSta_name()));
-                }
-                return cityBeans;
-            }
+    /**
+     * 获取默认的到达城市
+     */
+    public CityBean getDefaultEndCity() {
+        return CityBean.generateCity("上海");
+    }
 
-        });
+    /**
+     * 跳转到BusInfoResultFragment，查询长途大巴的信息
+     *
+     * @param startCity 出发城市
+     * @param endCity   目的城市
+     */
+    public void toBusInfoResultFragment(FragmentManager fragmentManager, CityBean startCity, CityBean endCity) {
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.addToBackStack("");
+        BusInfoResultFragment fragment = BusInfoResultFragment.generateFragment(startCity,
+                endCity);
+        transaction.replace(R.id.fragmrnt_container, fragment);
+        transaction.commit();
     }
 }

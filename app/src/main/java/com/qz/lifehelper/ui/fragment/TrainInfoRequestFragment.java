@@ -5,6 +5,7 @@ import android.widget.TextView;
 
 import com.qz.lifehelper.R;
 import com.qz.lifehelper.business.DateBusiness;
+import com.qz.lifehelper.business.LocationBusiness;
 import com.qz.lifehelper.entity.CityBean;
 import com.qz.lifehelper.helper.TrainInfoHelper;
 import com.qz.lifehelper.utils.DateUtil;
@@ -70,7 +71,7 @@ public class TrainInfoRequestFragment extends Fragment {
      */
     @Click(R.id.strat_loaction)
     void chooseStartCity() {
-        trainInfoHelper.chooseCity().onSuccess(new Continuation<CityBean, Void>() {
+        locationBusiness.chooseCity(this.getFragmentManager()).onSuccess(new Continuation<CityBean, Void>() {
             @Override
             public Void then(Task<CityBean> task) throws Exception {
                 startCity = task.getResult();
@@ -81,12 +82,15 @@ public class TrainInfoRequestFragment extends Fragment {
 
     }
 
+    @Bean
+    LocationBusiness locationBusiness;
+
     /**
      * 选择目的火车站
      */
     @Click(R.id.end_loaction)
     void chooseEndCity() {
-        trainInfoHelper.chooseCity().onSuccess(new Continuation<CityBean, Void>() {
+        locationBusiness.chooseCity(this.getFragmentManager()).onSuccess(new Continuation<CityBean, Void>() {
             @Override
             public Void then(Task<CityBean> task) throws Exception {
                 endCity = task.getResult();

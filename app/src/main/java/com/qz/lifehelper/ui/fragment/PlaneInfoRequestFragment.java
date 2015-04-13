@@ -5,6 +5,7 @@ import android.widget.TextView;
 
 import com.qz.lifehelper.R;
 import com.qz.lifehelper.business.DateBusiness;
+import com.qz.lifehelper.business.LocationBusiness;
 import com.qz.lifehelper.entity.CityBean;
 import com.qz.lifehelper.helper.PlaneInfoHelper;
 import com.qz.lifehelper.helper.TrainInfoHelper;
@@ -67,12 +68,15 @@ public class PlaneInfoRequestFragment extends Fragment {
         endAirportTv.setText(endCity.cityName);
     }
 
+    @Bean
+    LocationBusiness locationBusiness;
+
     /**
      * 选择出发机场
      */
     @Click(R.id.strat_loaction)
     void chooseStartCity() {
-        planeInfoHelper.chooseCity().onSuccess(new Continuation<CityBean, Void>() {
+        locationBusiness.chooseCity(this.getFragmentManager()).onSuccess(new Continuation<CityBean, Void>() {
             @Override
             public Void then(Task<CityBean> task) throws Exception {
                 startCity = task.getResult();
@@ -88,7 +92,7 @@ public class PlaneInfoRequestFragment extends Fragment {
      */
     @Click(R.id.end_loaction)
     void chooseEndCity() {
-        planeInfoHelper.chooseCity().onSuccess(new Continuation<CityBean, Void>() {
+        locationBusiness.chooseCity(this.getFragmentManager()).onSuccess(new Continuation<CityBean, Void>() {
             @Override
             public Void then(Task<CityBean> task) throws Exception {
                 endCity = task.getResult();

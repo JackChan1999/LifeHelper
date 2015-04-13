@@ -7,16 +7,13 @@ import android.widget.ListView;
 import com.qz.lifehelper.R;
 import com.qz.lifehelper.business.LocationBusiness;
 import com.qz.lifehelper.entity.CityBean;
-import com.qz.lifehelper.helper.ChooseBusCityHelper;
-import com.qz.lifehelper.ui.adapter.BusChooseCityAdapter;
+import com.qz.lifehelper.helper.ChooseCityHelper;
+import com.qz.lifehelper.ui.adapter.ChooseCityAdapter;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import bolts.Continuation;
 import bolts.Task;
@@ -27,16 +24,30 @@ import bolts.Task;
 @EFragment(R.layout.fragment_choose_city)
 public class ChooseCityFragment extends Fragment {
 
+    private static final String TAG = ChooseCityFragment.class.getSimpleName() + "TAG";
+
+    /**
+     * ChooseCityFragment的回调接口
+     */
     public interface CallBcak {
+        /**
+         * 当选中一个城市之后，将会回调该方法
+         */
         void onCityChoosed(CityBean cityBean);
     }
 
+    /**
+     * ChooseCityFragment的构造器
+     */
     static public class Builder {
         public Builder() {
             fragment = new ChooseCityFragment_();
         }
 
 
+        /**
+         * 设置回调接口
+         */
         public Builder setCallback(CallBcak callback) {
             fragment.callBcak = callback;
             return this;
@@ -45,7 +56,13 @@ public class ChooseCityFragment extends Fragment {
 
         ChooseCityFragment fragment;
 
+        /**
+         * 构建ChooseCityFragment
+         */
         public ChooseCityFragment create() {
+            if (fragment.callBcak == null) {
+                throw new RuntimeException("没有设置回调接口");
+            }
             return fragment;
         }
     }
@@ -55,13 +72,11 @@ public class ChooseCityFragment extends Fragment {
     LocationBusiness locationBusiness;
 
     @Bean
-    ChooseBusCityHelper chooseBusCityHelper;
+    ChooseCityHelper chooseCityHelper;
 
     private CallBcak callBcak;
 
-    private List<CityBean> cityBeans = new ArrayList<>();
-
-    BusChooseCityAdapter adapter;
+    ChooseCityAdapter adapter;
 
     @ViewById(R.id.choose_city_lv)
     ListView listView;
@@ -71,9 +86,9 @@ public class ChooseCityFragment extends Fragment {
      */
     @AfterViews
     void setListView() {
-        adapter = new BusChooseCityAdapter.Builder()
+        adapter = new ChooseCityAdapter.Builder()
                 .setContext(this.getActivity())
-                .setCallBack(new BusChooseCityAdapter.Callback() {
+                .setCallBack(new ChooseCityAdapter.Callback() {
                     @Override
                     public void onChooseCity(CityBean cityBean) {
                         callBcak.onCityChoosed(cityBean);
@@ -81,35 +96,37 @@ public class ChooseCityFragment extends Fragment {
 
                     @Override
                     public void onFindCurrentLoactionCity() {
-                        chooseBusCityHelper.setCurrentLocationCity(CityBean.generateCity(
+                        chooseCityHelper.setCurrentLocationCity(CityBean.generateCity(
                                 ChooseCityFragment.this.getActivity().getString(R.string.find_location_ing)));
-                        refreshList();
-                        locationBusiness.findCurrentLocationCity().onSuccess(new Continuation<CityBean, Void>() {
-                            @Override
-                            public Void then(Task<CityBean> task) throws Exception {
-                                chooseBusCityHelper.setCurrentLocationCity(task.getResult());
-                                refreshList();
-                                return null;
-                            }
-                        });
+                        findCurrentLocationCity();
                     }
                 })
                 .create();
 
         listView.setAdapter(adapter);
+        findCurrentLocationCity();
+    }
+
+    /**
+     * 定位当前位置
+     */
+    private void findCurrentLocationCity() {
         refreshList();
         locationBusiness.findCurrentLocationCity().onSuccess(new Continuation<CityBean, Void>() {
             @Override
             public Void then(Task<CityBean> task) throws Exception {
-                chooseBusCityHelper.setCurrentLocationCity(task.getResult());
+                chooseCityHelper.setCurrentLocationCity(task.getResult());
                 refreshList();
                 return null;
             }
         });
     }
 
+    /**
+     * 刷新城市列表
+     */
     private void refreshList() {
-        adapter.setData(chooseBusCityHelper.getChooseCityListData());
+        adapter.setData(chooseCityHelper.getChooseCityListData());
         adapter.notifyDataSetChanged();
     }
 }

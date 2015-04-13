@@ -1,9 +1,5 @@
 package com.qz.lifehelper.helper;
 
-/**
- * Created by kohoh on 15/3/16.
- */
-
 import android.content.Context;
 
 import com.qz.lifehelper.R;
@@ -23,12 +19,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * ChooseCityActivity的助手
+ * ChooseBusCityFragment的助手
  * <p/>
- * 帮助ChooseCityActivity实现一部分业务逻辑
+ * 帮助ChooseBusCityFragment实现一部分业务逻辑
  */
 
-@EBean(scope = EBean.Scope.Singleton)
+@EBean
 public class ChooseCityHelper {
 
     @RootContext

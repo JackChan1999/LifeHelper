@@ -2,26 +2,20 @@ package com.qz.lifehelper.business;
 
 import android.support.v4.app.FragmentManager;
 
-import com.qz.lifehelper.event.GetDateEvent;
 import com.qz.lifehelper.ui.fragment.DatePickerFragment;
 
-import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.EBean;
 
 import java.util.Calendar;
 import java.util.Date;
 
 import bolts.Task;
-import de.greenrobot.event.EventBus;
 
 /**
  * 该类帮助处理日期时间相关的用户逻辑
  */
 @EBean
 public class DateBusiness {
-
-    private Task<Date>.TaskCompletionSource chooseDateTask;
-
     /**
      * 选择日期
      * <p/>
@@ -30,31 +24,20 @@ public class DateBusiness {
      * @param baseDate 基础日期，会以此日期为中心，选择日期
      */
     public Task<Date> chooseDate(Date baseDate, FragmentManager fragmentManager) {
-        chooseDateTask = Task.create();
+        final Task<Date>.TaskCompletionSource taskCompletionSource = Task.create();
         Calendar baseCalendar = Calendar.getInstance();
         baseCalendar.setTime(baseDate);
-        DatePickerFragment datePickerFragment = DatePickerFragment.generateFragment(baseCalendar);
+        DatePickerFragment datePickerFragment = new DatePickerFragment.Builder()
+                .setBaseDate(baseDate)
+                .setCallback(new DatePickerFragment.Callback() {
+                    @Override
+                    public void onDateChoosed(Date date) {
+                        taskCompletionSource.trySetResult(date);
+                    }
+                })
+                .create();
         datePickerFragment.show(fragmentManager, "date_picker_fragmnet");
-        return chooseDateTask.getTask();
+        return taskCompletionSource.getTask();
 
     }
-
-    @AfterInject
-    void registerEventBus() {
-        EventBus.getDefault().register(this);
-    }
-
-
-    /**
-     * 当成功选择了日期后会发送GetDateEvent，因此在这里设置选择日期的结果
-     * <p/>
-     * DatePickerFragmnet会发出该event，通知选择日期成功
-     */
-    public void onEvent(GetDateEvent event) {
-        if (chooseDateTask != null) {
-            chooseDateTask.setResult(event.calendar.getTime());
-            chooseDateTask = null;
-        }
-    }
-
 }

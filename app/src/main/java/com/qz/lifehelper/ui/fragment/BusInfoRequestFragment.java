@@ -4,8 +4,9 @@ import android.support.v4.app.Fragment;
 import android.widget.TextView;
 
 import com.qz.lifehelper.R;
+import com.qz.lifehelper.business.BusBusiness;
+import com.qz.lifehelper.business.LocationBusiness;
 import com.qz.lifehelper.entity.CityBean;
-import com.qz.lifehelper.helper.BusInfoHelper;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
@@ -18,13 +19,13 @@ import bolts.Continuation;
 import bolts.Task;
 
 /**
- * 配置要搜索的汽车票的信息
+ * 配置要搜索的长途汽车的信息
  */
 @EFragment(R.layout.fragment_bus_info_request)
 public class BusInfoRequestFragment extends Fragment {
 
     @Bean
-    BusInfoHelper busInfoHelper;
+    BusBusiness busBusiness;
 
     /**
      * 当前选择的出发城市
@@ -37,12 +38,12 @@ public class BusInfoRequestFragment extends Fragment {
 
     @AfterInject
     void setDefaultStartCity() {
-        startCity = busInfoHelper.getDefaultStartCity();
+        startCity = busBusiness.getDefaultStartCity();
     }
 
     @AfterInject
     void setDefaulteEndCity() {
-        endCity = busInfoHelper.getDefaultEndCity();
+        endCity = busBusiness.getDefaultEndCity();
     }
 
     /**
@@ -61,12 +62,15 @@ public class BusInfoRequestFragment extends Fragment {
         endCityTv.setText(endCity.cityName);
     }
 
+    @Bean
+    LocationBusiness locationBusiness;
+
     /**
      * 选择出发城市
      */
     @Click(R.id.strat_loaction)
     void chooseStartCity() {
-        busInfoHelper.chooseCity().onSuccess(new Continuation<CityBean, Void>() {
+        locationBusiness.chooseCity(this.getFragmentManager()).onSuccess(new Continuation<CityBean, Void>() {
             @Override
             public Void then(Task<CityBean> task) throws Exception {
                 startCity = task.getResult();
@@ -82,7 +86,7 @@ public class BusInfoRequestFragment extends Fragment {
      */
     @Click(R.id.end_loaction)
     void chooseEndCity() {
-        busInfoHelper.chooseCity().onSuccess(new Continuation<CityBean, Void>() {
+        locationBusiness.chooseCity(this.getFragmentManager()).onSuccess(new Continuation<CityBean, Void>() {
             @Override
             public Void then(Task<CityBean> task) throws Exception {
                 endCity = task.getResult();
@@ -97,7 +101,7 @@ public class BusInfoRequestFragment extends Fragment {
      */
     @Click(R.id.search)
     void searchBusInfo() {
-        busInfoHelper.searchBusInfo(startCity, endCity);
+        busBusiness.toBusInfoResultFragment(this.getFragmentManager(), startCity, endCity);
     }
 
     @ViewById(R.id.strat_loaction_tv)

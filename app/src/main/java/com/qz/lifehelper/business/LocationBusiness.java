@@ -1,6 +1,8 @@
 package com.qz.lifehelper.business;
 
 import android.content.Context;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 
 import com.baidu.location.BDLocation;
@@ -9,12 +11,14 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.qz.lifehelper.R;
 import com.qz.lifehelper.entity.CityBean;
 import com.qz.lifehelper.entity.json.CitiesGroupByFirstCharJsonBean;
 import com.qz.lifehelper.entity.json.CityJsonBean;
 import com.qz.lifehelper.event.GetCurrentCityEvent;
 import com.qz.lifehelper.event.GetCurrentLocationCityEvent;
 import com.qz.lifehelper.persist.LocationPersist;
+import com.qz.lifehelper.ui.fragment.ChooseCityFragment;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
@@ -44,6 +48,31 @@ public class LocationBusiness {
 
     @Bean
     LocationPersist locationPersist;
+
+    /**
+     * 选择城市
+     * <p/>
+     * 会跳转到ChooseBusCity
+     */
+    public Task<CityBean> chooseCity(final FragmentManager fragmentManager) {
+        final Task<CityBean>.TaskCompletionSource taskCompletionSource = Task.create();
+
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.addToBackStack("");
+        ChooseCityFragment fragment = new ChooseCityFragment.Builder()
+                .setCallback(new ChooseCityFragment.CallBcak() {
+                    @Override
+                    public void onCityChoosed(CityBean cityBean) {
+                        fragmentManager.popBackStack();
+                        taskCompletionSource.setResult(cityBean);
+                    }
+                })
+                .create();
+        transaction.replace(R.id.fragmrnt_container, fragment);
+        transaction.commit();
+
+        return taskCompletionSource.getTask();
+    }
 
     /**
      * 设置应用选择的当前城市
