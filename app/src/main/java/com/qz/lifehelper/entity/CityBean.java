@@ -11,4 +11,9 @@ public class CityBean {
         cityBean.cityName = cityName;
         return cityBean;
     }
+
+    @Override
+    public String toString() {
+        return cityName;
+    }
 }

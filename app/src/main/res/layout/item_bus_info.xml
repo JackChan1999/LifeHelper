@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="20dp"
+    android:paddingTop="20dp"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp">
+
+    <TextView
+        android:layout_marginRight="20dp"
+        android:textSize="30sp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:text="06:33"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/start_time_tv" />
+
+    <TextView
+        android:gravity="center"
+        android:textSize="20sp"
+        android:layout_toRightOf="@id/start_time_tv"
+        android:text="长途客运南站"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/start_station_tv"
+        android:drawableLeft="@android:drawable/ic_menu_add"
+        android:drawablePadding="5dp" />
+
+    <TextView
+        android:gravity="center"
+        android:textSize="20sp"
+        android:layout_toRightOf="@id/start_time_tv"
+        android:layout_below="@id/start_station_tv"
+        android:text="上海"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/end_station_tv"
+        android:drawablePadding="5dp"
+        android:drawableLeft="@android:drawable/ic_menu_add" />
+
+    <TextView
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/darker_gray"
+        android:layout_alignParentRight="true"
+        android:text="38元"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ticket_price_tv" />
+
+
+</RelativeLayout>
