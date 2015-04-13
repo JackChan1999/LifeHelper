@@ -25,7 +25,7 @@ import bolts.Task;
  * 选择城市页面
  */
 @EFragment(R.layout.fragment_choose_city)
-public class ChooseBusCityFragment extends Fragment {
+public class ChooseCityFragment extends Fragment {
 
     public interface CallBcak {
         void onCityChoosed(CityBean cityBean);
@@ -33,7 +33,7 @@ public class ChooseBusCityFragment extends Fragment {
 
     static public class Builder {
         public Builder() {
-            fragment = new ChooseBusCityFragment_();
+            fragment = new ChooseCityFragment_();
         }
 
 
@@ -43,9 +43,9 @@ public class ChooseBusCityFragment extends Fragment {
         }
 
 
-        ChooseBusCityFragment fragment;
+        ChooseCityFragment fragment;
 
-        public ChooseBusCityFragment create() {
+        public ChooseCityFragment create() {
             return fragment;
         }
     }
@@ -82,7 +82,7 @@ public class ChooseBusCityFragment extends Fragment {
                     @Override
                     public void onFindCurrentLoactionCity() {
                         chooseBusCityHelper.setCurrentLocationCity(CityBean.generateCity(
-                                ChooseBusCityFragment.this.getActivity().getString(R.string.find_location_ing)));
+                                ChooseCityFragment.this.getActivity().getString(R.string.find_location_ing)));
                         refreshList();
                         locationBusiness.findCurrentLocationCity().onSuccess(new Continuation<CityBean, Void>() {
                             @Override

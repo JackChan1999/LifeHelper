@@ -5,335 +5,246 @@ package com.qz.lifehelper.entity.json;
  */
 public class PlaneInfoJsonBean {
 
-    private String name;
-    private String complany;
-    private String AirModel;
-    private String AirAge;
-    private String start;
-    private String end;
+    private String FlightNum;
+
+    private String AirlineCode;
+    private String Airline;
+    private String DepCity;
+    private String ArrCity;
     private String DepCode;
     private String ArrCode;
-    private String DepCode4;
-    private String ArrCode4;
-    private String DepAirport;
-    private String ArrAirport;
+    private String OnTimeRate;
     private String DepTerminal;
     private String ArrTerminal;
-    private String status;
+    private String FlightDate;
+    private String PEKDate;
     private String DepTime;
     private String ArrTime;
     private String Dexpected;
     private String Aexpected;
-    private String Dactual;
-    private String Aactual;
-    private String food;
-    private String OnTimeRate;
-    private String FlyTime;
-    private String DepDelay;
-    private String ArrDelay;
-    private String DepTrafficState;
-    private String DepTemperature;
-    private String ArrTrafficState;
-    private String ArrTemperature;
 
-
-    public String getName() {
-        return name;
+    /**
+     * @return The FlightNum
+     */
+    public String getFlightNum() {
+        return FlightNum;
     }
 
-
-    public void setName(String name) {
-        this.name = name;
+    /**
+     * @param FlightNum The FlightNum
+     */
+    public void setFlightNum(String FlightNum) {
+        this.FlightNum = FlightNum;
     }
 
-
-    public String getComplany() {
-        return complany;
+    /**
+     * @return The AirlineCode
+     */
+    public String getAirlineCode() {
+        return AirlineCode;
     }
 
-
-    public void setComplany(String complany) {
-        this.complany = complany;
+    /**
+     * @param AirlineCode The AirlineCode
+     */
+    public void setAirlineCode(String AirlineCode) {
+        this.AirlineCode = AirlineCode;
     }
 
-
-    public String getAirModel() {
-        return AirModel;
+    /**
+     * @return The Airline
+     */
+    public String getAirline() {
+        return Airline;
     }
 
-
-    public void setAirModel(String AirModel) {
-        this.AirModel = AirModel;
+    /**
+     * @param Airline The Airline
+     */
+    public void setAirline(String Airline) {
+        this.Airline = Airline;
     }
 
-
-    public String getAirAge() {
-        return AirAge;
+    /**
+     * @return The DepCity
+     */
+    public String getDepCity() {
+        return DepCity;
     }
 
-
-    public void setAirAge(String AirAge) {
-        this.AirAge = AirAge;
+    /**
+     * @param DepCity The DepCity
+     */
+    public void setDepCity(String DepCity) {
+        this.DepCity = DepCity;
     }
 
-
-    public String getStart() {
-        return start;
+    /**
+     * @return The ArrCity
+     */
+    public String getArrCity() {
+        return ArrCity;
     }
 
-
-    public void setStart(String start) {
-        this.start = start;
+    /**
+     * @param ArrCity The ArrCity
+     */
+    public void setArrCity(String ArrCity) {
+        this.ArrCity = ArrCity;
     }
 
-
-    public String getEnd() {
-        return end;
-    }
-
-
-    public void setEnd(String end) {
-        this.end = end;
-    }
-
-
+    /**
+     * @return The DepCode
+     */
     public String getDepCode() {
         return DepCode;
     }
 
-
+    /**
+     * @param DepCode The DepCode
+     */
     public void setDepCode(String DepCode) {
         this.DepCode = DepCode;
     }
 
-
+    /**
+     * @return The ArrCode
+     */
     public String getArrCode() {
         return ArrCode;
     }
 
-
+    /**
+     * @param ArrCode The ArrCode
+     */
     public void setArrCode(String ArrCode) {
         this.ArrCode = ArrCode;
     }
 
-
-    public String getDepCode4() {
-        return DepCode4;
-    }
-
-
-    public void setDepCode4(String DepCode4) {
-        this.DepCode4 = DepCode4;
-    }
-
-
-    public String getArrCode4() {
-        return ArrCode4;
-    }
-
-
-    public void setArrCode4(String ArrCode4) {
-        this.ArrCode4 = ArrCode4;
-    }
-
-
-    public String getDepAirport() {
-        return DepAirport;
-    }
-
-
-    public void setDepAirport(String DepAirport) {
-        this.DepAirport = DepAirport;
-    }
-
-
-    public String getArrAirport() {
-        return ArrAirport;
-    }
-
-
-    public void setArrAirport(String ArrAirport) {
-        this.ArrAirport = ArrAirport;
-    }
-
-
-    public String getDepTerminal() {
-        return DepTerminal;
-    }
-
-
-    public void setDepTerminal(String DepTerminal) {
-        this.DepTerminal = DepTerminal;
-    }
-
-
-    public String getArrTerminal() {
-        return ArrTerminal;
-    }
-
-
-    public void setArrTerminal(String ArrTerminal) {
-        this.ArrTerminal = ArrTerminal;
-    }
-
-
-    public String getStatus() {
-        return status;
-    }
-
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-
-    public String getDepTime() {
-        return DepTime;
-    }
-
-
-    public void setDepTime(String DepTime) {
-        this.DepTime = DepTime;
-    }
-
-
-    public String getArrTime() {
-        return ArrTime;
-    }
-
-
-    public void setArrTime(String ArrTime) {
-        this.ArrTime = ArrTime;
-    }
-
-
-    public String getDexpected() {
-        return Dexpected;
-    }
-
-
-    public void setDexpected(String Dexpected) {
-        this.Dexpected = Dexpected;
-    }
-
-
-    public String getAexpected() {
-        return Aexpected;
-    }
-
-
-    public void setAexpected(String Aexpected) {
-        this.Aexpected = Aexpected;
-    }
-
-
-    public String getDactual() {
-        return Dactual;
-    }
-
-
-    public void setDactual(String Dactual) {
-        this.Dactual = Dactual;
-    }
-
-
-    public String getAactual() {
-        return Aactual;
-    }
-
-
-    public void setAactual(String Aactual) {
-        this.Aactual = Aactual;
-    }
-
-
-    public String getFood() {
-        return food;
-    }
-
-
-    public void setFood(String food) {
-        this.food = food;
-    }
-
-
+    /**
+     * @return The OnTimeRate
+     */
     public String getOnTimeRate() {
         return OnTimeRate;
     }
 
-
+    /**
+     * @param OnTimeRate The OnTimeRate
+     */
     public void setOnTimeRate(String OnTimeRate) {
         this.OnTimeRate = OnTimeRate;
     }
 
-
-    public String getFlyTime() {
-        return FlyTime;
+    /**
+     * @return The DepTerminal
+     */
+    public String getDepTerminal() {
+        return DepTerminal;
     }
 
-
-    public void setFlyTime(String FlyTime) {
-        this.FlyTime = FlyTime;
+    /**
+     * @param DepTerminal The DepTerminal
+     */
+    public void setDepTerminal(String DepTerminal) {
+        this.DepTerminal = DepTerminal;
     }
 
-
-    public String getDepDelay() {
-        return DepDelay;
+    /**
+     * @return The ArrTerminal
+     */
+    public String getArrTerminal() {
+        return ArrTerminal;
     }
 
-
-    public void setDepDelay(String DepDelay) {
-        this.DepDelay = DepDelay;
+    /**
+     * @param ArrTerminal The ArrTerminal
+     */
+    public void setArrTerminal(String ArrTerminal) {
+        this.ArrTerminal = ArrTerminal;
     }
 
-
-    public String getArrDelay() {
-        return ArrDelay;
+    /**
+     * @return The FlightDate
+     */
+    public String getFlightDate() {
+        return FlightDate;
     }
 
-
-    public void setArrDelay(String ArrDelay) {
-        this.ArrDelay = ArrDelay;
+    /**
+     * @param FlightDate The FlightDate
+     */
+    public void setFlightDate(String FlightDate) {
+        this.FlightDate = FlightDate;
     }
 
-
-    public String getDepTrafficState() {
-        return DepTrafficState;
+    /**
+     * @return The PEKDate
+     */
+    public String getPEKDate() {
+        return PEKDate;
     }
 
-
-    public void setDepTrafficState(String DepTrafficState) {
-        this.DepTrafficState = DepTrafficState;
+    /**
+     * @param PEKDate The PEKDate
+     */
+    public void setPEKDate(String PEKDate) {
+        this.PEKDate = PEKDate;
     }
 
-
-    public String getDepTemperature() {
-        return DepTemperature;
+    /**
+     * @return The DepTime
+     */
+    public String getDepTime() {
+        return DepTime;
     }
 
-
-    public void setDepTemperature(String DepTemperature) {
-        this.DepTemperature = DepTemperature;
+    /**
+     * @param DepTime The DepTime
+     */
+    public void setDepTime(String DepTime) {
+        this.DepTime = DepTime;
     }
 
-
-    public String getArrTrafficState() {
-        return ArrTrafficState;
+    /**
+     * @return The ArrTime
+     */
+    public String getArrTime() {
+        return ArrTime;
     }
 
-
-    public void setArrTrafficState(String ArrTrafficState) {
-        this.ArrTrafficState = ArrTrafficState;
+    /**
+     * @param ArrTime The ArrTime
+     */
+    public void setArrTime(String ArrTime) {
+        this.ArrTime = ArrTime;
     }
 
-
-    public String getArrTemperature() {
-        return ArrTemperature;
+    /**
+     * @return The Dexpected
+     */
+    public String getDexpected() {
+        return Dexpected;
     }
 
+    /**
+     * @param Dexpected The Dexpected
+     */
+    public void setDexpected(String Dexpected) {
+        this.Dexpected = Dexpected;
+    }
 
-    public void setArrTemperature(String ArrTemperature) {
-        this.ArrTemperature = ArrTemperature;
+    /**
+     * @return The Aexpected
+     */
+    public String getAexpected() {
+        return Aexpected;
+    }
+
+    /**
+     * @param Aexpected The Aexpected
+     */
+    public void setAexpected(String Aexpected) {
+        this.Aexpected = Aexpected;
     }
 
 }

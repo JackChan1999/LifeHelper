@@ -15,7 +15,7 @@ public class JuheConstant {
     static private final String PLANE_key = "06753a2070829c649753320a490c5b19";
     static private final String PLANE = "/plan";
     static public final String AIPORT = PLANE + "/city?key=" + PLANE_key + DTYPE;
-    public static final String PLANE_INFO = PLANE + "/s2s?key=" + PLANE_key + DTYPE;
+    public static final String PLANE_INFO = PLANE + "/bc?key=" + PLANE_key + DTYPE;
 
     private static final String TRAIN_KEY = "781db56ed179991a4e62449a87dba8cd";
     private static final String TRAIN = "/train";

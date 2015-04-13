@@ -5,7 +5,7 @@ import android.widget.TextView;
 
 import com.qz.lifehelper.R;
 import com.qz.lifehelper.business.DateBusiness;
-import com.qz.lifehelper.entity.AirportBean;
+import com.qz.lifehelper.entity.CityBean;
 import com.qz.lifehelper.helper.PlaneInfoHelper;
 import com.qz.lifehelper.helper.TrainInfoHelper;
 import com.qz.lifehelper.utils.DateUtil;
@@ -35,48 +35,48 @@ public class PlaneInfoRequestFragment extends Fragment {
     /**
      * 当前选择的出发机场
      */
-    private AirportBean startAirport;
+    private CityBean startCity;
     /**
      * 当前选择的目的地机场
      */
-    private AirportBean endAirport;
+    private CityBean endCity;
 
     @AfterInject
-    void setDefaultStartAirport() {
-        startAirport = planeInfoHelper.getDefaultStartAirport();
+    void setDefaultStartCity() {
+        startCity = planeInfoHelper.getDefaultStartCity();
     }
 
     @AfterInject
-    void setDefaulteEndAirport() {
-        endAirport = planeInfoHelper.getDefaultEndAirport();
+    void setDefaulteEndCity() {
+        endCity = planeInfoHelper.getDefaultEndCity();
     }
 
     /**
      * 设置出发机场信息
      */
     @AfterViews
-    void setStartAirport() {
-        startAirportTv.setText(startAirport.airpory);
+    void setStartCity() {
+        startAirportTv.setText(startCity.cityName);
     }
 
     /**
      * 设置目的地机场信息
      */
     @AfterViews
-    void setEndAirport() {
-        endAirportTv.setText(endAirport.airpory);
+    void setEndCity() {
+        endAirportTv.setText(endCity.cityName);
     }
 
     /**
      * 选择出发机场
      */
     @Click(R.id.strat_loaction)
-    void chooseStartLoaction() {
-        planeInfoHelper.chooseAirport().onSuccess(new Continuation<AirportBean, Void>() {
+    void chooseStartCity() {
+        planeInfoHelper.chooseCity().onSuccess(new Continuation<CityBean, Void>() {
             @Override
-            public Void then(Task<AirportBean> task) throws Exception {
-                startAirport = task.getResult();
-                setStartAirport();
+            public Void then(Task<CityBean> task) throws Exception {
+                startCity = task.getResult();
+                setStartCity();
                 return null;
             }
         }, Task.UI_THREAD_EXECUTOR);
@@ -87,12 +87,12 @@ public class PlaneInfoRequestFragment extends Fragment {
      * 选择目的机场
      */
     @Click(R.id.end_loaction)
-    void chooseEndLoaction() {
-        planeInfoHelper.chooseAirport().onSuccess(new Continuation<AirportBean, Void>() {
+    void chooseEndCity() {
+        planeInfoHelper.chooseCity().onSuccess(new Continuation<CityBean, Void>() {
             @Override
-            public Void then(Task<AirportBean> task) throws Exception {
-                endAirport = task.getResult();
-                setEndAirport();
+            public Void then(Task<CityBean> task) throws Exception {
+                endCity = task.getResult();
+                setEndCity();
                 return null;
             }
         }, Task.UI_THREAD_EXECUTOR);
@@ -124,7 +124,7 @@ public class PlaneInfoRequestFragment extends Fragment {
     @Click(R.id.search)
     void searchPlaneInfo() {
         String date = dateTv.getText().toString();
-        planeInfoHelper.searchPlaneInfo(startAirport, endAirport, date);
+        planeInfoHelper.searchPlaneInfo(startCity, endCity, date);
     }
 
     @ViewById(R.id.strat_loaction_tv)

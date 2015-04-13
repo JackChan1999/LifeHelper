@@ -3,6 +3,7 @@ package com.qz.lifehelper.business;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.qz.lifehelper.entity.AirportBean;
+import com.qz.lifehelper.entity.CityBean;
 import com.qz.lifehelper.entity.PlaneInfoBean;
 import com.qz.lifehelper.entity.json.AirportJsonBean;
 import com.qz.lifehelper.entity.json.PlaneInfoJsonBean;
@@ -68,17 +69,17 @@ public class PlaneBusiness {
     /**
      * 获取航班信息
      *
-     * @param statrAirport 出发机场
-     * @param endAirport   目的地机场
+     * @param statrCity 出发机场
+     * @param endCity   目的地机场
      * @param dateFly      出发日期
      */
-    public Task<List<PlaneInfoBean>> getPlaneInfo(final AirportBean statrAirport, final AirportBean endAirport, final Date dateFly) {
+    public Task<List<PlaneInfoBean>> getPlaneInfo(final CityBean statrCity, final CityBean endCity, final Date dateFly) {
         return Task.callInBackground(new Callable<List<PlaneInfoBean>>() {
             @Override
             public List<PlaneInfoBean> call() throws Exception {
                 String date = DateUtil.formatDate(JuheConstant.QUERY_DATE_FORMAT_PATTERN, dateFly);
-                String start = statrAirport.airpory;
-                String end = endAirport.airpory;
+                String start = statrCity.cityName;
+                String end = endCity.cityName;
                 List<PlaneInfoJsonBean> planeInfoJsonBeans = planeService.getPlaneInfo(start, end, date).getResult();
                 List<PlaneInfoBean> planeInfoBeans = new ArrayList<PlaneInfoBean>();
                 for (PlaneInfoJsonBean planeInfoJsonBean : planeInfoJsonBeans) {
@@ -94,27 +95,21 @@ public class PlaneBusiness {
      * JsonBena与Bean之间的转换
      */
     private PlaneInfoBean convert2PlaneInfoBena(PlaneInfoJsonBean planeInfoJsonBean) throws ParseException {
-        String planeInfo = planeInfoJsonBean.getComplany() + " " + planeInfoJsonBean.getAirModel();
+        String planeInfo = planeInfoJsonBean.getAirline() + " " + planeInfoJsonBean.getFlightNum();
         Date dactualDate = DateUtil.parseDate(JuheConstant.RESPONSE_DATE_FORMAT_PATTERN, planeInfoJsonBean.getDepTime());
         Date aactualDate = DateUtil.parseDate(JuheConstant.RESPONSE_DATE_FORMAT_PATTERN, planeInfoJsonBean.getArrTime());
         String startTime = DateUtil.formatDate("hh:mm", dactualDate);
         String endTime = DateUtil.formatDate("hh:mm", aactualDate);
-        String startAirport = planeInfoJsonBean.getDepAirport();
-        if (startAirport.equals("")) {
-            startAirport = planeInfoJsonBean.getStart();
-        }
-        String endAirport = planeInfoJsonBean.getArrAirport();
-        if (endAirport.equals("")) {
-            endAirport = planeInfoJsonBean.getEnd();
-        }
-        String planeState = planeInfoJsonBean.getStatus();
+        String startAirport = planeInfoJsonBean.getDepCity() + " " + planeInfoJsonBean.getDepTerminal();
+        String endAirport = planeInfoJsonBean.getArrCity() + " " + planeInfoJsonBean.getArrTerminal();
+        String onTimeRate = planeInfoJsonBean.getOnTimeRate();
         PlaneInfoBean planeInfoBean = new PlaneInfoBean()
                 .setPlaneInfo(planeInfo)
                 .setStartTime(startTime)
                 .setEndTime(endTime)
                 .setStartAirport(startAirport)
                 .setEndAirport(endAirport)
-                .setPlaneState(planeState);
+                .setOnTimeRate(onTimeRate);
         return planeInfoBean;
     }
 }

@@ -3,7 +3,7 @@ package com.qz.lifehelper.ui.fragment;
 import android.support.v4.app.ListFragment;
 
 import com.qz.lifehelper.business.PlaneBusiness;
-import com.qz.lifehelper.entity.AirportBean;
+import com.qz.lifehelper.entity.CityBean;
 import com.qz.lifehelper.entity.PlaneInfoBean;
 import com.qz.lifehelper.ui.adapter.PlaneInfoAdapter;
 
@@ -27,11 +27,11 @@ public class PlaneInfoResultFragment extends ListFragment {
     /**
      * 出发机场
      */
-    private AirportBean statrAirport;
+    private CityBean statrCity;
     /**
      * 目的地机场
      */
-    private AirportBean endAirport;
+    private CityBean endCity;
     /**
      * 出发日期
      */
@@ -41,15 +41,15 @@ public class PlaneInfoResultFragment extends ListFragment {
     /**
      * 生成PlaneInfoResultFragment
      *
-     * @param startAirport 出发机场
-     * @param endAirport   目的地机场
+     * @param startCity 出发机场
+     * @param endCity   目的地机场
      * @param dateFly      出发日期
      */
-    public static PlaneInfoResultFragment generateFragment(AirportBean startAirport, AirportBean endAirport, Date dateFly) {
+    public static PlaneInfoResultFragment generateFragment(CityBean startCity, CityBean endCity, Date dateFly) {
 
         PlaneInfoResultFragment fragment = new PlaneInfoResultFragment_();
-        fragment.statrAirport = startAirport;
-        fragment.endAirport = endAirport;
+        fragment.statrCity = startCity;
+        fragment.endCity = endCity;
         fragment.dateFly = dateFly;
         return fragment;
     }
@@ -69,7 +69,7 @@ public class PlaneInfoResultFragment extends ListFragment {
     public void setListView() {
         setListAdapter(adapter);
 
-        planeBusiness.getPlaneInfo(statrAirport, endAirport, dateFly).onSuccess(new Continuation<List<PlaneInfoBean>, Object>() {
+        planeBusiness.getPlaneInfo(statrCity, endCity, dateFly).onSuccess(new Continuation<List<PlaneInfoBean>, Object>() {
             @Override
             public Object then(Task<List<PlaneInfoBean>> task) throws Exception {
                 data.clear();

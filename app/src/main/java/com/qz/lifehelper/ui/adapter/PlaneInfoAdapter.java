@@ -51,7 +51,7 @@ public class PlaneInfoAdapter extends BaseAdapter {
             TextView endTimeTv;
             TextView startAirportTv;
             TextView endAirportTv;
-            TextView planeStateTv;
+            TextView onTineRateTv;
         }
 
         if (convertView == null) {
@@ -63,7 +63,7 @@ public class PlaneInfoAdapter extends BaseAdapter {
             childViews.endTimeTv = (TextView) convertView.findViewById(R.id.end_time_tv);
             childViews.startAirportTv = (TextView) convertView.findViewById(R.id.start_airport_tv);
             childViews.endAirportTv = (TextView) convertView.findViewById(R.id.end_airport_tv);
-            childViews.planeStateTv = (TextView) convertView.findViewById(R.id.plane_state_tv);
+            childViews.onTineRateTv = (TextView) convertView.findViewById(R.id.on_time_rate_tv);
             convertView.setTag(childViews);
         }
 
@@ -75,7 +75,7 @@ public class PlaneInfoAdapter extends BaseAdapter {
         childViews.endTimeTv.setText(planeInfoBean.endTime);
         childViews.startAirportTv.setText(planeInfoBean.startAirport);
         childViews.endAirportTv.setText(planeInfoBean.endAirport);
-        childViews.planeStateTv.setText(planeInfoBean.planeState);
+        childViews.onTineRateTv.setText(planeInfoBean.onTimeRate);
         return convertView;
     }
 

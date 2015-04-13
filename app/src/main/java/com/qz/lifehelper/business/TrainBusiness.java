@@ -2,6 +2,7 @@ package com.qz.lifehelper.business;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.qz.lifehelper.entity.CityBean;
 import com.qz.lifehelper.entity.TrainInfoBean;
 import com.qz.lifehelper.entity.TrainStationBean;
 import com.qz.lifehelper.entity.json.JuheResponseJsonBean;
@@ -75,17 +76,17 @@ public class TrainBusiness {
     /**
      * 获取相应的火车信息
      *
-     * @param startStation 始发火车站
-     * @param endStation   目的地火车站
+     * @param startCity 始发火车站
+     * @param endCity   目的地火车站
      * @param dateStart    出发日期
      */
-    public Task<List<TrainInfoBean>> getTrainInfo(final TrainStationBean startStation, final TrainStationBean endStation, final Date dateStart) {
+    public Task<List<TrainInfoBean>> getTrainInfo(final CityBean startCity, final CityBean endCity, final Date dateStart) {
         return Task.callInBackground(new Callable<List<TrainInfoBean>>() {
             @Override
             public List<TrainInfoBean> call() throws Exception {
                 JuheResponseJsonBean<TrainInfoJsonBean> responseJsonBean = trainService.getTrainInfo(
-                        startStation.stationName,
-                        endStation.stationName,
+                        startCity.cityName,
+                        endCity.cityName,
                         DateUtil.formatDate(JuheConstant.QUERY_DATE_FORMAT_PATTERN, dateStart));
 
                 List<TrainInfoJsonBean> trainStationJsonBeans = responseJsonBean.getResult();
@@ -105,8 +106,8 @@ public class TrainBusiness {
     private TrainInfoBean convertToTrainInfoBean(TrainInfoJsonBean trainInfoJsonBean) {
         String duration = DateUtil.formatDate("hh时mm分", DateUtil.parseDate("hh:mm", trainInfoJsonBean.getLishi()));
         String surplusTicketCount = getsurplusTicketCount(trainInfoJsonBean) + "张";
-        String startStation = trainInfoJsonBean.getStartStationName();
-        String endStation = trainInfoJsonBean.getEndStationName();
+        String startStation = trainInfoJsonBean.getFromStationName();
+        String endStation = trainInfoJsonBean.getToStationName();
         String startTime = trainInfoJsonBean.getStartTime();
         String endTime = trainInfoJsonBean.getArriveTime();
         String trainInfo = trainInfoJsonBean.getTrainNo() + " " + trainInfoJsonBean.getTrainClassName();

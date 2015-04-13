@@ -4,20 +4,16 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
 import com.qz.lifehelper.R;
-import com.qz.lifehelper.entity.TrainStationBean;
-import com.qz.lifehelper.event.GetStationEvent;
-import com.qz.lifehelper.ui.fragment.ChooseTrainStationFragment;
-import com.qz.lifehelper.ui.fragment.ChooseTrainStationFragment_;
+import com.qz.lifehelper.entity.CityBean;
+import com.qz.lifehelper.ui.fragment.ChooseCityFragment;
 import com.qz.lifehelper.ui.fragment.TrainInfoRequestFragment;
 import com.qz.lifehelper.ui.fragment.TrainInfoRequestFragment_;
 import com.qz.lifehelper.ui.fragment.TrainInfoResultFragment;
 import com.qz.lifehelper.utils.DateUtil;
 
-import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.EBean;
 
 import bolts.Task;
-import de.greenrobot.event.EventBus;
 
 /**
  * 该类帮助TrainInfoActivity,TrainInfoRequestFragment,TrainInfoResultFragment,
@@ -51,52 +47,43 @@ public class TrainInfoHelper {
     /**
      * 获取默认的出发火车站
      */
-    public TrainStationBean getDefaultStartStation() {
-        return TrainStationBean.generateStation("北京", "beijing", "BJP");
+    public CityBean getDefaultStartCity() {
+        return CityBean.generateCity("北京");
     }
 
     /**
      * 获取默认的到达火车站
      */
-    public TrainStationBean getDefaultEndStation() {
-        return TrainStationBean.generateStation("上海", "shanghai", "SHH");
+    public CityBean getDefaultEndCity() {
+        return CityBean.generateCity("上海");
     }
-
-    @AfterInject
-    void reigisterEventBus() {
-        EventBus.getDefault().register(this);
-    }
-
-    private Task<TrainStationBean>.TaskCompletionSource chooseTrainStationTask;
 
     /**
      * 选择火车站
      * <p/>
      * 会跳转到ChooseTrainStation
      */
-    public Task<TrainStationBean> chooseTrainStation() {
-        chooseTrainStationTask = Task.create();
+    public Task<CityBean> chooseCity() {
+        final Task<CityBean>.TaskCompletionSource taskCompletionSource = Task.create();
 
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.addToBackStack("");
-        ChooseTrainStationFragment fragment = new ChooseTrainStationFragment_();
+        ChooseCityFragment fragment = new ChooseCityFragment.Builder()
+                .setCallback(new ChooseCityFragment.CallBcak() {
+                    @Override
+                    public void onCityChoosed(CityBean cityBean) {
+                        fragmentManager.popBackStack();
+                        taskCompletionSource.setResult(cityBean);
+
+                    }
+                })
+                .create();
+
+
         transaction.replace(R.id.fragmrnt_container, fragment);
         transaction.commit();
 
-        return chooseTrainStationTask.getTask();
-    }
-
-    /**
-     * 当接受到GetStationEvent后，设置选择火车站成功
-     * <p/>
-     * ChooseStationFragment会发出该Event，通知选择火车站成功
-     */
-    public void onEvent(GetStationEvent event) {
-        if (chooseTrainStationTask != null) {
-            chooseTrainStationTask.setResult(event.trainStationBean);
-            chooseTrainStationTask = null;
-        }
-
+        return taskCompletionSource.getTask();
     }
 
     /**
@@ -112,7 +99,7 @@ public class TrainInfoHelper {
      * @param endStation   目的地火车站
      * @param date         出发日期
      */
-    public void searchTrainInfo(TrainStationBean startStation, TrainStationBean endStation, String date) {
+    public void searchTrainInfo(CityBean startStation, CityBean endStation, String date) {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.addToBackStack("");
         TrainInfoResultFragment fragment = TrainInfoResultFragment.generateFragment(startStation,
@@ -121,13 +108,4 @@ public class TrainInfoHelper {
         transaction.commit();
     }
 
-    /**
-     * 设置选择的火车站
-     * <p/>
-     * ChosoeSTraintationFragment会使用该方法，设置用户选择的火车站
-     */
-    public void setStation(TrainStationBean trainStationBean) {
-        fragmentManager.popBackStack();
-        EventBus.getDefault().post(GetStationEvent.generateEvent(trainStationBean));
-    }
 }

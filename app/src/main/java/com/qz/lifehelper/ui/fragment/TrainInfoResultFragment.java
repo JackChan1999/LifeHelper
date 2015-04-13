@@ -3,8 +3,8 @@ package com.qz.lifehelper.ui.fragment;
 import android.support.v4.app.ListFragment;
 
 import com.qz.lifehelper.business.TrainBusiness;
+import com.qz.lifehelper.entity.CityBean;
 import com.qz.lifehelper.entity.TrainInfoBean;
-import com.qz.lifehelper.entity.TrainStationBean;
 import com.qz.lifehelper.ui.adapter.TrainInfoAdapter;
 
 import org.androidannotations.annotations.AfterViews;
@@ -27,11 +27,11 @@ public class TrainInfoResultFragment extends ListFragment {
     /**
      * 出发火车站
      */
-    private TrainStationBean startStation;
+    private CityBean startCity;
     /**
      * 目的地火车站
      */
-    private TrainStationBean endStation;
+    private CityBean endCity;
     /**
      * 出发日期
      */
@@ -41,15 +41,15 @@ public class TrainInfoResultFragment extends ListFragment {
     /**
      * 生成TrainInfoResultFragment
      *
-     * @param startStation 出发火车站
-     * @param endStation   目的地火车站
+     * @param startCity 出发火车站
+     * @param endCity   目的地火车站
      * @param dateStart    出发日期
      */
-    public static TrainInfoResultFragment generateFragment(TrainStationBean startStation, TrainStationBean endStation, Date dateStart) {
+    public static TrainInfoResultFragment generateFragment(CityBean startCity, CityBean endCity, Date dateStart) {
 
         TrainInfoResultFragment fragment = new TrainInfoResultFragment_();
-        fragment.startStation = startStation;
-        fragment.endStation = endStation;
+        fragment.startCity = startCity;
+        fragment.endCity = endCity;
         fragment.dateStart = dateStart;
         return fragment;
     }
@@ -69,7 +69,7 @@ public class TrainInfoResultFragment extends ListFragment {
     public void setListView() {
         setListAdapter(adapter);
 
-        trainBusiness.getTrainInfo(startStation, endStation, dateStart).onSuccess(new Continuation<List<TrainInfoBean>, Void>() {
+        trainBusiness.getTrainInfo(startCity, endCity, dateStart).onSuccess(new Continuation<List<TrainInfoBean>, Void>() {
             @Override
             public Void then(Task<List<TrainInfoBean>> task) throws Exception {
                 data.clear();

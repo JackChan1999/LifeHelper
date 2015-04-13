@@ -5,7 +5,7 @@ import android.widget.TextView;
 
 import com.qz.lifehelper.R;
 import com.qz.lifehelper.business.DateBusiness;
-import com.qz.lifehelper.entity.TrainStationBean;
+import com.qz.lifehelper.entity.CityBean;
 import com.qz.lifehelper.helper.TrainInfoHelper;
 import com.qz.lifehelper.utils.DateUtil;
 
@@ -33,48 +33,48 @@ public class TrainInfoRequestFragment extends Fragment {
     /**
      * 当前选择的出发火车站
      */
-    private TrainStationBean startStation;
+    private CityBean startCity;
     /**
      * 当前选择的目的地火车站
      */
-    private TrainStationBean endStation;
+    private CityBean endCity;
 
     @AfterInject
-    void setDefaultStartStation() {
-        startStation = trainInfoHelper.getDefaultStartStation();
+    void setDefaultStartCity() {
+        startCity = trainInfoHelper.getDefaultStartCity();
     }
 
     @AfterInject
-    void setDefaulteEndStation() {
-        endStation = trainInfoHelper.getDefaultEndStation();
+    void setDefaulteEndCity() {
+        endCity = trainInfoHelper.getDefaultEndCity();
     }
 
     /**
      * 设置出发火车站信息
      */
     @AfterViews
-    void setStartStation() {
-        startStationTv.setText(startStation.stationName);
+    void setStartCity() {
+        startStationTv.setText(startCity.cityName);
     }
 
     /**
      * 设置目的地火车站信息
      */
     @AfterViews
-    void setEndStation() {
-        endStationTv.setText(endStation.stationName);
+    void setEndCity() {
+        endStationTv.setText(endCity.cityName);
     }
 
     /**
-     * 选择出火车站
+     * 选择出发城市
      */
     @Click(R.id.strat_loaction)
-    void chooseStartLoaction() {
-        trainInfoHelper.chooseTrainStation().onSuccess(new Continuation<TrainStationBean, Void>() {
+    void chooseStartCity() {
+        trainInfoHelper.chooseCity().onSuccess(new Continuation<CityBean, Void>() {
             @Override
-            public Void then(Task<TrainStationBean> task) throws Exception {
-                startStation = task.getResult();
-                setStartStation();
+            public Void then(Task<CityBean> task) throws Exception {
+                startCity = task.getResult();
+                setStartCity();
                 return null;
             }
         }, Task.UI_THREAD_EXECUTOR);
@@ -85,12 +85,12 @@ public class TrainInfoRequestFragment extends Fragment {
      * 选择目的火车站
      */
     @Click(R.id.end_loaction)
-    void chooseEndLoaction() {
-        trainInfoHelper.chooseTrainStation().onSuccess(new Continuation<TrainStationBean, Void>() {
+    void chooseEndCity() {
+        trainInfoHelper.chooseCity().onSuccess(new Continuation<CityBean, Void>() {
             @Override
-            public Void then(Task<TrainStationBean> task) throws Exception {
-                endStation = task.getResult();
-                setEndStation();
+            public Void then(Task<CityBean> task) throws Exception {
+                endCity = task.getResult();
+                setEndCity();
                 return null;
             }
         }, Task.UI_THREAD_EXECUTOR);
@@ -120,9 +120,9 @@ public class TrainInfoRequestFragment extends Fragment {
      * 搜索火车票的信息
      */
     @Click(R.id.search)
-    void searchPlaneInfo() {
+    void searchTarinInfo() {
         String date = dateTv.getText().toString();
-        trainInfoHelper.searchTrainInfo(startStation, endStation, date);
+        trainInfoHelper.searchTrainInfo(startCity, endCity, date);
     }
 
     @ViewById(R.id.strat_loaction_tv)

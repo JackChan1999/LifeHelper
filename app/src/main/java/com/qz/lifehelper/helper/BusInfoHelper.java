@@ -8,7 +8,7 @@ import com.qz.lifehelper.entity.CityBean;
 import com.qz.lifehelper.ui.fragment.BusInfoRequestFragment;
 import com.qz.lifehelper.ui.fragment.BusInfoRequestFragment_;
 import com.qz.lifehelper.ui.fragment.BusInfoResultFragment;
-import com.qz.lifehelper.ui.fragment.ChooseBusCityFragment;
+import com.qz.lifehelper.ui.fragment.ChooseCityFragment;
 
 import org.androidannotations.annotations.EBean;
 
@@ -68,8 +68,8 @@ public class BusInfoHelper {
 
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.addToBackStack("");
-        ChooseBusCityFragment fragment = new ChooseBusCityFragment.Builder()
-                .setCallback(new ChooseBusCityFragment.CallBcak() {
+        ChooseCityFragment fragment = new ChooseCityFragment.Builder()
+                .setCallback(new ChooseCityFragment.CallBcak() {
                     @Override
                     public void onCityChoosed(CityBean cityBean) {
                         fragmentManager.popBackStack();

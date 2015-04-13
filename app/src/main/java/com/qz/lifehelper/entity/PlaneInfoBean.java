@@ -25,9 +25,9 @@ public class PlaneInfoBean {
      */
     public String endAirport;
     /**
-     * 航班状态
+     * 准点率
      */
-    public String planeState;
+    public String onTimeRate;
 
     public PlaneInfoBean setPlaneInfo(String planeInfo) {
         this.planeInfo = planeInfo;
@@ -54,8 +54,8 @@ public class PlaneInfoBean {
         return this;
     }
 
-    public PlaneInfoBean setPlaneState(String planeState) {
-        this.planeState = planeState;
+    public PlaneInfoBean setOnTimeRate(String onTimeRate) {
+        this.onTimeRate = onTimeRate;
         return this;
     }
 }
