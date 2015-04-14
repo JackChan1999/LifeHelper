@@ -32,7 +32,9 @@
 
         <activity android:name=".ui.activity.POIResultDetailActivity_" />
 
-        <activity android:name=".ui.activity.MainActivity_">
+        <activity
+            android:name=".ui.activity.MainActivity_"
+            android:label="Activity目录">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
