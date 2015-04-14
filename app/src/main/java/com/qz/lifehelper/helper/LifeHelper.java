@@ -5,7 +5,10 @@ import android.content.Intent;
 import android.widget.Toast;
 
 import com.qz.lifehelper.business.LocationBusiness;
+import com.qz.lifehelper.ui.activity.BusInfoActivity_;
 import com.qz.lifehelper.ui.activity.POIResultActivity;
+import com.qz.lifehelper.ui.activity.PlaneInfoActivity_;
+import com.qz.lifehelper.ui.activity.TrainInfoActivity_;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
@@ -39,21 +42,24 @@ public class LifeHelper {
      * 前往航班信息页
      */
     public void toPlane() {
-        Toast.makeText(context, "前往飞机票", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(context, PlaneInfoActivity_.class);
+        context.startActivity(intent);
     }
 
     /**
      * 前往火车信息页
      */
     public void toTrain() {
-        Toast.makeText(context, "前往火车票", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(context, TrainInfoActivity_.class);
+        context.startActivity(intent);
     }
 
     /**
      * 前往长途汽车页
      */
     public void toBus() {
-        Toast.makeText(context, "前往大巴票", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(context, BusInfoActivity_.class);
+        context.startActivity(intent);
     }
 
     /**
