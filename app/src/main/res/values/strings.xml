@@ -1,4 +1,33 @@
 <resources>
     <string name="life_helper">LifeHelper</string>
     <string name="find_location_ing">正在定位……</string>
+    <string name="login">登陆</string>
+    <string name="register">注册</string>
+    <string name="login_with_lifehelper">使用LifeHelper账号登陆</string>
+    <string name="account_input">请输入账号</string>
+    <string name="password_input">请输入密码</string>
+    <string name="email_input">请输入邮箱地址</string>
+    <string name="password_confirm">请再次输入密码</string>
+    <string name="forget_password">忘记密码？</string>
+    <string name="login_with_qq">QQ登陆</string>
+    <string name="login_with_weixin">微信登陆</string>
+    <string name="login_with_weibo">微博登陆</string>
+    <string name="tip">提示</string>
+    <string name="logining">登陆中,请稍后...</string>
+    <string name="registering">注册中，请稍后...</string>
+    <string name="login_error">登陆失败，请确认网络和用户名密码后重试</string>
+    <string name="email_address_null">邮箱地址不可空</string>
+    <string name="user_name_repeat">用户名已被注册，请重新填写</string>
+    <string name="email_repeat">邮箱已被注册，请更换邮箱</string>
+    <string name="register_success">注册成功</string>
+    <string name="password_null">密码不可为空</string>
+    <string name="user_name_null">用户名不可空</string>
+    <string name="password_not_equals">两次输入密码不一致，请重新输入</string>
+    <string name="network_error">网络错误，请检查您的网络连接</string>
+
+    <string name="find_password">找回密码</string>
+    <string name="email_sended">已发送邮件</string>
+    <string name="email_send_error">邮件发送错误，请确认您的邮件地址</string>
+
+
 </resources>
