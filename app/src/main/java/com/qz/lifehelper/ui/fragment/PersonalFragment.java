@@ -60,7 +60,7 @@ public class PersonalFragment extends Fragment {
 
     @Click(R.id.public_info)
     void onPublicInfoClick() {
-        personalHelper.toPublicInf();
+        personalHelper.toPublicInf(getFragmentManager());
     }
 
     @Click(R.id.logout_bn)

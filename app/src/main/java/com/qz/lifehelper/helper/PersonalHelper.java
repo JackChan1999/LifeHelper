@@ -2,14 +2,14 @@ package com.qz.lifehelper.helper;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.FragmentManager;
 import android.widget.Toast;
 
 import com.qz.lifehelper.business.AuthenticationBusiness;
+import com.qz.lifehelper.business.NoticeInfoBusiness;
 import com.qz.lifehelper.entity.UserInfoBean;
 import com.qz.lifehelper.event.GetAuthEvent;
-import com.qz.lifehelper.ui.activity.LoginActivity;
 import com.qz.lifehelper.ui.activity.LoginActivity_;
-import com.qz.lifehelper.ui.activity.MainActivity;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.Bean;
@@ -75,11 +75,14 @@ public class PersonalHelper {
         Toast.makeText(context, "前往我发布的信息页面", Toast.LENGTH_SHORT).show();
     }
 
+    @Bean
+    NoticeInfoBusiness noticeInfoBusiness;
+
     /**
      * 前往公共信息页面
      */
-    public void toPublicInf() {
-        Toast.makeText(context, "前往公共信息页面", Toast.LENGTH_SHORT).show();
+    public void toPublicInf(FragmentManager fragmentManager) {
+        noticeInfoBusiness.toNotcieInfoFragment(fragmentManager);
     }
 
 }
