@@ -2,9 +2,11 @@ package com.qz.lifehelper.helper;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.FragmentManager;
 import android.widget.Toast;
 
 import com.qz.lifehelper.business.LocationBusiness;
+import com.qz.lifehelper.business.TopInfoBusiness;
 import com.qz.lifehelper.ui.activity.POIResultActivity;
 
 import org.androidannotations.annotations.Bean;
@@ -55,11 +57,14 @@ public class ArroundHelper {
         Toast.makeText(context, "前往特惠", Toast.LENGTH_SHORT).show();
     }
 
+    @Bean
+    TopInfoBusiness topInfoBusiness;
+
     /**
      * 跳转到最热页面
      */
-    public void toTopic() {
-        Toast.makeText(context, "前往最热", Toast.LENGTH_SHORT).show();
+    public void toTopic(FragmentManager fragmentManager) {
+        topInfoBusiness.toTenTopSpotsFragment(fragmentManager);
     }
 
 }

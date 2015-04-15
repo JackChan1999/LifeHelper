@@ -20,7 +20,7 @@ public class ArroundFragmnet extends Fragment {
 
     @Click(R.id.topic)
     public void onTopicClick() {
-        arroundHelper.toTopic();
+        arroundHelper.toTopic(getFragmentManager());
     }
 
     @Click(R.id.food)
@@ -36,7 +36,6 @@ public class ArroundFragmnet extends Fragment {
     @Click(R.id.hospital)
     public void onHostelClick() {
         arroundHelper.toPOIResult("医院");
-
     }
 
     @Click(R.id.toliet)

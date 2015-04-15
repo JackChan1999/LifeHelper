@@ -31,13 +31,8 @@ public class NoticeInfoBusiness {
             @Override
             public String call() throws Exception {
                 //模拟从网络加载数据
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } finally {
-                    return outlinePersist.getNoticeInfo();
-                }
+                Thread.sleep(1000);
+                return outlinePersist.getNoticeInfo();
             }
         });
     }

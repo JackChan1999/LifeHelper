@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="5dp"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:paddingBottom="15dp"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:text="尼加拉瓜，Ometepe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/poi_title_tv" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/poi_image_tv"
+        android:minHeight="250dp"
+        android:src="@android:color/holo_blue_light" />
+
+    <TextView
+        android:paddingTop="15dp"
+        android:textSize="20sp"
+        android:textColor="@android:color/darker_gray"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/poi_context_tv"
+        android:text="Ometepe位于离马拉瓜约两小时船程的尼加拉瓜湖，Ometepe被誉为自然世界新七大奇迹之一。这是一个由双子火山口形成的小岛屿，这两座火山都是活动的。是你过去没有亲眼所见的景点。" />
+
+</LinearLayout>

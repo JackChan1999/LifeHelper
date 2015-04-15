@@ -32,4 +32,19 @@ public class OutlinePersist {
 
         return noticeInfo;
     }
+
+    /**
+     * 获取十大旅游景点的json数据
+     */
+    public String getTenTopSpots() {
+        String tenTopSpots = null;
+        try {
+            InputStream tenTopSpotsIS = context.getAssets().open("ten_top_spots");
+            tenTopSpots = IOUtils.toString(tenTopSpotsIS);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return tenTopSpots;
+    }
 }

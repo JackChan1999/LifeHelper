@@ -6,8 +6,12 @@ import com.baidu.mapapi.search.poi.PoiCitySearchOption;
 import com.baidu.mapapi.search.poi.PoiDetailResult;
 import com.baidu.mapapi.search.poi.PoiResult;
 import com.baidu.mapapi.search.poi.PoiSearch;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.qz.lifehelper.entity.CityBean;
+import com.qz.lifehelper.entity.ImageBean;
 import com.qz.lifehelper.entity.POIResultBean;
+import com.qz.lifehelper.entity.json.POIResultJsonBean;
 
 import org.androidannotations.annotations.EBean;
 
@@ -15,6 +19,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 import bolts.Task;
 
@@ -51,12 +56,11 @@ public class POIBusiness {
                 List<POIResultBean> poiResultBeans = new ArrayList<>();
                 if (poiInfos != null) {
                     for (PoiInfo poiInfo : poiInfos) {
-                        POIResultBean mPOIResultBean = new POIResultBean();
-                        mPOIResultBean.address = poiInfo.address;
-                        mPOIResultBean.poiIv = null;
-                        mPOIResultBean.tel = poiInfo.phoneNum;
-                        mPOIResultBean.title = poiInfo.name;
-                        mPOIResultBean.id = poiInfo.uid;
+                        POIResultBean mPOIResultBean = new POIResultBean()
+                                .setAddress(poiInfo.address)
+                                .setTel(poiInfo.phoneNum)
+                                .setTitle(poiInfo.name)
+                                .setId(poiInfo.uid);
                         poiResultBeans.add(mPOIResultBean);
                         addPOIResult(mPOIResultBean);
                     }
@@ -89,5 +93,29 @@ public class POIBusiness {
      */
     public POIResultBean getPOIResult(String poiResultId) {
         return poiResults.get(poiResultId);
+    }
+
+
+    /**
+     * 解析POIResult的json数据
+     */
+    public Task<List<POIResultBean>> parsePOIResult(final String tenTopSpotsJson) {
+        return Task.callInBackground(new Callable<List<POIResultBean>>() {
+            @Override
+            public List<POIResultBean> call() throws Exception {
+                Gson gson = new Gson();
+                List<POIResultJsonBean> poiResultJsonBeans = gson.fromJson(tenTopSpotsJson, new TypeToken<List<POIResultJsonBean>>() {
+                }.getType());
+
+                List<POIResultBean> poiResultBeans = new ArrayList<POIResultBean>();
+                for (POIResultJsonBean poiResultJsonBean : poiResultJsonBeans) {
+                    poiResultBeans.add(new POIResultBean()
+                            .setTitle(poiResultJsonBean.getTitle())
+                            .setDetail(poiResultJsonBean.getContent())
+                            .setImageBean(ImageBean.generateImage(poiResultJsonBean.getImage(), ImageBean.ImageType.OUTLINE)));
+                }
+                return poiResultBeans;
+            }
+        });
     }
 }
