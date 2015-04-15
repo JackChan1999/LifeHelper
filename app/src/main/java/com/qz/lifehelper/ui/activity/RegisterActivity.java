@@ -21,7 +21,7 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
 /**
- * 用户注册页面
+ * 鐢ㄦ埛娉ㄥ唽椤甸潰
  */
 @EActivity(R.layout.activity_register)
 public class RegisterActivity extends Activity {
@@ -29,23 +29,23 @@ public class RegisterActivity extends Activity {
     private ProgressDialog mRegisterDialog;
 
 
-    //用户账号
+    //鐢ㄦ埛璐﹀彿
     @ViewById(R.id.et_account)
     EditText mUaerAccount;
 
-    //用户密码
+    //鐢ㄦ埛瀵嗙爜
     @ViewById(R.id.et_password)
     EditText mUaerPassword;
 
-    //用户邮箱
+    //鐢ㄦ埛閭
     @ViewById(R.id.et_email)
     EditText mUaerEmail;
 
-    //确认密码
+    //纭瀵嗙爜
     @ViewById(R.id.et_password_confirm)
     EditText mUaerPasswordConfirm;
 
-    //注册按钮
+    //娉ㄥ唽鎸夐挳
     @ViewById(R.id.btn_register)
     Button mBtnRegister;
 
@@ -94,7 +94,7 @@ public class RegisterActivity extends Activity {
     }
 
     /**
-     * 注册
+     * 娉ㄥ唽
      */
     public void userRegister() {
         SignUpCallback signUpCallback = new SignUpCallback() {
@@ -132,7 +132,7 @@ public class RegisterActivity extends Activity {
         AVOSService.signUp(username, password, email, signUpCallback);
     }
     /**
-     * 隐藏登录中提示框
+     * 闅愯棌鐧诲綍涓彁绀烘
      */
     private void progressDialogDismiss() {
         if (mRegisterDialog != null)
@@ -140,7 +140,7 @@ public class RegisterActivity extends Activity {
     }
 
     /**
-     * 显示登录中提示框
+     * 鏄剧ず鐧诲綍涓彁绀烘
      */
     private void progressDialogShow() {
         mRegisterDialog = ProgressDialog

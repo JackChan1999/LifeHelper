@@ -23,8 +23,6 @@
 
         <activity android:name=".ui.activity.RegisterActivity_" />
 
-        <activity android:name=".ui.activity.ChooseCityActivity_" />
-
         <activity android:name=".ui.activity.HomeActivity_">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -11,7 +11,6 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.qz.lifehelper.R;
 import com.qz.lifehelper.entity.CityBean;
 import com.qz.lifehelper.entity.json.CitiesGroupByFirstCharJsonBean;
 import com.qz.lifehelper.entity.json.CityJsonBean;
@@ -68,7 +67,7 @@ public class LocationBusiness {
                     }
                 })
                 .create();
-        transaction.replace(R.id.fragmrnt_container, fragment);
+        transaction.add(android.R.id.content, fragment);
         transaction.commit();
 
         return taskCompletionSource.getTask();

@@ -1,25 +1,22 @@
 package com.qz.lifehelper.helper;
 
 import android.content.Context;
-import android.content.Intent;
-import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.widget.Toast;
 
 import com.qz.lifehelper.business.LocationBusiness;
 import com.qz.lifehelper.entity.CityBean;
-import com.qz.lifehelper.event.GetCurrentCityEvent;
-import com.qz.lifehelper.ui.activity.ChooseCityActivity_;
+import com.qz.lifehelper.entity.HomeFragmentBean;
 import com.qz.lifehelper.ui.fragment.ArroundFragmnet_;
 import com.qz.lifehelper.ui.fragment.LifeFragment_;
 import com.qz.lifehelper.ui.fragment.PersonalFragment_;
 
-
-import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
-import org.apache.commons.collections4.OrderedMap;
-import org.apache.commons.collections4.map.ListOrderedMap;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import bolts.Continuation;
 import bolts.Task;
@@ -38,18 +35,6 @@ public class HomeHelper {
     @RootContext
     Context context;
 
-    private Task<String>.TaskCompletionSource chooseCityTaskSource;
-
-    /**
-     * 前往选择城市页
-     */
-    public Task<String> chooseCity() {
-        chooseCityTaskSource = Task.create();
-        Intent intent = new Intent(context, ChooseCityActivity_.class);
-        context.startActivity(intent);
-        return chooseCityTaskSource.getTask();
-    }
-
     /**
      * 前往关键字搜索页
      */
@@ -60,14 +45,15 @@ public class HomeHelper {
     /**
      * 获取当前选择的城市
      */
-    public Task<String> getCurrentCity() {
+    public Task<String> getCurrentCity(FragmentManager fragmentManager) {
         final Task<String>.TaskCompletionSource taskCompletionSource = Task.create();
         CityBean currentCityBean = locationBusiness.getCurrentCity();
+        //如果美欧设置当前的城市，则跳转到ChooseCityFragment去选择一个城市
         if (currentCityBean == null) {
-            chooseCity().onSuccess(new Continuation<String, Void>() {
+            locationBusiness.chooseCity(fragmentManager).onSuccess(new Continuation<CityBean, Void>() {
                 @Override
-                public Void then(Task<String> task) throws Exception {
-                    taskCompletionSource.setResult(task.getResult());
+                public Void then(Task<CityBean> task) throws Exception {
+                    taskCompletionSource.setResult(task.getResult().cityName);
                     return null;
                 }
             });
@@ -77,28 +63,14 @@ public class HomeHelper {
         return taskCompletionSource.getTask();
     }
 
-    @AfterInject
-    public void reigsterEventBus() {
-        locationBusiness.getEventBus().register(this);
-    }
-
-    /**
-     * 当接收到选择城市的event，则设置选择城市task的结果
-     */
-    public void onEvent(GetCurrentCityEvent event) {
-        if (chooseCityTaskSource != null) {
-            chooseCityTaskSource.setResult(event.currentCityBean.cityName);
-        }
-    }
-
     /**
      * 获取Home页面的三个子页面对应的Fragment及其对应当Tab标题
      */
-    public OrderedMap<String, Fragment> getFragments() {
-        OrderedMap<String, Fragment> fragments = new ListOrderedMap<String, Fragment>();
-        fragments.put("周边", new ArroundFragmnet_());
-        fragments.put("生活", new LifeFragment_());
-        fragments.put("个人", new PersonalFragment_());
+    public List<HomeFragmentBean> getFragments() {
+        List<HomeFragmentBean> fragments = new ArrayList<>();
+        fragments.add(HomeFragmentBean.generateHomeFragment(new ArroundFragmnet_(), "周边"));
+        fragments.add(HomeFragmentBean.generateHomeFragment(new LifeFragment_(), "生活"));
+        fragments.add(HomeFragmentBean.generateHomeFragment(new PersonalFragment_(), "个人"));
         return fragments;
     }
 

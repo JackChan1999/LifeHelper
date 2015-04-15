@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import com.qz.lifehelper.ui.activity.BusInfoActivity_;
-import com.qz.lifehelper.ui.activity.ChooseCityActivity_;
 import com.qz.lifehelper.ui.activity.HomeActivity_;
 import com.qz.lifehelper.ui.activity.POIResultActivity;
 import com.qz.lifehelper.ui.activity.POIResultActivity_;
@@ -33,7 +32,6 @@ public class MainHelper {
 
         if (activityClasses == null) {
             activityClasses = new ArrayList<ActivityClass>();
-            activityClasses.add(new ActivityClass("ChooseCityActivity", ChooseCityActivity_.class));
             activityClasses.add(new ActivityClass("HomeActivity", HomeActivity_.class));
 
             Bundle extra = new Bundle();

@@ -1,7 +1,8 @@
 package com.qz.lifehelper.ui.fragment;
 
 
-import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.widget.ListView;
 
 import com.qz.lifehelper.R;
@@ -22,7 +23,7 @@ import bolts.Task;
  * 选择城市页面
  */
 @EFragment(R.layout.fragment_choose_city)
-public class ChooseCityFragment extends Fragment {
+public class ChooseCityFragment extends BaseFragment {
 
     private static final String TAG = ChooseCityFragment.class.getSimpleName() + "TAG";
 
@@ -128,5 +129,14 @@ public class ChooseCityFragment extends Fragment {
     private void refreshList() {
         adapter.setData(chooseCityHelper.getChooseCityListData());
         adapter.notifyDataSetChanged();
+    }
+
+    @ViewById(R.id.toolbar)
+    Toolbar toolbar;
+
+    @AfterViews
+    void setToolBar() {
+        toolbar.setTitle("选择城市");
+        ((ActionBarActivity) getActivity()).setSupportActionBar(toolbar);
     }
 }
