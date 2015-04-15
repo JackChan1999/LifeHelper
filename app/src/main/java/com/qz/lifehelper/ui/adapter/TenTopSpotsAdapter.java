@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.qz.lifehelper.R;
 import com.qz.lifehelper.entity.POIResultBean;
+import com.squareup.picasso.Picasso;
 
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
@@ -71,7 +72,10 @@ public class TenTopSpotsAdapter extends BaseAdapter {
 
         childViews.titleTv.setText(poiResultBean.title);
         childViews.contentTv.setText(poiResultBean.detail);
-        //TODO 加载图片
+        Picasso.with(context)
+                .load(poiResultBean.imageBean.imageSrc)
+                .fit()
+                .into(childViews.imageIv);
 
         return convertView;
     }
