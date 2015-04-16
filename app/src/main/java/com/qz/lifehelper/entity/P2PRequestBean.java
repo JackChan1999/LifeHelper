@@ -7,7 +7,7 @@ import java.io.Serializable;
  */
 public class P2PRequestBean implements Serializable {
 
-    public P2PCatergoryBean category;
+    public P2PCategoryBean category;
 
 
     /**
@@ -24,7 +24,7 @@ public class P2PRequestBean implements Serializable {
 
     public FragmentType fragmentType;
 
-    public P2PRequestBean setCategory(P2PCatergoryBean category) {
+    public P2PRequestBean setCategory(P2PCategoryBean category) {
         this.category = category;
         return this;
     }

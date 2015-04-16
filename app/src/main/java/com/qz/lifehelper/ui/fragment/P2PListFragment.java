@@ -7,7 +7,7 @@ import android.widget.ListView;
 import com.qz.lifehelper.R;
 import com.qz.lifehelper.business.DialogBusiness;
 import com.qz.lifehelper.business.P2PBusiness;
-import com.qz.lifehelper.entity.P2PCatergoryBean;
+import com.qz.lifehelper.entity.P2PCategoryBean;
 import com.qz.lifehelper.entity.P2PItemBean;
 import com.qz.lifehelper.ui.adapter.P2PListAdapter;
 
@@ -31,8 +31,8 @@ public class P2PListFragment extends BaseFragment {
 
         private P2PListFragment fragment = new P2PListFragment_.FragmentBuilder_().build();
 
-        public Builder setCategory(P2PCatergoryBean p2pCatergoryBean) {
-            fragment.catergoryBean = p2pCatergoryBean;
+        public Builder setCategory(P2PCategoryBean p2PCategoryBean) {
+            fragment.catergoryBean = p2PCategoryBean;
             return this;
         }
 
@@ -44,7 +44,7 @@ public class P2PListFragment extends BaseFragment {
         }
     }
 
-    private P2PCatergoryBean catergoryBean;
+    private P2PCategoryBean catergoryBean;
 
     @ViewById(R.id.listview)
     ListView listView;
@@ -80,7 +80,7 @@ public class P2PListFragment extends BaseFragment {
 
     @AfterViews
     void setToolbar() {
-        toolbar.setTitle(catergoryBean.category);
+        toolbar.setTitle(catergoryBean.title);
         ((ActionBarActivity) getActivity()).setSupportActionBar(toolbar);
     }
 

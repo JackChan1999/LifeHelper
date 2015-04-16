@@ -5,12 +5,15 @@ import android.support.v4.app.FragmentTransaction;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.qz.lifehelper.entity.ImageBean;
-import com.qz.lifehelper.entity.P2PCatergoryBean;
+import com.qz.lifehelper.entity.P2PCategoryBean;
 import com.qz.lifehelper.entity.P2PItemBean;
 import com.qz.lifehelper.entity.P2PRequestBean;
+import com.qz.lifehelper.entity.json.P2PCategoryJsonBean;
 import com.qz.lifehelper.entity.json.P2PItemJsonBean;
 import com.qz.lifehelper.persist.OutlinePersist;
+import com.qz.lifehelper.persist.P2PPersist;
 import com.qz.lifehelper.ui.fragment.P2PListFragment;
+import com.qz.lifehelper.ui.fragment.P2pCategoryFragment;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
@@ -34,7 +37,7 @@ public class P2PBusiness {
     public void toTargetFragment(FragmentTransaction transaction, P2PRequestBean p2pRequestBean) {
         switch (p2pRequestBean.fragmentType) {
             case P2P_CATEGORY:
-                toP2PCategoryFragment();
+                toP2PCategoryFragment(transaction);
                 break;
             case P2P_LIST:
                 toP2PListFragment(transaction, p2pRequestBean.category);
@@ -48,16 +51,16 @@ public class P2PBusiness {
     /**
      * 前往P2P详情页
      */
-    private void toP2PDetailFragment() {
+    public void toP2PDetailFragment() {
 
     }
 
     /**
      * 前往P2P结果列表页
      */
-    private void toP2PListFragment(FragmentTransaction transaction, P2PCatergoryBean p2pCatergoryBean) {
+    public void toP2PListFragment(FragmentTransaction transaction, P2PCategoryBean p2PCategoryBean) {
         P2PListFragment fragment = new P2PListFragment.Builder()
-                .setCategory(p2pCatergoryBean)
+                .setCategory(p2PCategoryBean)
                 .create();
         transaction.add(android.R.id.content, fragment);
         transaction.commit();
@@ -66,8 +69,10 @@ public class P2PBusiness {
     /**
      * 前往P2P分类目录页
      */
-    private void toP2PCategoryFragment() {
-
+    public void toP2PCategoryFragment(FragmentTransaction transaction) {
+        P2pCategoryFragment fragment = new P2pCategoryFragment.Builder().create();
+        transaction.add(android.R.id.content, fragment);
+        transaction.commit();
     }
 
     @Bean
@@ -78,7 +83,7 @@ public class P2PBusiness {
      *
      * @param catergoryBean P2类别
      */
-    public Task<List<P2PItemBean>> getP2PList(P2PCatergoryBean catergoryBean) {
+    public Task<List<P2PItemBean>> getP2PList(P2PCategoryBean catergoryBean) {
         return Task.callInBackground(new Callable<String>() {
             @Override
             public String call() throws Exception {
@@ -119,4 +124,48 @@ public class P2PBusiness {
             }
         });
     }
+
+    @Bean
+    P2PPersist p2pPersist;
+
+    /**
+     * 获取P2P分类信息数据
+     */
+    public Task<List<P2PCategoryBean>> getP2PCategory() {
+        return Task.callInBackground(new Callable<String>() {
+            @Override
+            public String call() throws Exception {
+                return p2pPersist.getP2PCategory();
+            }
+        }).continueWithTask(new Continuation<String, Task<List<P2PCategoryBean>>>() {
+            @Override
+            public Task<List<P2PCategoryBean>> then(Task<String> task) throws Exception {
+                return parseP2PCategory(task.getResult());
+            }
+        });
+    }
+
+    /**
+     * 解析p2p分类信息json数据
+     */
+    private Task<List<P2PCategoryBean>> parseP2PCategory(final String p2pCategoryJson) {
+        return Task.callInBackground(new Callable<List<P2PCategoryBean>>() {
+            @Override
+            public List<P2PCategoryBean> call() throws Exception {
+                Gson gson = new Gson();
+                List<P2PCategoryJsonBean> p2pCategoryJsonBeans = gson.fromJson(p2pCategoryJson, new TypeToken<List<P2PCategoryJsonBean>>() {
+                }.getType());
+                List<P2PCategoryBean> p2pCategoryBeans = new ArrayList<P2PCategoryBean>();
+                for (P2PCategoryJsonBean p2pCategoryJsonBean : p2pCategoryJsonBeans) {
+                    p2pCategoryBeans.add(new P2PCategoryBean()
+                            .setTitle(p2pCategoryJsonBean.getTitle())
+                            .setContent(p2pCategoryJsonBean.getContent())
+                            .setImageBean(ImageBean.generateImage(p2pCategoryJsonBean.getImage(), ImageBean.ImageType.OUTLINE)));
+                }
+                return p2pCategoryBeans;
+            }
+        });
+    }
+
+
 }

@@ -52,7 +52,7 @@ public class P2PListAdapter extends BaseAdapter {
         }
 
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.item_p2p, parent, false);
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_p2p_item, parent, false);
             ChildViews childViews = new ChildViews();
             childViews.p2pImageIv = (ImageView) convertView.findViewById(R.id.p2p_image_iv);
             childViews.p2pTitleTv = (TextView) convertView.findViewById(R.id.p2p_title_tv);
