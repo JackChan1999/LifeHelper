@@ -47,4 +47,19 @@ public class OutlinePersist {
 
         return tenTopSpots;
     }
+
+    /**
+     * 获取P2P items的json数据
+     */
+    public String getP2PItems() {
+        String p2pItemsJson = null;
+        try {
+            InputStream tenTopSpotsIS = context.getAssets().open("p2p_items");
+            p2pItemsJson = IOUtils.toString(tenTopSpotsIS);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return p2pItemsJson;
+    }
 }

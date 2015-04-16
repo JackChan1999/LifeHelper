@@ -1,6 +1,7 @@
 package com.qz.lifehelper.ui.activity;
 
-import android.support.v4.app.Fragment;
+import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 
 import com.qz.lifehelper.ui.fragment.HomeFragment;
 
@@ -15,10 +16,13 @@ import org.androidannotations.annotations.EActivity;
 @EActivity
 public class HomeActivity extends BaseActivity {
 
-
     @Override
-    protected Fragment getFragment() {
-        return new HomeFragment.Builder()
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        HomeFragment fragment = new HomeFragment.Builder()
                 .create();
+        transaction.add(android.R.id.content, fragment);
+        transaction.commit();
     }
 }

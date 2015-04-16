@@ -5,7 +5,10 @@ import android.content.Intent;
 import android.widget.Toast;
 
 import com.qz.lifehelper.business.LocationBusiness;
+import com.qz.lifehelper.entity.P2PCatergoryBean;
+import com.qz.lifehelper.entity.P2PRequestBean;
 import com.qz.lifehelper.ui.activity.BusInfoActivity_;
+import com.qz.lifehelper.ui.activity.P2PActivity;
 import com.qz.lifehelper.ui.activity.POIResultActivity;
 import com.qz.lifehelper.ui.activity.PlaneInfoActivity_;
 import com.qz.lifehelper.ui.activity.TrainInfoActivity_;
@@ -66,8 +69,12 @@ public class LifeHelper {
      * 前往交易市场搜索结果页
      */
     public void toMarketResult(String category) {
-        Toast.makeText(context, "前往" + category + "交易市场", Toast.LENGTH_SHORT).show();
+        Intent intent = P2PActivity.generateIntent(context
+                , new P2PRequestBean()
+                .setFragmentType(P2PRequestBean.FragmentType.P2P_LIST)
+                .setCategory(new P2PCatergoryBean().setCategory(category)));
 
+        context.startActivity(intent);
     }
 
     /**

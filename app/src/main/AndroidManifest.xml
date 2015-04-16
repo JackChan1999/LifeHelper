@@ -13,6 +13,8 @@
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="Drjj8aQ7mvTgYYES5rMgdZUE" />
 
+        <activity android:name=".ui.activity.P2PActivity_" />
+
         <activity android:name=".ui.activity.BusInfoActivity_" />
 
         <activity android:name=".ui.activity.TrainInfoActivity_" />

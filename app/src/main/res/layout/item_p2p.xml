@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5dp">
+
+    <ImageView
+        android:layout_marginRight="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/p2p_image_iv"
+        android:minHeight="100dp"
+        android:minWidth="100dp"
+        android:background="@android:color/holo_blue_light" />
+
+    <TextView
+        android:textSize="25sp"
+        android:layout_toRightOf="@id/p2p_image_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/p2p_title_tv"
+        android:text="苹果MacBook笔记本电脑" />
+
+    <TextView
+        android:textStyle="bold"
+        android:textColor="@android:color/holo_blue_light"
+        android:textSize="35sp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:layout_toRightOf="@id/p2p_image_iv"
+        android:layout_below="@id/p2p_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/p2p_price_tv"
+        android:text="3320元" />
+
+    <TextView
+        android:textSize="18sp"
+        android:textColor="@android:color/darker_gray"
+        android:layout_toRightOf="@id/p2p_image_iv"
+        android:layout_below="@id/p2p_price_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/p2p_address_tv"
+        android:text="位置：上海" />
+
+    <TextView
+        android:textSize="18sp"
+        android:textColor="@android:color/darker_gray"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/p2p_price_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/p2p_tel_tv"
+        android:text="电话：18222919444" />
+
+</RelativeLayout>
