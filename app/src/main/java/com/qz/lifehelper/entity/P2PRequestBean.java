@@ -7,7 +7,15 @@ import java.io.Serializable;
  */
 public class P2PRequestBean implements Serializable {
 
+    /**
+     * P2PListFragment需要这个参数来加载制定分类的数据
+     */
     public P2PCategoryBean category;
+
+    /**
+     * P2PDetailFragment需要该参数来加载p2p详细信息
+     */
+    public P2PItemBean p2PItemBean;
 
 
     /**
@@ -22,6 +30,9 @@ public class P2PRequestBean implements Serializable {
         , P2P_DETAIL
     }
 
+    /**
+     * 通过该参数确定要打开的fragment
+     */
     public FragmentType fragmentType;
 
     public P2PRequestBean setCategory(P2PCategoryBean category) {
@@ -31,6 +42,11 @@ public class P2PRequestBean implements Serializable {
 
     public P2PRequestBean setFragmentType(FragmentType fragmentType) {
         this.fragmentType = fragmentType;
+        return this;
+    }
+
+    public P2PRequestBean setP2PItemBean(P2PItemBean p2PItemBean) {
+        this.p2PItemBean = p2PItemBean;
         return this;
     }
 }

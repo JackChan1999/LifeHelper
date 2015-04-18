@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <ImageView
+        android:minHeight="200dp"
+        android:background="@android:color/holo_blue_light"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/p2p_image_iv" />
+
+    <TextView
+        android:layout_margin="10dp"
+        android:textSize="30sp"
+        android:text="苹果MacBook笔记本"
+        android:layout_below="@id/p2p_image_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/p2p_title_tv" />
+
+    <TextView
+        android:layout_marginLeft="10dp"
+        android:textSize="18sp"
+        android:layout_below="@id/p2p_title_tv"
+        android:text="位置：上海"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/p2p_address_tv" />
+
+    <TextView
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:textSize="18sp"
+        android:layout_below="@id/p2p_address_tv"
+        android:text="电话：18222919444"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/p2p_tel_tv" />
+
+
+    <TextView
+        android:textSize="35sp"
+        android:layout_marginRight="10dp"
+        android:textColor="@android:color/holo_blue_light"
+        android:layout_below="@id/p2p_title_tv"
+        android:layout_alignParentRight="true"
+        android:text="3320元"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/p2p_price_tv" />
+
+    <View
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:id="@+id/piece"
+        android:layout_below="@id/p2p_tel_tv"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:background="@android:color/darker_gray" />
+
+    <TextView
+        android:textSize="28sp"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@id/piece"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/p2p_content_title_tv"
+        android:text="商品详情" />
+
+    <TextView
+        android:textSize="18sp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/p2p_content_title_tv"
+        android:text="麦兜弟弟最大的梦想就是去马尔代夫，那个水清沙白的小岛国成为多少人梦中的浪漫之地。但马尔代夫的美景全部位于低海拔，全国平均高度仅高出海面1.5米，八成的国土不高于1米。如果联合国对全球暖化下海面上升速度计算准确的话，最快一个世纪这些岛屿将被海水逐一吞噬。"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/p2p_content_tv" />
+
+</RelativeLayout>

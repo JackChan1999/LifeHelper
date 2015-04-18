@@ -12,6 +12,7 @@ import com.qz.lifehelper.entity.json.P2PCategoryJsonBean;
 import com.qz.lifehelper.entity.json.P2PItemJsonBean;
 import com.qz.lifehelper.persist.OutlinePersist;
 import com.qz.lifehelper.persist.P2PPersist;
+import com.qz.lifehelper.ui.fragment.P2PDetailFragment;
 import com.qz.lifehelper.ui.fragment.P2PListFragment;
 import com.qz.lifehelper.ui.fragment.P2pCategoryFragment;
 
@@ -43,7 +44,7 @@ public class P2PBusiness {
                 toP2PListFragment(transaction, p2pRequestBean.category);
                 break;
             case P2P_DETAIL:
-                toP2PDetailFragment();
+                toP2PDetailFragment(transaction, p2pRequestBean.p2PItemBean);
                 break;
         }
     }
@@ -51,8 +52,12 @@ public class P2PBusiness {
     /**
      * 前往P2P详情页
      */
-    public void toP2PDetailFragment() {
-
+    public void toP2PDetailFragment(FragmentTransaction transaction, P2PItemBean p2PItemBean) {
+        P2PDetailFragment fragment = new P2PDetailFragment.Builder()
+                .setP2PItemBean(p2PItemBean)
+                .create();
+        transaction.add(android.R.id.content, fragment);
+        transaction.commit();
     }
 
     /**

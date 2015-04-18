@@ -1,7 +1,10 @@
 package com.qz.lifehelper.ui.fragment;
 
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.qz.lifehelper.R;
@@ -16,6 +19,7 @@ import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import bolts.Continuation;
@@ -58,6 +62,8 @@ public class P2PListFragment extends BaseFragment {
     @Bean
     DialogBusiness dialogBusiness;
 
+    private List<P2PItemBean> data = new ArrayList<>();
+
     @AfterViews
     void setListView() {
         listView.setAdapter(adapter);
@@ -67,12 +73,23 @@ public class P2PListFragment extends BaseFragment {
         p2PBusiness.getP2PList(catergoryBean).onSuccess(new Continuation<List<P2PItemBean>, Void>() {
             @Override
             public Void then(Task<List<P2PItemBean>> task) throws Exception {
-                adapter.setData(task.getResult());
+                data.clear();
+                data.addAll(task.getResult());
+                adapter.setData(data);
                 dialogBusiness.hideDialog("p2pList");
                 adapter.notifyDataSetChanged();
                 return null;
             }
         }, Task.UI_THREAD_EXECUTOR);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.addToBackStack(null);
+                p2PBusiness.toP2PDetailFragment(transaction, data.get(position));
+            }
+        });
     }
 
     @ViewById(R.id.toolbar)
