@@ -94,16 +94,17 @@ public class HomeFragment extends BaseFragment {
                         locationBusiness.setCurrentCity(task.getResult());
                         return null;
                     }
-                });
+                }, Task.UI_THREAD_EXECUTOR);
             }
         });
         homeHelper.getCurrentCity(getFragmentManager()).onSuccess(new Continuation<String, Void>() {
             @Override
             public Void then(Task<String> task) throws Exception {
                 currentCityTv.setText(task.getResult());
+                locationBusiness.setCurrentCity(CityBean.generateCity(task.getResult()));
                 return null;
             }
-        });
+        }, Task.UI_THREAD_EXECUTOR);
     }
 
     @Bean
