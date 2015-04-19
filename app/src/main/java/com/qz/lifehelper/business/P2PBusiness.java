@@ -48,6 +48,7 @@ public class P2PBusiness {
                 toP2PDetailFragment(transaction, p2pRequestBean.p2PItemBean);
                 break;
             case P2P_ADD:
+                //TODO 这里实际上是没有实现的
                 toP2PAddFragment(transaction, p2pRequestBean.addCallBack);
                 break;
             case P2P_ALTER:

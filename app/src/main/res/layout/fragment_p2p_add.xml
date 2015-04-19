@@ -1,205 +1,234 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
+    <include
+        layout="@layout/toolbar"
+        android:id="@+id/toolbar" />
+
+    <ScrollView
+            android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            style="@style/input_take_phpoto"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:id="@+id/take_photo_ll">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="添加照片"
-                android:drawableTop="@android:drawable/ic_menu_camera" />
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="25dp"
-            style="@style/input_fill_piece" />
-
-
-        <LinearLayout
-            style="@style/input_container_leave1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
             <LinearLayout
-                style="@style/input_container_leave2"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
 
-                <TextView
-                    style="@style/input_text_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="地址" />
+                <!--添加照片-->
+                <LinearLayout
+                    style="@style/input_take_phpoto"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:id="@+id/take_photo_ll">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="添加照片"
+                        android:drawableTop="@android:drawable/ic_menu_camera" />
+
+                </LinearLayout>
 
                 <View
-                    style="@style/input_separator_vertical"
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent" />
-
-                <EditText
-                    style="@style/input_edit_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/address_et" />
-
-            </LinearLayout>
-
-            <View
-                style="@style/input_separator_horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="1dp" />
-
-            <LinearLayout
-                style="@style/input_container_leave2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    style="@style/input_text_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="电话" />
-
-                <View
-                    style="@style/input_separator_vertical"
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent" />
-
-                <EditText
-                    style="@style/input_edit_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tel_et" />
-            </LinearLayout>
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp"
+                    style="@style/input_fill_piece" />
 
 
-        </LinearLayout>
+                <LinearLayout
+                    style="@style/input_container_leave1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="25dp"
-            style="@style/input_fill_piece" />
+                    <!--地址-->
+                    <LinearLayout
+                        style="@style/input_container_leave2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-        <LinearLayout
-            style="@style/input_container_leave1"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+                        <TextView
+                            style="@style/input_text_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="地址" />
 
-            <LinearLayout
-                style="@style/input_container_leave2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                        <View
+                            style="@style/input_separator_vertical"
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent" />
 
-                <TextView
-                    style="@style/input_text_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="价格" />
+                        <EditText
+                            android:inputType="text"
+                            android:imeOptions="actionNext"
+                            style="@style/input_edit_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/address_et" />
 
-                <View
-                    style="@style/input_separator_vertical"
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent" />
+                    </LinearLayout>
 
-                <EditText
-                    style="@style/input_edit_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/price_et" />
+                    <View
+                        style="@style/input_separator_horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp" />
 
-            </LinearLayout>
+                    <!--电话-->
+                    <LinearLayout
+                        style="@style/input_container_leave2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-        </LinearLayout>
+                        <TextView
+                            style="@style/input_text_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="电话" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="25dp"
-            style="@style/input_fill_piece" />
+                        <View
+                            style="@style/input_separator_vertical"
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent" />
 
-        <LinearLayout
-            style="@style/input_container_leave1"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+                        <EditText
+                            android:imeOptions="actionNext"
+                            android:inputType="number"
+                            style="@style/input_edit_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tel_et" />
+                    </LinearLayout>
 
-            <LinearLayout
-                style="@style/input_container_leave2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
 
-                <TextView
-                    style="@style/input_text_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="标题" />
+                </LinearLayout>
 
                 <View
-                    style="@style/input_separator_vertical"
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent" />
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp"
+                    style="@style/input_fill_piece" />
 
-                <EditText
-                    style="@style/input_edit_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/title_et" />
+                <LinearLayout
+                    style="@style/input_container_leave1"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-            </LinearLayout>
+                    <!--价格-->
+                    <LinearLayout
+                        style="@style/input_container_leave2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
+                        <TextView
+                            style="@style/input_text_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="价格" />
 
-            <View
-                style="@style/input_separator_horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="1dp" />
+                        <View
+                            style="@style/input_separator_vertical"
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent" />
 
-            <LinearLayout
-                style="@style/input_container_leave2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                        <EditText
+                            android:imeOptions="actionNext"
+                            android:inputType="number"
+                            style="@style/input_edit_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/price_et" />
 
-                <TextView
-                    style="@style/input_text_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="描述" />
+                    </LinearLayout>
+
+                </LinearLayout>
 
                 <View
-                    style="@style/input_separator_vertical"
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent" />
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp"
+                    style="@style/input_fill_piece" />
 
-                <EditText
-                    style="@style/input_edit_text"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    style="@style/input_container_leave1"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <!--标题-->
+                    <LinearLayout
+                        style="@style/input_container_leave2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            style="@style/input_text_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="标题" />
+
+                        <View
+                            style="@style/input_separator_vertical"
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent" />
+
+                        <EditText
+                            android:imeOptions="actionNext"
+                            android:inputType="text"
+                            style="@style/input_edit_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/title_et" />
+
+                    </LinearLayout>
+
+
+                    <View
+                        style="@style/input_separator_horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp" />
+
+                    <!--描述-->
+                    <LinearLayout
+                        style="@style/input_container_leave2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            style="@style/input_text_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="描述" />
+
+                        <View
+                            style="@style/input_separator_vertical"
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent" />
+
+                        <EditText
+                            android:imeOptions="actionDone"
+                            android:inputType="textMultiLine"
+                            style="@style/input_edit_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/detail_et"
+                            android:minLines="5" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!--提交-->
+                <Button
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/detail_et"
-                    android:minLines="5" />
+                    android:text="提交"
+                    android:id="@+id/submit_bn"
+                    style="@style/input_submit" />
             </LinearLayout>
+    </ScrollView>
+</LinearLayout>
 
-        </LinearLayout>
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="提交"
-            android:id="@+id/submit_bn"
-            style="@style/input_submit" />
-    </LinearLayout>
-</ScrollView>
 

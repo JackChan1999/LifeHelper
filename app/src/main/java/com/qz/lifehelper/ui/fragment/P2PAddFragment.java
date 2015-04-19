@@ -1,5 +1,6 @@
 package com.qz.lifehelper.ui.fragment;
 
+import android.support.v7.widget.Toolbar;
 import android.widget.EditText;
 
 import com.qz.lifehelper.R;
@@ -7,6 +8,7 @@ import com.qz.lifehelper.business.DialogBusiness;
 import com.qz.lifehelper.business.P2PBusiness;
 import com.qz.lifehelper.entity.P2PItemBean;
 
+import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
@@ -107,5 +109,13 @@ public class P2PAddFragment extends BaseFragment {
                 return null;
             }
         });
+    }
+
+    @ViewById(R.id.toolbar)
+    Toolbar toolbar;
+
+    @AfterViews
+    void setToolbar() {
+        toolbar.setTitle("新增出售物品");
     }
 }
