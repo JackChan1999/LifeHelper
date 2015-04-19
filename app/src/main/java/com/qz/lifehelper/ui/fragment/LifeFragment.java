@@ -57,7 +57,7 @@ public class LifeFragment extends Fragment {
 
     @Click(R.id.buy_electric_appliance)
     public void onBuyElectricAppliance() {
-        lifeHelper.toMarketResult("电子商品");
+        lifeHelper.toMarketResult("电子数码");
     }
 
     @Click(R.id.buy_clothes)

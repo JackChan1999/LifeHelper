@@ -13,6 +13,7 @@ import com.qz.lifehelper.business.DialogBusiness;
 import com.qz.lifehelper.business.P2PBusiness;
 import com.qz.lifehelper.entity.P2PCategoryBean;
 import com.qz.lifehelper.entity.P2PItemBean;
+import com.qz.lifehelper.service.P2PService;
 import com.qz.lifehelper.ui.adapter.P2PListAdapter;
 
 import org.androidannotations.annotations.AfterViews;
@@ -20,8 +21,9 @@ import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import bolts.Continuation;
 import bolts.Task;
@@ -61,9 +63,12 @@ public class P2PListFragment extends BaseFragment {
     P2PBusiness p2pBusiness;
 
     @Bean
+    P2PService p2pService;
+
+    @Bean
     DialogBusiness dialogBusiness;
 
-    private List<P2PItemBean> data = new ArrayList<>();
+    private List<P2PItemBean> data = new LinkedList<>();
 
     @AfterViews
     void setListView() {
@@ -71,14 +76,13 @@ public class P2PListFragment extends BaseFragment {
         dialogBusiness.showDialog(getFragmentManager()
                 , new DialogBusiness.ProgressDialogBuilder().create()
                 , "p2pList");
-        p2pBusiness.getP2PList(catergoryBean).onSuccess(new Continuation<List<P2PItemBean>, Void>() {
+        p2pService.getP2PList(catergoryBean).onSuccess(new Continuation<List<P2PItemBean>, Void>() {
             @Override
             public Void then(Task<List<P2PItemBean>> task) throws Exception {
                 data.clear();
                 data.addAll(task.getResult());
-                adapter.setData(data);
                 dialogBusiness.hideDialog("p2pList");
-                adapter.notifyDataSetChanged();
+                refreshListView(data);
                 return null;
             }
         }, Task.UI_THREAD_EXECUTOR);
@@ -96,6 +100,11 @@ public class P2PListFragment extends BaseFragment {
 
     }
 
+    private void refreshListView(List<P2PItemBean> data) {
+        adapter.setData(data);
+        adapter.notifyDataSetChanged();
+    }
+
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         menu.add("修改");
@@ -108,15 +117,41 @@ public class P2PListFragment extends BaseFragment {
         transaction.addToBackStack(null);
         p2pBusiness.toP2PAlterFragment(transaction, data.get(info.position), new P2PAlterFragment.Callback() {
             @Override
-            public void onAlterSuccess(P2PItemBean p2pItemBean) {
-                //刷新数据
-                getFragmentManager().popBackStack();
+            public void onAlterSuccess(final P2PItemBean p2pItemBean) {
+                Task.call(new Callable<Void>() {
+                    @Override
+                    public Void call() throws Exception {
+                        for (P2PItemBean targerItem : data) {
+                            if (targerItem.id.equals(p2pItemBean.id)) {
+                                int indexOf = data.indexOf(targerItem);
+                                data.remove(targerItem);
+                                data.add(indexOf, p2pItemBean);
+                                break;
+                            }
+                        }
+                        refreshListView(data);
+                        getFragmentManager().popBackStack();
+                        return null;
+                    }
+                });
             }
 
             @Override
-            public void onDeleteSuccess(P2PItemBean p2pItemBean) {
-                //刷新数据
-                getFragmentManager().popBackStack();
+            public void onDeleteSuccess(final P2PItemBean p2pItemBean) {
+                Task.call(new Callable<Void>() {
+                    @Override
+                    public Void call() throws Exception {
+                        for (P2PItemBean targerItem : data) {
+                            if (targerItem.id.equals(p2pItemBean.id)) {
+                                data.remove(targerItem);
+                                break;
+                            }
+                        }
+                        refreshListView(data);
+                        getFragmentManager().popBackStack();
+                        return null;
+                    }
+                });
             }
         });
         return true;
@@ -139,7 +174,15 @@ public class P2PListFragment extends BaseFragment {
                         P2PAddFragment.Callback callback = new P2PAddFragment.Callback() {
                             @Override
                             public void onAddP2PItemSuccess(P2PItemBean p2pItemBean) {
-                                //TODO 刷新数据
+                                data.add(0, p2pItemBean);
+                                Task.call(new Callable<Void>() {
+                                    @Override
+                                    public Void call() throws Exception {
+                                        refreshListView(data);
+                                        getFragmentManager().popBackStack();
+                                        return null;
+                                    }
+                                }, Task.UI_THREAD_EXECUTOR);
                             }
                         };
                         p2pBusiness.toP2PAddFragment(transaction, callback);

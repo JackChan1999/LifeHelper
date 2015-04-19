@@ -21,6 +21,8 @@ public class P2PItemJsonBean {
     private String image;
     @Expose
     private String id;
+    @Expose
+    private String category;
 
     /**
      * @return The title
@@ -120,4 +122,11 @@ public class P2PItemJsonBean {
         this.id = id;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
 }

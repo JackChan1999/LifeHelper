@@ -5,8 +5,9 @@ import android.widget.EditText;
 
 import com.qz.lifehelper.R;
 import com.qz.lifehelper.business.DialogBusiness;
-import com.qz.lifehelper.business.P2PBusiness;
+import com.qz.lifehelper.entity.P2PCategoryBean;
 import com.qz.lifehelper.entity.P2PItemBean;
+import com.qz.lifehelper.service.P2PService;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
@@ -76,7 +77,7 @@ public class P2PAddFragment extends BaseFragment {
     EditText DetailEt;
 
     @Bean
-    P2PBusiness p2pBusiness;
+    P2PService p2pService;
 
     @Bean
     DialogBusiness dialogBusiness;
@@ -92,20 +93,21 @@ public class P2PAddFragment extends BaseFragment {
 
         //TODO 检测数据是否合法
 
+        //TODO 实现设置Category
         P2PItemBean p2pItemBean = new P2PItemBean()
                 .setTitle(title)
                 .setDetail(detail)
                 .setAddress(add)
-                .setTitle(tel)
-                .setPrice(price);
+                .setTel(tel)
+                .setPrice(price)
+                .setCategoryBean(new P2PCategoryBean().setTitle("电子数码"));
 
         dialogBusiness.showDialog(getFragmentManager(), new DialogBusiness.ProgressDialogBuilder().create(), "upload_p2p");
-        p2pBusiness.uploadP2PItem(p2pItemBean).onSuccess(new Continuation<P2PItemBean, Void>() {
+        p2pService.addP2PItem(p2pItemBean).onSuccess(new Continuation<P2PItemBean, Void>() {
             @Override
             public Void then(Task<P2PItemBean> task) throws Exception {
                 dialogBusiness.hideDialog("upload_p2p");
                 callback.onAddP2PItemSuccess(task.getResult());
-                getFragmentManager().popBackStack();
                 return null;
             }
         });

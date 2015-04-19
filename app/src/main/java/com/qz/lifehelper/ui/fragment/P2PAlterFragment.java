@@ -5,8 +5,8 @@ import android.widget.ImageView;
 
 import com.qz.lifehelper.R;
 import com.qz.lifehelper.business.DialogBusiness;
-import com.qz.lifehelper.business.P2PBusiness;
 import com.qz.lifehelper.entity.P2PItemBean;
+import com.qz.lifehelper.service.P2PService;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
@@ -97,7 +97,7 @@ public class P2PAlterFragment extends BaseFragment {
     }
 
     @Bean
-    P2PBusiness p2pBusiness;
+    P2PService p2pService;
 
     @Bean
     DialogBusiness dialogBusiness;
@@ -110,25 +110,26 @@ public class P2PAlterFragment extends BaseFragment {
     @Click(R.id.alter_bn)
     void alter() {
         //TODO 设置图片
-        P2PItemBean p2PItemBean = new P2PItemBean()
+        P2PItemBean p2pItemBean = new P2PItemBean()
                 .setTitle(titleEt.getText().toString())
                 .setDetail(detailEt.getText().toString())
                 .setAddress(addEt.getText().toString())
                 .setTel(telEt.getText().toString())
                 .setPrice(priceEt.getText().toString())
-                .setId(this.p2pItemBean.id);
+                .setId(this.p2pItemBean.id)
+                .setCategoryBean(this.p2pItemBean.categoryBean);
 
         dialogBusiness.showDialog(getFragmentManager()
                 , new DialogBusiness.ProgressDialogBuilder().create()
                 , "p2p_alter");
-        p2pBusiness.alter(p2PItemBean).onSuccess(new Continuation<P2PItemBean, Void>() {
+        p2pService.alterP2PItem(p2pItemBean).onSuccess(new Continuation<P2PItemBean, Void>() {
             @Override
             public Void then(Task<P2PItemBean> task) throws Exception {
                 dialogBusiness.hideDialog("p2p_alter");
                 callback.onAlterSuccess(task.getResult());
                 return null;
             }
-        });
+        }, Task.UI_THREAD_EXECUTOR);
     }
 
     @Click(R.id.delete_bn)
@@ -136,14 +137,14 @@ public class P2PAlterFragment extends BaseFragment {
         dialogBusiness.showDialog(getFragmentManager()
                 , new DialogBusiness.ProgressDialogBuilder().create()
                 , "p2p_delete");
-        p2pBusiness.delete(p2pItemBean).onSuccess(new Continuation<P2PItemBean, Void>() {
+        p2pService.deleteP2PItem(p2pItemBean).onSuccess(new Continuation<P2PItemBean, Void>() {
             @Override
             public Void then(Task<P2PItemBean> task) throws Exception {
                 dialogBusiness.hideDialog("p2p_delete");
                 callback.onDeleteSuccess(task.getResult());
                 return null;
             }
-        });
+        }, Task.UI_THREAD_EXECUTOR);
     }
 
 }

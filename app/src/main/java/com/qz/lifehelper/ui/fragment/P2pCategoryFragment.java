@@ -11,6 +11,7 @@ import android.widget.ListView;
 import com.qz.lifehelper.R;
 import com.qz.lifehelper.business.P2PBusiness;
 import com.qz.lifehelper.entity.P2PCategoryBean;
+import com.qz.lifehelper.service.P2PService;
 import com.qz.lifehelper.ui.adapter.P2PCategoryAdapter;
 
 import org.androidannotations.annotations.AfterViews;
@@ -50,12 +51,15 @@ public class P2pCategoryFragment extends BaseFragment {
     @Bean
     P2PBusiness p2pBusiness;
 
+    @Bean
+    P2PService p2pService;
+
     List<P2PCategoryBean> data = new ArrayList<>();
 
     @AfterViews
     void setListView() {
         listView.setAdapter(adapter);
-        p2pBusiness.getP2PCategory().onSuccess(new Continuation<List<P2PCategoryBean>, Void>() {
+        p2pService.getP2PCategory().onSuccess(new Continuation<List<P2PCategoryBean>, Void>() {
             @Override
             public Void then(Task<List<P2PCategoryBean>> task) throws Exception {
                 data.clear();

@@ -38,6 +38,5 @@ public class DateBusiness {
                 .create();
         datePickerFragment.show(fragmentManager, "date_picker_fragmnet");
         return taskCompletionSource.getTask();
-
     }
 }

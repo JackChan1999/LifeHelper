@@ -14,6 +14,12 @@ public class P2PItemBean implements Serializable {
     public String id;
     public String price;
     public ImageBean imageBean;
+    public P2PCategoryBean categoryBean;
+
+    public P2PItemBean setCategoryBean(P2PCategoryBean categoryBean) {
+        this.categoryBean = categoryBean;
+        return this;
+    }
 
     public P2PItemBean setTitle(String title) {
         this.title = title;
