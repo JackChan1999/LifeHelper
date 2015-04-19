@@ -3,6 +3,7 @@ package com.qz.lifehelper.business;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 
+import com.qz.lifehelper.ui.fragment.ContextMenuDialogFragment;
 import com.qz.lifehelper.ui.fragment.ProgressDialogFragment;
 
 import org.androidannotations.annotations.EBean;
@@ -20,6 +21,10 @@ public class DialogBusiness {
         public DialogFragment create() {
             return new ProgressDialogFragment();
         }
+    }
+
+    static public class ContextMenuDialogBuilder extends ContextMenuDialogFragment.Builder {
+
     }
 
     private Map<String, DialogFragment> fragmentMap = new HashMap<>();

@@ -13,6 +13,7 @@ import com.qz.lifehelper.entity.json.P2PItemJsonBean;
 import com.qz.lifehelper.persist.OutlinePersist;
 import com.qz.lifehelper.persist.P2PPersist;
 import com.qz.lifehelper.ui.fragment.P2PAddFragment;
+import com.qz.lifehelper.ui.fragment.P2PAlterFragment;
 import com.qz.lifehelper.ui.fragment.P2PDetailFragment;
 import com.qz.lifehelper.ui.fragment.P2PListFragment;
 import com.qz.lifehelper.ui.fragment.P2pCategoryFragment;
@@ -52,7 +53,8 @@ public class P2PBusiness {
                 toP2PAddFragment(transaction, p2pRequestBean.addCallBack);
                 break;
             case P2P_ALTER:
-                toP2PAlterFragment(transaction);
+                //TODO 这里实际上是没有实现的
+                toP2PAlterFragment(transaction, null, null);
                 break;
         }
     }
@@ -60,8 +62,13 @@ public class P2PBusiness {
     /**
      * 前往P2P修改页面
      */
-    public void toP2PAlterFragment(FragmentTransaction transaction) {
-
+    public void toP2PAlterFragment(FragmentTransaction transaction, P2PItemBean p2PItemBean, P2PAlterFragment.Callback callback) {
+        P2PAlterFragment fragment = new P2PAlterFragment.Builder()
+                .setCallback(callback)
+                .setP2PItemBean(p2PItemBean)
+                .create();
+        transaction.add(android.R.id.content, fragment);
+        transaction.commit();
     }
 
     /**
@@ -210,6 +217,34 @@ public class P2PBusiness {
                 //模拟网络
                 Thread.sleep(2000);
                 return p2PItemBean;
+            }
+        });
+    }
+
+    /**
+     * 修改P2P信息
+     */
+    public Task<P2PItemBean> alter(final P2PItemBean p2PItemBean) {
+        return Task.callInBackground(new Callable<P2PItemBean>() {
+            @Override
+            public P2PItemBean call() throws Exception {
+                //模拟网络
+                Thread.sleep(1000);
+                return p2PItemBean;
+            }
+        });
+    }
+
+    /**
+     * 删除P2P信息
+     */
+    public Task<P2PItemBean> delete(final P2PItemBean p2pItemBean) {
+        return Task.callInBackground(new Callable<P2PItemBean>() {
+            @Override
+            public P2PItemBean call() throws Exception {
+                //模拟网络
+                Thread.sleep(1000);
+                return p2pItemBean;
             }
         });
     }

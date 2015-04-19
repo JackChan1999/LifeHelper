@@ -225,7 +225,7 @@
                     android:layout_height="wrap_content"
                     android:text="提交"
                     android:id="@+id/submit_bn"
-                    style="@style/input_submit" />
+                    style="@style/input_bn" />
             </LinearLayout>
     </ScrollView>
 </LinearLayout>
