@@ -12,6 +12,7 @@ import com.qz.lifehelper.entity.json.P2PCategoryJsonBean;
 import com.qz.lifehelper.entity.json.P2PItemJsonBean;
 import com.qz.lifehelper.persist.OutlinePersist;
 import com.qz.lifehelper.persist.P2PPersist;
+import com.qz.lifehelper.ui.fragment.P2PAddFragment;
 import com.qz.lifehelper.ui.fragment.P2PDetailFragment;
 import com.qz.lifehelper.ui.fragment.P2PListFragment;
 import com.qz.lifehelper.ui.fragment.P2pCategoryFragment;
@@ -46,8 +47,33 @@ public class P2PBusiness {
             case P2P_DETAIL:
                 toP2PDetailFragment(transaction, p2pRequestBean.p2PItemBean);
                 break;
+            case P2P_ADD:
+                toP2PAddFragment(transaction, p2pRequestBean.addCallBack);
+                break;
+            case P2P_ALTER:
+                toP2PAlterFragment(transaction);
+                break;
         }
     }
+
+    /**
+     * 前往P2P修改页面
+     */
+    public void toP2PAlterFragment(FragmentTransaction transaction) {
+
+    }
+
+    /**
+     * 前往P2P新增页面
+     */
+    public void toP2PAddFragment(FragmentTransaction transaction, P2PAddFragment.Callback callback) {
+        P2PAddFragment fragment = new P2PAddFragment.Builder()
+                .setCallback(callback)
+                .create();
+        transaction.add(android.R.id.content, fragment);
+        transaction.commit();
+    }
+
 
     /**
      * 前往P2P详情页
@@ -173,4 +199,17 @@ public class P2PBusiness {
     }
 
 
+    /**
+     * 上传P2P信息
+     */
+    public Task<P2PItemBean> uploadP2PItem(final P2PItemBean p2PItemBean) {
+        return Task.callInBackground(new Callable<P2PItemBean>() {
+            @Override
+            public P2PItemBean call() throws Exception {
+                //模拟网络
+                Thread.sleep(2000);
+                return p2PItemBean;
+            }
+        });
+    }
 }

@@ -20,5 +20,4 @@
     <style name="Toolbar">
         <item name="android:background">@android:color/holo_blue_dark</item>
     </style>
-
 </resources>

@@ -1,8 +1,8 @@
 package com.qz.lifehelper.ui.fragment;
 
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -98,7 +98,26 @@ public class P2PListFragment extends BaseFragment {
     @AfterViews
     void setToolbar() {
         toolbar.setTitle(catergoryBean.title);
-        ((ActionBarActivity) getActivity()).setSupportActionBar(toolbar);
+        toolbar.inflateMenu(R.menu.menu_p2p_list);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.p2p_add_menu_bn:
+                        final FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                        transaction.addToBackStack(null);
+                        P2PAddFragment.Callback callback = new P2PAddFragment.Callback() {
+                            @Override
+                            public void onAddP2PItemSuccess(P2PItemBean p2pItemBean) {
+                                //TODO 刷新数据
+                            }
+                        };
+                        p2PBusiness.toP2PAddFragment(transaction, callback);
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        });
     }
-
 }

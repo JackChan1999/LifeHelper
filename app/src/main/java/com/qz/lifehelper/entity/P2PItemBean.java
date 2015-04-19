@@ -1,9 +1,11 @@
 package com.qz.lifehelper.entity;
 
+import java.io.Serializable;
+
 /**
  * 分装了P2P结果信息
  */
-public class P2PItemBean {
+public class P2PItemBean implements Serializable {
 
     public String title;
     public String tel;

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:lifehelper="http://schemas.android.com/apk/res-auto">
+    <item
+        lifehelper:showAsAction="always"
+        android:icon="@android:drawable/ic_menu_add"
+        android:title="新增"
+        android:id="@+id/p2p_add_menu_bn" />
+</menu>
