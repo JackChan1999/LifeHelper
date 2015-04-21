@@ -33,6 +33,11 @@ public class P2PAddFragment extends BaseFragment {
             return this;
         }
 
+        public Builder setCategory(P2PCategoryBean category) {
+            fragment.categoryBean = category;
+            return this;
+        }
+
         public P2PAddFragment create() {
             if (fragment.callback == null) {
                 throw new IllegalStateException("没有设置Callback");
@@ -40,6 +45,8 @@ public class P2PAddFragment extends BaseFragment {
             return fragment;
         }
     }
+
+    private P2PCategoryBean categoryBean;
 
     /**
      * 上传完成后会回调该接口
@@ -93,14 +100,13 @@ public class P2PAddFragment extends BaseFragment {
 
         //TODO 检测数据是否合法
 
-        //TODO 实现设置Category
         P2PItemBean p2pItemBean = new P2PItemBean()
                 .setTitle(title)
                 .setDetail(detail)
                 .setAddress(add)
                 .setTel(tel)
                 .setPrice(price)
-                .setCategoryBean(new P2PCategoryBean().setTitle("电子数码"));
+                .setCategoryBean(categoryBean);
 
         dialogBusiness.showDialog(getFragmentManager(), new DialogBusiness.ProgressDialogBuilder().create(), "upload_p2p");
         p2pService.addP2PItem(p2pItemBean).onSuccess(new Continuation<P2PItemBean, Void>() {

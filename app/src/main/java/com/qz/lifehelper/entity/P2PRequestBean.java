@@ -1,7 +1,5 @@
 package com.qz.lifehelper.entity;
 
-import com.qz.lifehelper.ui.fragment.P2PAddFragment;
-
 import java.io.Serializable;
 
 /**
@@ -18,12 +16,6 @@ public class P2PRequestBean implements Serializable {
      * P2PDetailFragment需要该参数来加载p2p详细信息
      */
     public P2PItemBean p2PItemBean;
-
-    /**
-     * P2PAddFragment需要这个参数
-     */
-    public P2PAddFragment.Callback addCallBack;
-
 
     /**
      * P2P的fragment类型

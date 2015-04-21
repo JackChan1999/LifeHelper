@@ -52,7 +52,7 @@ public class LifeFragment extends Fragment {
 
     @Click(R.id.buy_fruit)
     public void onBuyFruitClick() {
-        lifeHelper.toMarketResult("蔬菜水果");
+        lifeHelper.toMarketResult("蔬菜家禽");
     }
 
     @Click(R.id.buy_electric_appliance)

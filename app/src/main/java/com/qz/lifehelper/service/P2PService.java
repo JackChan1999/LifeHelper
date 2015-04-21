@@ -11,10 +11,7 @@ import com.qz.lifehelper.persist.P2PPersist;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
-import org.apache.commons.io.IOUtils;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -77,13 +74,13 @@ public class P2PService {
      *
      * @param catergoryBean P2P类别
      */
-    public Task<List<P2PItemBean>> getP2PList(final P2PCategoryBean catergoryBean) {
+    public Task<List<P2PItemBean>> getP2PItem(final P2PCategoryBean catergoryBean) {
         return Task.callInBackground(new Callable<String>() {
             @Override
             public String call() throws Exception {
                 //模拟网络加载
                 Thread.sleep(1000);
-                return p2pPersist.getP2PList(catergoryBean);
+                return p2pPersist.getP2PItem(catergoryBean);
             }
         }).continueWithTask(new Continuation<String, Task<List<P2PItemBean>>>() {
             @Override
@@ -105,15 +102,7 @@ public class P2PService {
                 }.getType());
                 List<P2PItemBean> p2pItemBeans = new ArrayList<P2PItemBean>();
                 for (P2PItemJsonBean p2pItemJsonBean : p2pItemJsonBeans) {
-                    p2pItemBeans.add(new P2PItemBean()
-                            .setTitle(p2pItemJsonBean.getTitle())
-                            .setDetail(p2pItemJsonBean.getDetail())
-                            .setPrice(p2pItemJsonBean.getPrice())
-                            .setAddress(p2pItemJsonBean.getAddress())
-                            .setTel(p2pItemJsonBean.getTel())
-                            .setId(p2pItemJsonBean.getId())
-                            .setCategoryBean(new P2PCategoryBean().setTitle(p2pItemJsonBean.getCategory()))
-                            .setImageBean(ImageBean.generateImage(p2pItemJsonBean.getImage(), ImageBean.ImageType.OUTLINE)));
+                    p2pItemBeans.add(convertToP2PItemBean(p2pItemJsonBean));
                 }
                 return p2pItemBeans;
             }
@@ -133,7 +122,7 @@ public class P2PService {
                 List<P2PItemJsonBean> p2pItemJsonBeans = getP2PItemJsonBean(p2pItemBean.categoryBean);
                 p2pItemBean.setId(generateId());
                 p2pItemJsonBeans.add(0, convertToP2pItemJsonBean(p2pItemBean));
-                p2pPersist.setP2PFile(p2pItemJsonBeans, p2pItemBean.categoryBean);
+                setP2PItemJsonBean(p2pItemJsonBeans, p2pItemBean.categoryBean);
                 return p2pItemBean;
             }
         });
@@ -156,46 +145,10 @@ public class P2PService {
                         break;
                     }
                 }
-                p2pPersist.setP2PFile(p2pItemJsonBeans, p2pItemBean.categoryBean);
+                setP2PItemJsonBean(p2pItemJsonBeans, p2pItemBean.categoryBean);
                 return p2pItemBean;
             }
         });
-    }
-
-    /**
-     * 获取对应分类的P2PItemJsonBean数据
-     */
-    private List<P2PItemJsonBean> getP2PItemJsonBean(P2PCategoryBean categoryBean) throws IOException {
-        File p2pFile = p2pPersist.getP2PFile(categoryBean);
-        FileInputStream p2pFileIS = new FileInputStream(p2pFile);
-        Gson gson = new Gson();
-        String p2pJson = IOUtils.toString(p2pFileIS);
-        return gson.fromJson(p2pJson, new TypeToken<List<P2PItemJsonBean>>() {
-        }.getType());
-    }
-
-    /**
-     * 生成id
-     */
-    private String generateId() {
-        Calendar calendar = Calendar.getInstance();
-        return String.valueOf(calendar.get(Calendar.DATE));
-    }
-
-    /**
-     * 将p2pItemBean和p2pItemJsonBean进行转换
-     */
-    private P2PItemJsonBean convertToP2pItemJsonBean(P2PItemBean p2pItemBean) {
-        P2PItemJsonBean p2pItemJsonBean = new P2PItemJsonBean();
-        p2pItemJsonBean.setId(p2pItemBean.id);
-        p2pItemJsonBean.setTitle(p2pItemBean.title);
-        p2pItemJsonBean.setDetail(p2pItemBean.detail);
-        p2pItemJsonBean.setAddress(p2pItemBean.address);
-        p2pItemJsonBean.setTel(p2pItemBean.tel);
-        p2pItemJsonBean.setPrice(p2pItemBean.price);
-        p2pItemJsonBean.setCategory(p2pItemBean.categoryBean.title);
-        //todo 设置图片
-        return p2pItemJsonBean;
     }
 
     /**
@@ -217,10 +170,70 @@ public class P2PService {
                         break;
                     }
                 }
-                p2pPersist.setP2PFile(p2PItemJsonBeans, p2pItemBean.categoryBean);
+                setP2PItemJsonBean(p2PItemJsonBeans, p2pItemBean.categoryBean);
                 return p2pItemBean;
             }
 
         });
+    }
+
+    /**
+     * 获取对应分类的P2PItemJsonBean数据
+     */
+    private List<P2PItemJsonBean> getP2PItemJsonBean(P2PCategoryBean categoryBean) throws IOException {
+        Gson gson = new Gson();
+        String p2pJson = p2pPersist.getP2PItem(categoryBean);
+        return gson.fromJson(p2pJson, new TypeToken<List<P2PItemJsonBean>>() {
+        }.getType());
+    }
+
+    /**
+     * 设置对应分类的P2PItemJsonBean数据
+     */
+    private void setP2PItemJsonBean(List<P2PItemJsonBean> p2pItemJsonBeans, P2PCategoryBean categoryBean) throws IOException {
+        Gson gson = new Gson();
+        String p2pJson = gson.toJson(p2pItemJsonBeans);
+        p2pPersist.setP2PItem(p2pJson, categoryBean);
+    }
+
+    /**
+     * 生成id
+     */
+    private String generateId() {
+        Calendar calendar = Calendar.getInstance();
+        return String.valueOf(calendar.get(Calendar.DATE));
+    }
+
+    /**
+     * 将p2pItemBean转换为p2pItemJsonBean
+     */
+    private P2PItemJsonBean convertToP2pItemJsonBean(P2PItemBean p2pItemBean) {
+        P2PItemJsonBean p2pItemJsonBean = new P2PItemJsonBean();
+        p2pItemJsonBean.setId(p2pItemBean.id);
+        p2pItemJsonBean.setTitle(p2pItemBean.title);
+        p2pItemJsonBean.setDetail(p2pItemBean.detail);
+        p2pItemJsonBean.setAddress(p2pItemBean.address);
+        p2pItemJsonBean.setTel(p2pItemBean.tel);
+        p2pItemJsonBean.setPrice(p2pItemBean.price);
+        p2pItemJsonBean.setCategory(p2pItemBean.categoryBean.title);
+        //todo 设置图片
+        return p2pItemJsonBean;
+    }
+
+    /**
+     * 将p2pItemJsonBean转换为p2pItemBean
+     * @param p2pItemJsonBean
+     * @return
+     */
+    private P2PItemBean convertToP2PItemBean(P2PItemJsonBean p2pItemJsonBean) {
+        return new P2PItemBean()
+                .setTitle(p2pItemJsonBean.getTitle())
+                .setDetail(p2pItemJsonBean.getDetail())
+                .setPrice(p2pItemJsonBean.getPrice())
+                .setAddress(p2pItemJsonBean.getAddress())
+                .setTel(p2pItemJsonBean.getTel())
+                .setId(p2pItemJsonBean.getId())
+                .setCategoryBean(new P2PCategoryBean().setTitle(p2pItemJsonBean.getCategory()))
+                .setImageBean(ImageBean.generateImage(p2pItemJsonBean.getImage(), ImageBean.ImageType.OUTLINE));
     }
 }

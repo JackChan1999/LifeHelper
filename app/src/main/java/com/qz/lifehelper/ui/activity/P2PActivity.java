@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 
 import com.qz.lifehelper.business.P2PBusiness;
+import com.qz.lifehelper.entity.P2PCategoryBean;
 import com.qz.lifehelper.entity.P2PRequestBean;
+import com.qz.lifehelper.ui.fragment.P2pCategoryFragment;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
@@ -37,6 +39,20 @@ public class P2PActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        p2pBusiness.toTargetFragment(transaction, p2pRequestBean);
+        switch (p2pRequestBean.fragmentType) {
+            case P2P_CATEGORY:
+                p2pBusiness.toP2PCategoryFragment(transaction, new P2pCategoryFragment.Callback() {
+                    @Override
+                    public void onCategorySelected(P2PCategoryBean categoryBean) {
+                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.addToBackStack(null);
+                        p2pBusiness.toP2PListFragment(transaction, categoryBean);
+                    }
+                });
+                break;
+            case P2P_LIST:
+                p2pBusiness.toP2PListFragment(transaction, p2pRequestBean.category);
+                break;
+        }
     }
 }

@@ -1,7 +1,5 @@
 package com.qz.lifehelper.ui.fragment;
 
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -34,10 +32,31 @@ public class P2pCategoryFragment extends BaseFragment {
 
         private P2pCategoryFragment fragment = new P2pCategoryFragment_.FragmentBuilder_().build();
 
+        public Builder setCallback(Callback callback) {
+            fragment.callback = callback;
+            return this;
+        }
+
         public P2pCategoryFragment create() {
+            if (fragment.callback == null) {
+                throw new IllegalStateException("没有设置Callback");
+            }
+
             return fragment;
         }
     }
+
+    /**
+     * 当选择来分类后回调该接口
+     */
+    public interface Callback {
+        /**
+         * 当成功选择来分类后会回调该方法
+         */
+        public void onCategorySelected(P2PCategoryBean categoryBean);
+    }
+
+    private Callback callback;
 
     @ViewById(R.id.listview)
     ListView listView;
@@ -72,10 +91,7 @@ public class P2pCategoryFragment extends BaseFragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                FragmentManager fragmentManager = P2pCategoryFragment.this.getFragmentManager();
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.addToBackStack(null);
-                p2pBusiness.toP2PListFragment(transaction, data.get(position));
+                callback.onCategorySelected(data.get(position));
             }
         });
     }

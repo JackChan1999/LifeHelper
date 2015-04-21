@@ -76,7 +76,7 @@ public class P2PListFragment extends BaseFragment {
         dialogBusiness.showDialog(getFragmentManager()
                 , new DialogBusiness.ProgressDialogBuilder().create()
                 , "p2pList");
-        p2pService.getP2PList(catergoryBean).onSuccess(new Continuation<List<P2PItemBean>, Void>() {
+        p2pService.getP2PItem(catergoryBean).onSuccess(new Continuation<List<P2PItemBean>, Void>() {
             @Override
             public Void then(Task<List<P2PItemBean>> task) throws Exception {
                 data.clear();
@@ -185,7 +185,7 @@ public class P2PListFragment extends BaseFragment {
                                 }, Task.UI_THREAD_EXECUTOR);
                             }
                         };
-                        p2pBusiness.toP2PAddFragment(transaction, callback);
+                        p2pBusiness.toP2PAddFragment(transaction, catergoryBean, callback);
                         return true;
                     default:
                         return false;
