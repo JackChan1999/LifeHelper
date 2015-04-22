@@ -6,12 +6,11 @@
     android:background="@android:color/white">
 
     <ImageView
-        android:minHeight="200dp"
-        android:background="@android:color/holo_blue_light"
+        android:scaleType="centerCrop"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/p2p_image_big"
         android:id="@+id/p2p_image_iv" />
 
     <TextView

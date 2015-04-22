@@ -216,7 +216,7 @@ public class P2PService {
         p2pItemJsonBean.setTel(p2pItemBean.tel);
         p2pItemJsonBean.setPrice(p2pItemBean.price);
         p2pItemJsonBean.setCategory(p2pItemBean.categoryBean.title);
-        //todo 设置图片
+        p2pItemJsonBean.setImage(p2pItemBean.imageBean.imageSrc);
         return p2pItemJsonBean;
     }
 

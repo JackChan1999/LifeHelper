@@ -5,6 +5,7 @@ import android.widget.TextView;
 
 import com.qz.lifehelper.R;
 import com.qz.lifehelper.entity.P2PItemBean;
+import com.squareup.picasso.Picasso;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
@@ -54,7 +55,9 @@ public class P2PDetailFragment extends BaseFragment {
 
     @AfterViews
     void setData() {
-        //TODO 设置图片
+        Picasso.with(this.getActivity())
+                .load(p2pItemBean.imageBean.imageSrc)
+                .into(p2pImageIv);
         p2pTitleTv.setText(p2pItemBean.title);
         p2pAddTv.setText(p2pItemBean.address);
         p2pTelTv.setText(p2pItemBean.tel);

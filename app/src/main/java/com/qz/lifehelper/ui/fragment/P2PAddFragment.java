@@ -1,13 +1,18 @@
 package com.qz.lifehelper.ui.fragment;
 
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.qz.lifehelper.R;
 import com.qz.lifehelper.business.DialogBusiness;
+import com.qz.lifehelper.entity.ImageBean;
 import com.qz.lifehelper.entity.P2PCategoryBean;
 import com.qz.lifehelper.entity.P2PItemBean;
 import com.qz.lifehelper.service.P2PService;
+import com.squareup.picasso.Picasso;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
@@ -63,9 +68,32 @@ public class P2PAddFragment extends BaseFragment {
 
     private Callback callback;
 
+    @ViewById(R.id.image_iv)
+    ImageView imageIv;
+
+    @ViewById(R.id.take_photo_ll)
+    View takePhotoBn;
+
+    private ImageBean imageBean;
+
     @Click(R.id.take_photo_ll)
     void takePhoto() {
-        //TODO 实现拍摄照片
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        TakePhotoFragment fragment = new TakePhotoFragment.Builder()
+                .setCallback(new TakePhotoFragment.Callback() {
+                    @Override
+                    public void onGetPhoto(final ImageBean imageBean) {
+                        P2PAddFragment.this.imageBean = imageBean;
+                        takePhotoBn.setVisibility(View.GONE);
+                        imageIv.setVisibility(View.VISIBLE);
+                        Picasso.with(P2PAddFragment.this.getActivity())
+                                .load(imageBean.imageSrc)
+                                .into(imageIv);
+                    }
+                })
+                .create();
+        transaction.add(fragment, null);
+        transaction.commit();
     }
 
     @ViewById(R.id.address_et)
@@ -96,7 +124,6 @@ public class P2PAddFragment extends BaseFragment {
         String tel = TelEt.getText().toString();
         String price = PriceEt.getText().toString();
         String detail = DetailEt.getText().toString();
-        //TODO 获取照片
 
         //TODO 检测数据是否合法
 
@@ -106,6 +133,7 @@ public class P2PAddFragment extends BaseFragment {
                 .setAddress(add)
                 .setTel(tel)
                 .setPrice(price)
+                .setImageBean(imageBean)
                 .setCategoryBean(categoryBean);
 
         dialogBusiness.showDialog(getFragmentManager(), new DialogBusiness.ProgressDialogBuilder().create(), "upload_p2p");

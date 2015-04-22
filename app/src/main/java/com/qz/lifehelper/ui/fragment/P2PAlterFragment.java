@@ -7,6 +7,7 @@ import com.qz.lifehelper.R;
 import com.qz.lifehelper.business.DialogBusiness;
 import com.qz.lifehelper.entity.P2PItemBean;
 import com.qz.lifehelper.service.P2PService;
+import com.squareup.picasso.Picasso;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
@@ -69,7 +70,7 @@ public class P2PAlterFragment extends BaseFragment {
     private Callback callback;
 
     @ViewById(R.id.image_iv)
-    ImageView imageIV;
+    ImageView imageIv;
 
     @ViewById(R.id.title_et)
     EditText titleEt;
@@ -88,7 +89,9 @@ public class P2PAlterFragment extends BaseFragment {
 
     @AfterViews
     void setData() {
-        //TOODO 设置图片
+        Picasso.with(this.getActivity())
+                .load(p2pItemBean.imageBean.imageSrc)
+                .into(imageIv);
         titleEt.setText(p2pItemBean.title);
         detailEt.setText(p2pItemBean.detail);
         addEt.setText(p2pItemBean.address);
@@ -109,7 +112,6 @@ public class P2PAlterFragment extends BaseFragment {
 
     @Click(R.id.alter_bn)
     void alter() {
-        //TODO 设置图片
         P2PItemBean p2pItemBean = new P2PItemBean()
                 .setTitle(titleEt.getText().toString())
                 .setDetail(detailEt.getText().toString())
@@ -117,6 +119,7 @@ public class P2PAlterFragment extends BaseFragment {
                 .setTel(telEt.getText().toString())
                 .setPrice(priceEt.getText().toString())
                 .setId(this.p2pItemBean.id)
+                .setImageBean(this.p2pItemBean.imageBean)
                 .setCategoryBean(this.p2pItemBean.categoryBean);
 
         dialogBusiness.showDialog(getFragmentManager()

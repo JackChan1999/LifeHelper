@@ -50,8 +50,6 @@
     </style>
 
     <style name="input_take_phpoto">
-        <item name="android:layout_marginTop">30dp</item>
-        <item name="android:layout_marginBottom">30dp</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:orientation">vertical</item>
         <item name="android:background">@android:color/holo_blue_light</item>
