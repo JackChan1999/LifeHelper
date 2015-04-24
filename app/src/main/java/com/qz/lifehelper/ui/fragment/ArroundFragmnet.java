@@ -38,9 +38,9 @@ public class ArroundFragmnet extends Fragment {
         arroundHelper.toPOIResult("医院");
     }
 
-    @Click(R.id.toliet)
-    public void onTolietClick() {
-        arroundHelper.toPOIResult("厕所");
+    @Click(R.id.cafe)
+    public void onCafeClick() {
+        arroundHelper.toPOIResult("咖啡");
 
     }
 
@@ -56,15 +56,15 @@ public class ArroundFragmnet extends Fragment {
 
     }
 
-    @Click(R.id.charfingdish)
-    public void onCharfingdishClick() {
-        arroundHelper.toPOIResult("火锅");
+    @Click(R.id.bank)
+    public void onBankClick() {
+        arroundHelper.toPOIResult("银行");
 
     }
 
-    @Click(R.id.more)
-    public void onMoreClick() {
-        arroundHelper.toPOICategory();
+    @Click(R.id.movie)
+    public void onMovieClick() {
+        arroundHelper.toPOIResult("电影");
     }
 
     @Click(R.id.top10restaurant)

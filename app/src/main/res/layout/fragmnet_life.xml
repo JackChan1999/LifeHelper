@@ -18,7 +18,7 @@
             android:gravity="center"
             android:padding="10dp"
             android:text="交通出行"
-            android:textSize="20sp"
+            android:textSize="25sp"
             android:textStyle="bold" />
 
         <LinearLayout
@@ -37,7 +37,7 @@
                     android:id="@+id/plane_iv"
                     android:layout_width="@dimen/home_page_navigate_button_size"
                     android:layout_height="@dimen/home_page_navigate_button_size"
-                    android:src="@android:color/holo_blue_light" />
+                    android:src="@drawable/plane_launcher" />
 
                 <TextView
                     style="@style/HomeNavigateButtomThemeTitle"
@@ -58,7 +58,7 @@
                     android:id="@+id/train_iv"
                     android:layout_width="@dimen/home_page_navigate_button_size"
                     android:layout_height="@dimen/home_page_navigate_button_size"
-                    android:src="@android:color/holo_blue_light" />
+                    android:src="@drawable/train_launcher" />
 
                 <TextView
                     style="@style/HomeNavigateButtomThemeTitle"
@@ -79,7 +79,7 @@
                     android:id="@+id/bus_iv"
                     android:layout_width="@dimen/home_page_navigate_button_size"
                     android:layout_height="@dimen/home_page_navigate_button_size"
-                    android:src="@android:color/holo_blue_light" />
+                    android:src="@drawable/bus_launcher" />
 
                 <TextView
                     style="@style/HomeNavigateButtomThemeTitle"
@@ -106,7 +106,7 @@
             android:gravity="center"
             android:padding="10dp"
             android:text="家政服务"
-            android:textSize="20sp"
+            android:textSize="25sp"
             android:textStyle="bold" />
 
         <LinearLayout
@@ -125,7 +125,7 @@
                     android:id="@+id/move_iv"
                     android:layout_width="@dimen/home_page_navigate_button_size"
                     android:layout_height="@dimen/home_page_navigate_button_size"
-                    android:src="@android:color/holo_blue_light" />
+                    android:src="@drawable/move_launcher" />
 
                 <TextView
                     style="@style/HomeNavigateButtomThemeTitle"
@@ -146,7 +146,7 @@
                     android:id="@+id/maternitymatron_iv"
                     android:layout_width="@dimen/home_page_navigate_button_size"
                     android:layout_height="@dimen/home_page_navigate_button_size"
-                    android:src="@android:color/holo_blue_light" />
+                    android:src="@drawable/moonwomen_launcher" />
 
                 <TextView
                     style="@style/HomeNavigateButtomThemeTitle"
@@ -167,7 +167,7 @@
                     android:id="@+id/cleaner_iv"
                     android:layout_width="@dimen/home_page_navigate_button_size"
                     android:layout_height="@dimen/home_page_navigate_button_size"
-                    android:src="@android:color/holo_blue_light" />
+                    android:src="@drawable/cleaner_launcher" />
 
                 <TextView
                     style="@style/HomeNavigateButtomThemeTitle"
@@ -218,12 +218,10 @@
                 </LinearLayout>
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:background="@android:color/holo_blue_light"
-                    android:minHeight="40dp"
-                    android:minWidth="40dp" />
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/fruit_launcher"
+                    style="@style/p2p_launcher_icon"/>
 
             </LinearLayout>
 
@@ -259,12 +257,10 @@
                 </LinearLayout>
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:background="@android:color/holo_blue_light"
-                    android:minHeight="40dp"
-                    android:minWidth="40dp" />
+                    style="@style/p2p_launcher_icon"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/electric_launcher" />
 
             </LinearLayout>
 
@@ -307,12 +303,10 @@
                 </LinearLayout>
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:background="@android:color/holo_blue_light"
-                    android:minHeight="40dp"
-                    android:minWidth="40dp" />
+                    style="@style/p2p_launcher_icon"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/clothes_launcher" />
 
             </LinearLayout>
 
@@ -328,7 +322,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:gravity="center">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -348,12 +343,10 @@
                 </LinearLayout>
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:background="@android:color/holo_blue_light"
-                    android:minHeight="40dp"
-                    android:minWidth="40dp" />
+                    style="@style/p2p_launcher_icon"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/more_launcher" />
 
             </LinearLayout>
 

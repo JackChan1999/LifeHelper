@@ -69,11 +69,14 @@ public class HomeFragment extends BaseFragment {
         adapter.notifyDataSetChanged();
         tab.setShouldExpand(true);
         tab.setViewPager(pager);
+        tab.setTextColorResource(R.color.white);
+        tab.setIndicatorColorResource(R.color.tab_indicator);
+        tab.setDividerColorResource(R.color.tab_divider);
     }
 
     @AfterViews
     public void setToolBar() {
-        ((ActionBarActivity) getActivity()).setSupportActionBar(toolbar);
+//        ((ActionBarActivity) getActivity()).setSupportActionBar(toolbar);
         toolbar.findViewById(R.id.search_bn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,7 +84,7 @@ public class HomeFragment extends BaseFragment {
             }
         });
 
-        toolbar.setTitle("LifeHelper");
+//        toolbar.setTitle("LifeHelper");
 
         final TextView currentCityTv = (TextView) toolbar.findViewById(R.id.current_city_tv);
         currentCityTv.setOnClickListener(new View.OnClickListener() {

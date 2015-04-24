@@ -18,6 +18,7 @@
     </style>
 
     <style name="Toolbar">
-        <item name="android:background">@android:color/holo_blue_dark</item>
+        <item name="android:background">@color/app_color</item>
+        <item name="android:textColor">@android:color/white</item>
     </style>
 </resources>
