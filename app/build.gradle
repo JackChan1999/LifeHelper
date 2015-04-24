@@ -2,16 +2,23 @@ apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
 
 def package_name = 'com.qz.lifehelper'
+
+repositories {
+    flatDir {
+        dirs 'aars'
+    }
+}
+
 android {
     compileSdkVersion 21
     buildToolsVersion "21.1.2"
 
     defaultConfig {
         applicationId "$package_name"
-        minSdkVersion 14
+        minSdkVersion 15
         targetSdkVersion 21
         versionCode 1
-        versionName "1.0"
+        versionName "V1.0"
     }
 
     signingConfigs {
@@ -38,12 +45,6 @@ android {
         }
     }
 
-    sourceSets {
-        main {
-            jniLibs.srcDirs = ['libs']
-        }
-    }
-
     packagingOptions {
         exclude 'META-INF/NOTICE.txt'
         exclude 'META-INF/LICENSE.txt'
@@ -63,6 +64,7 @@ dependencies {
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
+    compile(name: 'genius', ext: 'aar')
 }
 
 apt {

@@ -2,7 +2,6 @@ package com.qz.lifehelper.ui.fragment;
 
 import android.graphics.Bitmap;
 import android.support.v4.app.Fragment;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -37,7 +36,7 @@ public class PersonalFragment extends Fragment {
     @Bean
     AppBusiness appBusiness;
 
-    @Click(R.id.login_bn)
+    @Click(R.id.user_icon_iv)
     void onLoginBnClick() {
         personalHelper.login().onSuccess(new Continuation<UserInfoBean, Void>() {
             @Override
@@ -81,14 +80,8 @@ public class PersonalFragment extends Fragment {
         }
     }
 
-    @ViewById(R.id.login_bn)
-    View loginBn;
-
     @ViewById(R.id.user_icon_iv)
     ImageView userIconIv;
-
-    @ViewById(R.id.user_icon_background_iv)
-    ImageView userIconBagIv;
 
     @ViewById(R.id.user_name)
     TextView userNameTv;
@@ -97,9 +90,6 @@ public class PersonalFragment extends Fragment {
      * 修改为登录状态
      */
     void login(String userName, Bitmap userIcon, Bitmap userIconBag) {
-        userNameTv.setVisibility(View.VISIBLE);
-        loginBn.setVisibility(View.GONE);
-        userIconBagIv.setImageBitmap(userIconBag);
         userIconIv.setImageBitmap(userIcon);
         userNameTv.setText(userName);
     }
@@ -108,9 +98,6 @@ public class PersonalFragment extends Fragment {
      * 修改为登出状态
      */
     void logout(Bitmap userIcon, Bitmap userIconBag) {
-        loginBn.setVisibility(View.VISIBLE);
-        userNameTv.setVisibility(View.GONE);
-        userIconBagIv.setImageBitmap(userIconBag);
         userIconIv.setImageBitmap(userIcon);
         userNameTv.setText(null);
     }

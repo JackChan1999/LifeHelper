@@ -8,7 +8,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="LifeHelper"
-        android:textColor="@color/white"
+        android:textColor="@color/app_text_color_light"
         android:textSize="28sp"/>
 
     <TextView
@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/title"
         android:text="杭州"
-        android:textColor="@color/white"
+        android:textColor="@color/app_text_color_light"
         android:textSize="15sp" />
 
     <ImageView

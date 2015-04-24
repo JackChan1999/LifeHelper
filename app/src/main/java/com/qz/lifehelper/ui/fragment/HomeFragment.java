@@ -1,7 +1,6 @@
 package com.qz.lifehelper.ui.fragment;
 
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
@@ -69,7 +68,7 @@ public class HomeFragment extends BaseFragment {
         adapter.notifyDataSetChanged();
         tab.setShouldExpand(true);
         tab.setViewPager(pager);
-        tab.setTextColorResource(R.color.white);
+        tab.setTextColorResource(R.color.app_text_color_light);
         tab.setIndicatorColorResource(R.color.tab_indicator);
         tab.setDividerColorResource(R.color.tab_divider);
     }

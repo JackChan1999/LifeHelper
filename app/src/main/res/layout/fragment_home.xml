@@ -9,7 +9,7 @@
         android:id="@+id/toolbar" />
 
     <com.astuetz.PagerSlidingTabStrip
-        android:background="@color/app_mian_color"
+        android:background="@color/app_main_color"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:id="@+id/tab" />

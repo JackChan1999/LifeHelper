@@ -1,6 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="personal_icon">
+
+    <style name="personal.root">
+        <item name="android:background">@color/app_bg_color</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="personal.icon_group">
+        <item name="android:layout_weight">5</item>
+        <item name="android:paddingTop">20dp</item>
+        <item name="android:paddingBottom">20dp</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:background">@color/app_main_color</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="personal.icon_text">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/app_text_color_light</item>
+    </style>
+
+    <style name="personal.list_item_text">
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="personal.list_group">
+        <item name="android:layout_weight">4</item>
+        <item name="android:layout_margin">20dp</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="personal.list_item">
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="personal.icon">
         <item name="android:layout_marginRight">20dp</item>
     </style>
+
+    <style name="personal.user_icon">
+        <item name="android:layout_marginBottom">10dp</item>
+    </style>
+
+    <style name="personal">
+        <item name="android:description">@string/life_helper</item>
+    </style>
+
+    <style name="personal.underline">
+        <item name="android:background">@color/app_main_color</item>
+        <item name="android:layout_marginTop">10dp</item>
+    </style>
+
+    <style name="personal.appversion">
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">30dp</item>
+        <item name="android:textColor">@color/app_text_color_light</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="personal.text">
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">@color/app_text_color_dark</item>
+    </style>
+
+
 </resources>

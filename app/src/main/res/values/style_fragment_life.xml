@@ -1,7 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="p2p_launcher_icon">
+
+    <style name="life">
+        <item name="android:description">@string/life_helper</item>
+    </style>
+
+    <style name="life.root">
+        <item name="android:background">@color/app_main_color</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="life.launcher_group_leave0">
+        <item name="android:layout_weight">2</item>
+        <item name="android:background">@color/app_bg_color_light</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_marginBottom">15dp</item>
+    </style>
+
+    <style name="life.title_text">
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:textSize">25sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/app_text_color_dark</item>
+    </style>
+
+    <style name="life.launcher_group_leave1">
+        <item name="android:layout_weight">1</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="life.launcher_group_leave2">
+        <item name="android:gravity">center</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="life.launcher_text">
+        <item name="android:textColor">@color/app_text_color_dark</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+
+    <style name="life.p2p_launcher_icon">
         <item name="android:layout_gravity">center</item>
         <item name="android:layout_marginLeft">10dp</item>
+    </style>
+
+    <style name="life.p2p_group_leave0">
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@color/app_bg_color_light</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:padding">5dp</item>
+    </style>
+
+    <style name="life.p2p_group_leave1">
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="life.p2p_group_leave2">
+        <item name="android:layout_weight">1</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="life.p2p_group_leave3">
+        <item name="android:paddingLeft">5dp</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="life.p2p_launcher_title_text">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/app_text_color_dark</item>
+    </style>
+
+    <style name="life.p2p_launcher_describe_text">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/app_text_color_grey</item>
+    </style>
+
+    <style name="life.divider">
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:background">@color/app_main_color_light</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+
+    <style name="life.underline">
+        <item name="android:background">@color/app_main_color_light</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_marginBottom">5dp</item>
     </style>
 </resources>
