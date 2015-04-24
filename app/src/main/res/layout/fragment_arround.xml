@@ -11,7 +11,7 @@
 
         <LinearLayout
             android:layout_marginBottom="10dp"
-            android:background="@android:color/white"
+            android:background="@color/app_bg_color_light"
             android:layout_alignParentTop="true"
             android:id="@+id/topic_container"
             android:layout_width="match_parent"
@@ -28,7 +28,7 @@
 
         <LinearLayout
             android:layout_marginBottom="10dp"
-            android:background="@android:color/white"
+            android:background="@color/app_bg_color_light"
             android:id="@+id/arround_menu_containrt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -231,7 +231,7 @@
             android:gravity="center_horizontal"
             android:paddingTop="20dp"
             android:paddingBottom="20dp"
-            android:background="@android:color/white"
+            android:background="@color/app_bg_color_light"
             android:id="@+id/action_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
