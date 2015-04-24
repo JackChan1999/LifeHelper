@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="app_color">#37474f</color>
+    <color name="app_mian_color">#37474f</color>
+    <color name="app_bg_color">#b0bec5</color>
     <color name="white">#ffffff</color>
     <color name="tab_indicator">#90a4ae</color>
     <color name="tab_divider">#455a64</color>

@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/darker_gray"
+    android:background="@color/app_bg_color"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -10,40 +10,48 @@
         android:layout_height="wrap_content">
 
         <ImageView
+            android:layout_centerInParent="true"
             android:id="@+id/user_icon_background_iv"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:background="@android:color/holo_blue_light" />
+            android:layout_height="220dp"
+            android:background="@color/app_mian_color" />
 
-        <ImageView
-            android:id="@+id/user_icon_iv"
+        <LinearLayout
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_centerInParent="true"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="30dp"
-            android:background="@android:color/holo_orange_light"
-            android:minHeight="50dp"
-            android:minWidth="50dp" />
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/user_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/user_icon_iv"
-            android:layout_centerHorizontal="true"
-            android:visibility="gone" />
+            <ImageView
+                android:id="@+id/user_icon_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="30dp"
+                android:background="@android:color/holo_orange_light"
+                android:minHeight="50dp"
+                android:minWidth="50dp" />
 
-        <Button
-            android:id="@+id/login_bn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/user_icon_iv"
-            android:layout_centerHorizontal="true"
-            android:background="@android:color/white"
-            android:text="登 录" />
+            <TextView
+                android:id="@+id/user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/user_icon_iv"
+                android:layout_centerHorizontal="true"
+                android:visibility="gone" />
 
+            <Button
+                android:id="@+id/login_bn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/user_icon_iv"
+                android:layout_centerHorizontal="true"
+                android:background="@android:color/white"
+                android:text="登 录" />
 
+        </LinearLayout>
     </RelativeLayout>
 
     <LinearLayout
@@ -60,12 +68,10 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
-                android:background="@android:color/holo_blue_light"
-                android:minHeight="40dp"
-                android:minWidth="40dp" />
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/my_p2p_icon"
+                style="@style/personal_icon" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -97,12 +103,10 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
-                android:background="@android:color/holo_blue_light"
-                android:minHeight="40dp"
-                android:minWidth="40dp" />
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/my_poi_icon"
+                style="@style/personal_icon" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -134,12 +138,10 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
-                android:background="@android:color/holo_blue_light"
-                android:minHeight="40dp"
-                android:minWidth="40dp" />
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/info_icon"
+                style="@style/personal_icon" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -171,12 +173,10 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
-                android:background="@android:color/holo_blue_light"
-                android:minHeight="40dp"
-                android:minWidth="40dp" />
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/logout_icon"
+                style="@style/personal_icon" />
 
             <LinearLayout
                 android:layout_width="match_parent"

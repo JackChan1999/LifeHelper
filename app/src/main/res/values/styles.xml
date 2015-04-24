@@ -18,7 +18,7 @@
     </style>
 
     <style name="Toolbar">
-        <item name="android:background">@color/app_color</item>
+        <item name="android:background">@color/app_mian_color</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
 </resources>

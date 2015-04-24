@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="personal_icon">
+        <item name="android:layout_marginRight">20dp</item>
+    </style>
+</resources>
