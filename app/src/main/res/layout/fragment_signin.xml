@@ -12,7 +12,7 @@
         <ImageView
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@drawable/clothes_launcher" />
+            android:src="@drawable/user_name_icon" />
 
         <EditText
             android:hint="请输入用户名"
@@ -37,7 +37,7 @@
         <ImageView
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@drawable/clothes_launcher" />
+            android:src="@drawable/password_icon" />
 
         <EditText
             android:layout_width="match_parent"

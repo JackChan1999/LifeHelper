@@ -7,6 +7,7 @@
     <color name="app_text_color_light">#eceff1</color>
     <color name="app_text_color_dark">#263238</color>
     <color name="app_text_color_grey">#9e9e9e</color>
+    <color name="app_bn">#ff7043</color>
     <color name="tab_indicator">#90a4ae</color>
     <color name="tab_divider">#455a64</color>
 </resources>
