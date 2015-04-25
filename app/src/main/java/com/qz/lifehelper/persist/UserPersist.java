@@ -37,6 +37,6 @@ public class UserPersist {
 
     public void setUserIcon(String userIcon) {
         getUserSharedPreferences().edit().putString(USER_ICON, userIcon).commit();
-
     }
+
 }

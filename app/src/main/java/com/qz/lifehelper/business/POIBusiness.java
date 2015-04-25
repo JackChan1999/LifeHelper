@@ -1,5 +1,8 @@
 package com.qz.lifehelper.business;
 
+import android.content.Context;
+import android.widget.Toast;
+
 import com.baidu.mapapi.search.core.PoiInfo;
 import com.baidu.mapapi.search.poi.OnGetPoiSearchResultListener;
 import com.baidu.mapapi.search.poi.PoiCitySearchOption;
@@ -14,6 +17,7 @@ import com.qz.lifehelper.entity.POIResultBean;
 import com.qz.lifehelper.entity.json.POIResultJsonBean;
 
 import org.androidannotations.annotations.EBean;
+import org.androidannotations.annotations.RootContext;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -35,6 +39,9 @@ public class POIBusiness {
 
     // 缓存所有加载过的POI数据
     Map<String, POIResultBean> poiResults = new LinkedHashMap<>();
+
+    @RootContext
+    Context context;
 
     /**
      * 开始加载制定城市的相关类别的POI数据。
@@ -117,5 +124,12 @@ public class POIBusiness {
                 return poiResultBeans;
             }
         });
+    }
+
+    /**
+     * 前往我发布的信息页面
+     */
+    public void toMyPublish() {
+        Toast.makeText(context, "前往我发布的信息页面", Toast.LENGTH_SHORT).show();
     }
 }

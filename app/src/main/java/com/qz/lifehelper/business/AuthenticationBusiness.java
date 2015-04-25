@@ -1,16 +1,21 @@
 package com.qz.lifehelper.business;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.widget.Toast;
+import android.content.Intent;
 
+import com.qz.lifehelper.entity.ImageBean;
 import com.qz.lifehelper.entity.UserInfoBean;
+import com.qz.lifehelper.event.LoginSuccessEvent;
+import com.qz.lifehelper.event.SigninSuccessEvent;
 import com.qz.lifehelper.persist.UserPersist;
+import com.qz.lifehelper.service.AuthenticateService;
+import com.qz.lifehelper.ui.activity.AuthenticateActivity;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
 
+import bolts.Continuation;
 import bolts.Task;
 import de.greenrobot.event.EventBus;
 
@@ -18,45 +23,88 @@ import de.greenrobot.event.EventBus;
  * 该类主要负责处理用户验证相关的业务逻辑
  */
 
-@EBean(scope = EBean.Scope.Singleton)
+@EBean
 public class AuthenticationBusiness {
+
+    @Bean
+    UserPersist userPersist;
 
     @RootContext
     Context context;
 
     @Bean
-    UserPersist userPersist;
+    AuthenticateService authenticateService;
 
-    EventBus eventBus = EventBus.builder().build();
+    private Task<UserInfoBean>.TaskCompletionSource authenticateTaskCS;
+
+    /**
+     * 前往AuthenticateActivity，进行身份验证
+     */
+    public Task<UserInfoBean> toAuthenticateActivity() {
+        authenticateTaskCS = Task.create();
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+        Intent intent = AuthenticateActivity.generateIntent(context);
+        context.startActivity(intent);
+        return authenticateTaskCS.getTask();
+    }
+
+    public void onEvent(LoginSuccessEvent event) {
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+        if (authenticateTaskCS != null) {
+            authenticateTaskCS.trySetResult(event.userInfoBean);
+        }
+    }
+
+    public void onEvent(SigninSuccessEvent event) {
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+        if (authenticateTaskCS != null) {
+            authenticateTaskCS.trySetResult(event.userInfoBean);
+        }
+    }
 
     /**
      * 判断是否已经登录
      */
     public boolean isLogin() {
-        // TODO 还没有实现
-        return false;
+        if (userPersist.getUserName() == null) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     /**
-     * 登录 登录成功之后，会发送GetAuthEvent，通知相关组件登录成功
+     * 登录
      */
-    public Task<UserInfoBean> login(String userName, String password) {
-        Task<UserInfoBean>.TaskCompletionSource taskCompletionSource = Task.create();
-
-        // TODO 登录业务逻辑
-
-        return taskCompletionSource.getTask();
+    public Task<UserInfoBean> login(final String userName, final String password) {
+        return authenticateService.login(userName, password).onSuccess(new Continuation<UserInfoBean, UserInfoBean>() {
+            @Override
+            public UserInfoBean then(Task<UserInfoBean> task) throws Exception {
+                UserInfoBean userInfoBean = task.getResult();
+                saveUseInfo(userInfoBean);
+                return userInfoBean;
+            }
+        });
     }
 
     /**
-     * 注册 注册成功之后，会发送GetAuthEvent，通知相关组建登录成功。注意，注册成功也就相当于登录成功了
+     * 注册
      */
-    public Task<UserInfoBean> signin(String userName, String password) {
-        Task<UserInfoBean>.TaskCompletionSource taskCompletionSource = Task.create();
-
-        // TODO 注册业务逻辑
-
-        return taskCompletionSource.getTask();
+    public Task<UserInfoBean> signin(final String userName, String password) {
+        return authenticateService.signin(userName, password).onSuccess(new Continuation<UserInfoBean, UserInfoBean>() {
+            @Override
+            public UserInfoBean then(Task<UserInfoBean> task) throws Exception {
+                UserInfoBean userInfoBean = task.getResult();
+                saveUseInfo(userInfoBean);
+                return userInfoBean;
+            }
+        });
     }
 
     /**
@@ -64,39 +112,38 @@ public class AuthenticationBusiness {
      * <p/>
      * 只有当isLogin返回true时，才会返回有效数据
      */
-    public UserInfoBean getUserInfo() throws Exception {
+    public UserInfoBean getUserInfo() {
         if (!isLogin()) {
-            throw new Exception("还没有登录");
+            throw new IllegalStateException("还没有登陆");
         }
-        return UserInfoBean.generateBean(userPersist.getUserName(), userPersist.getUserIcon());
+        return UserInfoBean.generateBean(
+                userPersist.getUserName()
+                , ImageBean.generateImage(
+                        userPersist.getUserIcon()
+                        , ImageBean.ImageType.OUTLINE));
     }
 
-    /**
-     * 获取用户当默认头像
-     * <p/>
-     * 当没有登录当时候，或者登录后用户没有设置头像，则使用默认头像
-     */
-    public Bitmap getDefaultUserIcon() {
-        // TODO 没有实现
-        return null;
-    }
 
     /**
      * 设置当前登录用户当信息
      */
-    private void setUserInfo(UserInfoBean userInfo) {
+    private void saveUseInfo(UserInfoBean userInfo) {
         userPersist.setUserName(userInfo.userName);
-        userPersist.setUserIcon(userInfo.userIcon);
+        userPersist.setUserIcon(userInfo.userIcon.imageSrc);
     }
 
     /**
      * 登出 登出成功之后，会发送GetAuthEvent，通知相关组件已经成功登出
      */
     public void logout() {
-        Toast.makeText(context, "退出登入", Toast.LENGTH_SHORT).show();
+        userPersist.setUserName(null);
+        userPersist.setUserIcon(null);
     }
 
-    public EventBus getEventBus() {
-        return eventBus;
+    /**
+     * 获取默认当头像
+     */
+    public ImageBean getDefaultUserIcon() {
+        return ImageBean.generateImage("file:///android_asset/user_icon_1.png", ImageBean.ImageType.OUTLINE);
     }
 }

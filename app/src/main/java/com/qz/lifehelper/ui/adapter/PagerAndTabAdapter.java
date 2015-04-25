@@ -4,24 +4,24 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.qz.lifehelper.entity.HomeFragmentBean;
+import com.qz.lifehelper.entity.FragmentBean;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 存放子页面当PagerView的adapter
+ * ViewPager和PagerSlidingTabStrip的adapter
  */
-public class HomePagerAdapter extends FragmentPagerAdapter {
+public class PagerAndTabAdapter extends FragmentPagerAdapter {
 
-    List<HomeFragmentBean> data = new ArrayList<>();
+    List<FragmentBean> data = new ArrayList<>();
 
-    public void setData(List<HomeFragmentBean> data) {
+    public void setData(List<FragmentBean> data) {
         this.data.clear();
         this.data.addAll(data);
     }
 
-    public HomePagerAdapter(FragmentManager fm) {
+    public PagerAndTabAdapter(FragmentManager fm) {
         super(fm);
     }
 

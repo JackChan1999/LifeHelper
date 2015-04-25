@@ -10,7 +10,7 @@ import com.qz.lifehelper.R;
 import com.qz.lifehelper.business.LocationBusiness;
 import com.qz.lifehelper.entity.CityBean;
 import com.qz.lifehelper.helper.HomeHelper;
-import com.qz.lifehelper.ui.adapter.HomePagerAdapter;
+import com.qz.lifehelper.ui.adapter.PagerAndTabAdapter;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
@@ -62,7 +62,7 @@ public class HomeFragment extends BaseFragment {
      */
     @AfterViews
     public void setPagerAndTab() {
-        HomePagerAdapter adapter = new HomePagerAdapter(this.getFragmentManager());
+        PagerAndTabAdapter adapter = new PagerAndTabAdapter(this.getFragmentManager());
         pager.setAdapter(adapter);
         adapter.setData(homeHelper.getFragments());
         adapter.notifyDataSetChanged();

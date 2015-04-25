@@ -5,9 +5,9 @@ package com.qz.lifehelper.entity;
  */
 public class UserInfoBean {
     public String userName;
-    public String userIcon;
+    public ImageBean userIcon;
 
-    static public final UserInfoBean generateBean(String userName, String userIcon) {
+    static public final UserInfoBean generateBean(String userName, ImageBean userIcon) {
         UserInfoBean userInfoBean = new UserInfoBean();
 
         userInfoBean.userIcon = userIcon;

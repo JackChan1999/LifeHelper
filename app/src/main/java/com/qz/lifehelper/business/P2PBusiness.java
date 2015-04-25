@@ -1,6 +1,8 @@
 package com.qz.lifehelper.business;
 
+import android.content.Context;
 import android.support.v4.app.FragmentTransaction;
+import android.widget.Toast;
 
 import com.qz.lifehelper.entity.P2PCategoryBean;
 import com.qz.lifehelper.entity.P2PItemBean;
@@ -11,6 +13,7 @@ import com.qz.lifehelper.ui.fragment.P2PListFragment;
 import com.qz.lifehelper.ui.fragment.P2pCategoryFragment;
 
 import org.androidannotations.annotations.EBean;
+import org.androidannotations.annotations.RootContext;
 
 /**
  * 负责处理P2P的业务逻辑
@@ -18,6 +21,9 @@ import org.androidannotations.annotations.EBean;
 @EBean
 public class P2PBusiness {
 
+
+    @RootContext
+    Context context;
 
     /**
      * 前往P2P修改页面
@@ -75,6 +81,13 @@ public class P2PBusiness {
                 .create();
         transaction.add(android.R.id.content, fragment);
         transaction.commit();
+    }
+
+    /**
+     * 前往我发布到商品页面
+     */
+    public void toMySale() {
+        Toast.makeText(context, "前往我发布的商品页面", Toast.LENGTH_SHORT).show();
     }
 
 }

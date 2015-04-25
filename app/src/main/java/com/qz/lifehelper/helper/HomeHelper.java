@@ -6,7 +6,7 @@ import android.widget.Toast;
 
 import com.qz.lifehelper.business.LocationBusiness;
 import com.qz.lifehelper.entity.CityBean;
-import com.qz.lifehelper.entity.HomeFragmentBean;
+import com.qz.lifehelper.entity.FragmentBean;
 import com.qz.lifehelper.ui.fragment.ArroundFragmnet_;
 import com.qz.lifehelper.ui.fragment.LifeFragment_;
 import com.qz.lifehelper.ui.fragment.PersonalFragment_;
@@ -66,11 +66,11 @@ public class HomeHelper {
     /**
      * 获取Home页面的三个子页面对应的Fragment及其对应当Tab标题
      */
-    public List<HomeFragmentBean> getFragments() {
-        List<HomeFragmentBean> fragments = new ArrayList<>();
-        fragments.add(HomeFragmentBean.generateHomeFragment(new ArroundFragmnet_(), "周边"));
-        fragments.add(HomeFragmentBean.generateHomeFragment(new LifeFragment_(), "生活"));
-        fragments.add(HomeFragmentBean.generateHomeFragment(new PersonalFragment_(), "个人"));
+    public List<FragmentBean> getFragments() {
+        List<FragmentBean> fragments = new ArrayList<>();
+        fragments.add(FragmentBean.generateHomeFragment(new ArroundFragmnet_(), "周边"));
+        fragments.add(FragmentBean.generateHomeFragment(new LifeFragment_(), "生活"));
+        fragments.add(FragmentBean.generateHomeFragment(new PersonalFragment_(), "个人"));
         return fragments;
     }
 
