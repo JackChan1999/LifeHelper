@@ -4,4 +4,19 @@
     android:layout_height="wrap_content"
     style="@style/Toolbar">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:id="@+id/title_tv"
+            android:text="@string/life_helper"
+            android:textSize="28sp"
+            android:textColor="@color/app_text_color_light" />
+    </LinearLayout>
+
 </android.support.v7.widget.Toolbar>

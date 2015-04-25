@@ -1,116 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="15dp"
-    android:layout_marginRight="15dp"
-    android:layout_marginTop="60dp"
-    android:orientation="vertical"
-    tools:context=".ui.activity.SearchPlaneActivity">
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/toolbar"
+        android:id="@+id/toolbar" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        style="@style/traffic.root">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:orientation="vertical">
+            style="@style/traffic.city_group_leave1">
 
             <LinearLayout
-                android:id="@+id/strat_loaction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                style="@style/traffic.city_group_leave2">
 
-                <TextView
+                <LinearLayout
+                    android:id="@+id/strat_loaction"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="出发城市"
-                    android:textColor="@android:color/holo_blue_light"
-                    android:textSize="25sp" />
+                    style="@style/traffic.city_group_leave3">
 
-                <TextView
-                    android:id="@+id/strat_loaction_tv"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="出发城市"
+                        style="@style/traffic.city_text_title" />
+
+                    <TextView
+                        android:id="@+id/strat_loaction_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="北京"
+                        style="@style/traffic.city_text_content" />
+
+                    <ImageView
+                        android:layout_width="26dp"
+                        android:layout_height="26dp"
+                        android:src="@drawable/arror_icon"
+                        style="@style/traffic.arror_icon" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    style="@style/traffic.underline" />
+
+
+                <LinearLayout
+                    android:id="@+id/end_loaction"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:text="北京"
-                    android:textSize="30sp" />
+                    style="@style/traffic.city_group_leave3">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@android:drawable/ic_input_add" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="到达城市"
+                        style="@style/traffic.city_text_title" />
+
+                    <TextView
+                        android:id="@+id/end_loaction_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="上海"
+                        style="@style/traffic.city_text_content" />
+
+                    <ImageView
+                        android:layout_width="26dp"
+                        android:layout_height="26dp"
+                        android:src="@drawable/arror_icon"
+                        style="@style/traffic.arror_icon" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    style="@style/traffic.underline" />
+
 
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:background="@android:color/darker_gray" />
-
-
-            <LinearLayout
-                android:id="@+id/end_loaction"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="到达城市"
-                    android:textColor="@android:color/holo_blue_light"
-                    android:textSize="25sp" />
-
-                <TextView
-                    android:id="@+id/end_loaction_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:text="上海"
-                    android:textSize="30sp" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@android:drawable/ic_input_add" />
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:background="@android:color/darker_gray" />
-
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/refresh_icon"
+                android:id="@+id/exchange_iv"
+                style="@style/traffic.exchange" />
 
         </LinearLayout>
 
-        <ImageView
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/search"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:src="@android:drawable/ic_delete" />
+            android:text="搜索"
+            style="@style/traffic.bn" />
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/search"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
-        android:background="@android:color/holo_blue_light"
-        android:text="搜索"
-        android:textSize="25sp" />
-
 </LinearLayout>

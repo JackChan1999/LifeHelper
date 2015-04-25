@@ -1,6 +1,7 @@
 package com.qz.lifehelper.ui.fragment;
 
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
 import com.qz.lifehelper.R;
@@ -147,5 +148,23 @@ public class PlaneInfoRequestFragment extends Fragment {
     @AfterViews
     void setDefaultDate() {
         dateTv.setText(DateUtil.getCurrentDate(PlaneBusiness.dateFormatPattern));
+    }
+
+    @Click(R.id.exchange_iv)
+    void exchangeCity() {
+        CityBean tempCity = startCity;
+        startCity = endCity;
+        endCity = tempCity;
+        setEndCity();
+        setStartCity();
+    }
+
+    @ViewById(R.id.toolbar)
+    Toolbar toolbar;
+
+    @AfterViews
+    void setToolbar() {
+        TextView titleTv = (TextView) toolbar.findViewById(R.id.title_tv);
+        titleTv.setText("搜索飞机票");
     }
 }
