@@ -1,8 +1,10 @@
 package com.qz.lifehelper.ui.fragment;
 
-import android.support.v4.app.ListFragment;
+import android.widget.ListView;
 
+import com.qz.lifehelper.R;
 import com.qz.lifehelper.business.BusBusiness;
+import com.qz.lifehelper.business.DialogBusiness;
 import com.qz.lifehelper.entity.CityBean;
 import com.qz.lifehelper.entity.json.BusInfoBean;
 import com.qz.lifehelper.ui.adapter.BusInfoAdapter;
@@ -10,6 +12,7 @@ import com.qz.lifehelper.ui.adapter.BusInfoAdapter;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +23,8 @@ import bolts.Task;
 /**
  * 长途大巴搜索结果页
  */
-@EFragment
-public class BusInfoResultFragment extends ListFragment {
+@EFragment(R.layout.layout_listview)
+public class BusInfoResultFragment extends BaseFragment {
 
     /**
      * 出发城市
@@ -55,16 +58,24 @@ public class BusInfoResultFragment extends ListFragment {
 
     List<BusInfoBean> data = new ArrayList<>();
 
+    @Bean
+    DialogBusiness dialogBusiness;
+
+    @ViewById(R.id.listview)
+    ListView listView;
+
     /**
      * 配置长途大巴信息搜索结果列表
      */
     @AfterViews
     public void setListView() {
-        setListAdapter(adapter);
+        listView.setAdapter(adapter);
 
+        dialogBusiness.showDialog(getFragmentManager(), new DialogBusiness.ProgressDialogBuilder().create(), "bus_info");
         busBusiness.getBusInfo(startCity, endCity).onSuccess(new Continuation<List<BusInfoBean>, Void>() {
             @Override
             public Void then(Task<List<BusInfoBean>> task) throws Exception {
+                dialogBusiness.hideDialog("bus_info");
                 data.clear();
                 data.addAll(task.getResult());
                 adapter.setData(data);

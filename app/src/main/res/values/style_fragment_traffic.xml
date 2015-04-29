@@ -67,4 +67,37 @@
     <style name="traffic.arror_icon">
         <item name="android:layout_marginLeft">5dp</item>
     </style>
+
+    <style name="traffic.bus_item">
+        <item name="android:description">@string/life_helper</item>
+    </style>
+
+    <style name="traffic.bus_item.root">
+        <item name="android:paddingRight">12dp</item>
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:paddingBottom">20dp</item>
+        <item name="android:paddingTop">20dp</item>
+    </style>
+
+    <style name="traffic.bus_item.time">
+        <item name="android:layout_marginRight">8dp</item>
+        <item name="android:textSize">30sp</item>
+        <item name="android:textColor">@color/app_text_color_dark</item>
+    </style>
+
+    <style name="traffic.bus_item.city">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/app_text_color_dark</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="traffic.bus_item.city_icon">
+        <item name="android:layout_marginRight">5dp</item>
+    </style>
+
+    <style name="traffic.bus_item.price">
+        <item name="android:textSize">40sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/app_text_color_grey</item>
+    </style>
 </resources>
