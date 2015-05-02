@@ -1,7 +1,11 @@
 package com.qz.lifehelper.ui.fragment;
 
-import android.support.v4.app.ListFragment;
+import android.support.v7.widget.Toolbar;
+import android.widget.ListView;
+import android.widget.TextView;
 
+import com.qz.lifehelper.R;
+import com.qz.lifehelper.business.DialogBusiness;
 import com.qz.lifehelper.business.TrainBusiness;
 import com.qz.lifehelper.entity.CityBean;
 import com.qz.lifehelper.entity.TrainInfoBean;
@@ -10,6 +14,7 @@ import com.qz.lifehelper.ui.adapter.TrainInfoAdapter;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,8 +26,8 @@ import bolts.Task;
 /**
  * 火车票信息搜索结果页
  */
-@EFragment
-public class TrainInfoResultFragment extends ListFragment {
+@EFragment(R.layout.layout_listview)
+public class TrainInfoResultFragment extends BaseFragment {
 
     /**
      * 出发火车站
@@ -62,16 +67,24 @@ public class TrainInfoResultFragment extends ListFragment {
 
     List<TrainInfoBean> data = new ArrayList<>();
 
+    @Bean
+    DialogBusiness dialogBusiness;
+
+    @ViewById(R.id.listview)
+    ListView listView;
+
     /**
      * 配置火车票信息搜索结果列表
      */
     @AfterViews
     public void setListView() {
-        setListAdapter(adapter);
+        listView.setAdapter(adapter);
 
+        dialogBusiness.showDialog(getFragmentManager(), new DialogBusiness.ProgressDialogBuilder().create(), "train_info");
         trainBusiness.getTrainInfo(startCity, endCity, dateStart).onSuccess(new Continuation<List<TrainInfoBean>, Void>() {
             @Override
             public Void then(Task<List<TrainInfoBean>> task) throws Exception {
+                dialogBusiness.hideDialog("train_info");
                 data.clear();
                 data.addAll(task.getResult());
                 adapter.setData(data);
@@ -79,5 +92,15 @@ public class TrainInfoResultFragment extends ListFragment {
                 return null;
             }
         }, Task.UI_THREAD_EXECUTOR);
+    }
+
+    @ViewById(R.id.toolbar)
+    Toolbar toolbar;
+
+    @AfterViews
+    void setToolbar() {
+        TextView titleTv = (TextView) toolbar.findViewById(R.id.title_tv);
+        String title = startCity.cityName + "－" + endCity.cityName;
+        titleTv.setText(title);
     }
 }
