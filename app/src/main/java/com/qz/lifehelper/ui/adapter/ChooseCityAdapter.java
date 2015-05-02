@@ -190,9 +190,9 @@ public class ChooseCityAdapter extends BaseAdapter {
                 itemChildViews.findLocationItem.setVisibility(View.VISIBLE);
                 findLoactionItemChildlViews.cityNameTv.setText(((FindLoactionItemBean) itemData).cityName);
                 if (((FindLoactionItemBean) itemData).cityName.equals(context.getString(R.string.find_location_ing))) {
-                    findLoactionItemChildlViews.findLocationBn.setBackground(context.getResources().getDrawable(android.R.color.holo_orange_light));
+                    findLoactionItemChildlViews.findLocationBn.setBackground(context.getResources().getDrawable(R.color.orange_dark));
                 } else {
-                    findLoactionItemChildlViews.findLocationBn.setBackground(context.getResources().getDrawable(android.R.color.holo_red_light));
+                    findLoactionItemChildlViews.findLocationBn.setBackground(context.getResources().getDrawable(R.color.green_dark));
                 }
                 findLoactionItemChildlViews.findLocationBn.setVisibility(View.VISIBLE);
                 findLoactionItemChildlViews.findLocationBn.setOnClickListener(new View.OnClickListener() {

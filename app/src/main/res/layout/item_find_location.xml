@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
-    android:background="@android:color/white">
+    style="@style/choose_city.city_group">
 
     <TextView
-        android:layout_weight="5"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:id="@+id/city_name_tv"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:id="@+id/city_name_tv"
-        android:textSize="16sp"
-        android:paddingLeft="20dp" />
+        android:text="天津"
+        style="@style/choose_city.city_text" />
 
     <Button
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
         android:id="@+id/find_location_bn"
-        android:layout_weight="1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="重新定位" />
+        android:text="重新定位"
+        style="@style/choose_city.find_location_bn" />
 
-</LinearLayout>
+</RelativeLayout>

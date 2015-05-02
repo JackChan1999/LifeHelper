@@ -118,7 +118,9 @@ public class LocationBusiness {
 
                     Log.d(TAG, "get current location");
                     locationClient.stop();
-                    CityBean currentLocationCity = CityBean.generateCity(bdLocation.getCity());
+                    String cityName = bdLocation.getCity();
+                    cityName = cityName.replace("市", "");
+                    CityBean currentLocationCity = CityBean.generateCity(cityName);
                     taskCompletionSource.setResult(currentLocationCity);
                     getEventBus().post(GetCurrentLocationCityEvent.generateEvent(currentLocationCity));
                 }

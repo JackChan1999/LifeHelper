@@ -76,12 +76,12 @@ public class HomeFragment extends BaseFragment {
     @AfterViews
     public void setToolBar() {
 //        ((ActionBarActivity) getActivity()).setSupportActionBar(toolbar);
-        toolbar.findViewById(R.id.search_bn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                homeHelper.search();
-            }
-        });
+//        toolbar.findViewById(R.id.search_bn).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                homeHelper.search();
+//            }
+//        });
 
 //        toolbar.setTitle("LifeHelper");
 

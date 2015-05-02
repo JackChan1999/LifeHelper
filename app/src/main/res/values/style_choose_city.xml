@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="choose_city">
+        <item name="android:description">@string/life_helper</item>
+    </style>
+
+    <style name="choose_city.section_group">
+        <item name="android:background">@color/app_main_color</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="choose_city.section_text">
+        <item name="android:paddingBottom">3dp</item>
+        <item name="android:paddingTop">3dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/app_text_color_light</item>
+        <item name="android:paddingLeft">14dp</item>
+    </style>
+
+    <style name="choose_city.city_group">
+        <item name="android:background">@color/white</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="choose_city.city_text">
+        <item name="android:paddingTop">6dp</item>
+        <item name="android:paddingBottom">6dp</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/app_text_color_dark</item>
+        <item name="android:paddingLeft">20dp</item>
+    </style>
+
+    <style name="choose_city.find_location_bn">
+        <item name="android:layout_margin">0dp</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:paddingRight">15dp</item>
+        <item name="android:background">@color/orange_dark</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/app_text_color_light</item>
+    </style>
+
+    <style name="choose_city.list">
+        <item name="android:divider">@color/app_main_color</item>
+    </style>
+</resources>

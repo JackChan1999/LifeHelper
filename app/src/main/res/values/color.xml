@@ -10,4 +10,8 @@
     <color name="app_bn">#ff7043</color>
     <color name="tab_indicator">#90a4ae</color>
     <color name="tab_divider">#455a64</color>
+
+    <color name="white">#ffffff</color>
+    <color name="green_dark">#0a7e07</color>
+    <color name="orange_dark">#f57c00</color>
 </resources>
