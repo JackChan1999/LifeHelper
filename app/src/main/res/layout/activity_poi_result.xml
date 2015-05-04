@@ -29,6 +29,10 @@
 
     <!--</LinearLayout>-->
 
+    <include
+        layout="@layout/toolbar"
+        android:id="@+id/toolbar" />
+
     <ListView
         android:layout_weight="1"
         android:id="@+id/poi_result_lv"

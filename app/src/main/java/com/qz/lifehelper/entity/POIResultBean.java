@@ -10,6 +10,7 @@ public class POIResultBean {
     public String detail;
     public String id;
     public ImageBean imageBean;
+    public POICategoryBean poiCategoryBean;
 
     public POIResultBean setImageBean(ImageBean imageBean) {
         this.imageBean = imageBean;
@@ -38,6 +39,11 @@ public class POIResultBean {
 
     public POIResultBean setId(String id) {
         this.id = id;
+        return this;
+    }
+
+    public POIResultBean setPoiCategoryBean(POICategoryBean poiCategoryBean) {
+        this.poiCategoryBean = poiCategoryBean;
         return this;
     }
 }

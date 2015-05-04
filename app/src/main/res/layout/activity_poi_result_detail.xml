@@ -1,75 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/darker_gray"
-    android:orientation="vertical">
+    android:background="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        style="@style/poi.detail.root">
+
 
         <ImageView
             android:id="@+id/poi_iv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/holo_blue_light"
-            android:minHeight="150dp" />
+            android:layout_height="200dp"
+            style="@style/poi.detail.image" />
 
-        <TextView
-            android:id="@+id/title_tv"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="星巴克（阿里巴巴店）"
-            android:textColor="@android:color/holo_blue_light"
-            android:textSize="30sp" />
+            style="@style/poi.detail.group_leave1.common_info">
 
-        <View
+            <TextView
+                android:id="@+id/title_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="星巴克（阿里巴巴店）"
+                style="@style/poi.detail.title" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                style="@style/poi.detail.underline" />
+
+            <TextView
+                android:id="@+id/tel_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="tel:57782341"
+                style="@style/poi.detail.text.tel" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                style="@style/poi.detail.underline" />
+
+            <TextView
+                android:id="@+id/address_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="add:杭州市滨江区阿里巴巴1号楼"
+                style="@style/poi.detail.text.add" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray" />
-
-        <TextView
-            android:id="@+id/tel_tv"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@android:drawable/ic_menu_search"
-            android:text="tel:57782341" />
+            style="@style/poi.detail.group_leave1.detial_groop">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="介绍"
+                style="@style/poi.detail.detail_title" />
 
-        <TextView
-            android:id="@+id/address_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableLeft="@android:drawable/ic_menu_search"
-            android:text="add:杭州市滨江区阿里巴巴1号楼" />
+            <TextView
+                android:id="@+id/detail_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/poi.detail.text.detail"
+                android:text="有一个很大的停车场，对我这种手潮的人来讲特别开心。上菜很快，值得表扬，特别提出，它家手擀面汤超级好喝！这地方只适合吃饭，想多聊会儿或者喝点酒没戏，九点时候整个大厅只剩我们一桌了……服务员是行动派，要什么给拿什么特别快，但是，脸上毫无表情，在她把你要的东西拿回来之前，你完全不知道她是否听到了你的需求……菜点太多，懒得拼图，凑合看吧" />
 
+        </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:background="@android:color/white"
-        android:orientation="vertical">
+</ScrollView>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="介绍"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/detail_tv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="星巴克（Starbucks）是美国一家连锁咖啡公司的名称，1971年成立，为全球最大的咖啡连锁店，其总部坐落美国华盛顿州西雅图市。星巴克旗下零售产品包括30多款全球顶级的咖啡豆、手工制作的浓缩咖啡和多款咖啡冷热饮料、新鲜美味的各式糕点食品以及丰富多样的咖啡机、咖啡杯等商品。星巴克在全球范围内已经有近12,000间分店遍布北美、南美洲、欧洲、中东及太平洋区。2012年3月，星巴克在美国的两款甜点被曝用胭脂虫当着色剂，专家称或令哮喘者过敏。2012年4月，星巴克表示停用该着色剂。" />
-    </LinearLayout>
-
-</LinearLayout>

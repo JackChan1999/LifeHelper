@@ -10,9 +10,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.qz.lifehelper.R;
+import com.qz.lifehelper.business.POIBusiness;
 import com.qz.lifehelper.entity.POIResultBean;
 import com.qz.lifehelper.ui.activity.POIResultDetailActivity;
+import com.squareup.picasso.Picasso;
 
+import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
 
@@ -59,6 +62,9 @@ public class POIResultListAdpater extends BaseAdapter {
         TextView telTv;
     }
 
+    @Bean
+    POIBusiness poiBusiness;
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
@@ -83,10 +89,12 @@ public class POIResultListAdpater extends BaseAdapter {
             }
         });
 
-        childs.poiIv.setBackgroundColor(context.getResources().getColor(android.R.color.holo_blue_light));
         childs.titleTv.setText(poiResultBean.title);
         childs.addressTv.setText(poiResultBean.address);
         childs.telTv.setText(poiResultBean.tel);
+        Picasso.with(context)
+                .load(poiResultBean.imageBean.imageSrc)
+                .into(childs.poiIv);
         return convertView;
     }
 }

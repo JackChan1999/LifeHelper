@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.qz.lifehelper.R;
 import com.qz.lifehelper.business.POIBusiness;
 import com.qz.lifehelper.entity.POIResultBean;
+import com.squareup.picasso.Picasso;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
@@ -56,7 +57,9 @@ public class POIResultDetailActivity extends ActionBarActivity {
         telTv.setText("tel:" + poiResultBean.tel);
         addTv.setText("add:" + poiResultBean.address);
         detailTv.setText(poiResultBean.detail);
-        //TODO 设置图片
+        Picasso.with(this)
+                .load(poiResultBean.imageBean.imageSrc)
+                .into(poiIv);
     }
 
     public static Intent generateIntent(Context context, String poiResultId) {

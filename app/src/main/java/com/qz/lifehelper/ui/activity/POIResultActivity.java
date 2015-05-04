@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.qz.lifehelper.R;
+import com.qz.lifehelper.business.DialogBusiness;
 import com.qz.lifehelper.business.POIBusiness;
 import com.qz.lifehelper.entity.CityBean;
 import com.qz.lifehelper.entity.POIResultBean;
@@ -83,18 +85,21 @@ public class POIResultActivity extends ActionBarActivity {
         onStarLoadPOIData();
     }
 
+    @Bean
+    DialogBusiness dialogBusiness;
+
     /**
      * 当开始加载数据时被调用
      */
     void onStarLoadPOIData() {
-
+        dialogBusiness.showDialog(getSupportFragmentManager(), new DialogBusiness.ProgressDialogBuilder().create(), "poi_list");
     }
 
     /**
      * 当成功加载数据时被调用
      */
     void onLoadPOIDataSuccess() {
-
+        dialogBusiness.hideDialog("poi_list");
     }
 
     /**
@@ -102,6 +107,14 @@ public class POIResultActivity extends ActionBarActivity {
      */
     void onLoadPOIDataFial() {
 
+    }
+
+    @ViewById(R.id.title_tv)
+    TextView toolbarTitleTv;
+
+    @AfterViews
+    void setToolbar() {
+        toolbarTitleTv.setText(category);
     }
 
 }

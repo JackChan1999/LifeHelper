@@ -13,16 +13,22 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.qz.lifehelper.entity.CityBean;
 import com.qz.lifehelper.entity.ImageBean;
+import com.qz.lifehelper.entity.POICategoryBean;
 import com.qz.lifehelper.entity.POIResultBean;
 import com.qz.lifehelper.entity.json.POIResultJsonBean;
 
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
+import org.apache.commons.io.IOUtils;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.Callable;
 
 import bolts.Task;
@@ -63,11 +69,17 @@ public class POIBusiness {
                 List<POIResultBean> poiResultBeans = new ArrayList<>();
                 if (poiInfos != null) {
                     for (PoiInfo poiInfo : poiInfos) {
+                        POICategoryBean categoryBean = POICategoryBean.generate(category);
                         POIResultBean mPOIResultBean = new POIResultBean()
                                 .setAddress(poiInfo.address)
                                 .setTel(poiInfo.phoneNum)
                                 .setTitle(poiInfo.name)
-                                .setId(poiInfo.uid);
+                                .setId(poiInfo.uid)
+                                .setImageBean(ImageBean.generateImage(
+                                        getDefaultPOIImage(categoryBean),
+                                        ImageBean.ImageType.OUTLINE))
+                                .setPoiCategoryBean(categoryBean)
+                                .setDetail(getDefaultPOIDetail(categoryBean));
                         poiResultBeans.add(mPOIResultBean);
                         addPOIResult(mPOIResultBean);
                     }
@@ -131,5 +143,44 @@ public class POIBusiness {
      */
     public void toMyPublish() {
         Toast.makeText(context, "前往我发布的信息页面", Toast.LENGTH_SHORT).show();
+    }
+
+    static Map<String, String> poiCategories = new HashMap<>();
+
+    static {
+        poiCategories.put("餐厅", "restruant");
+    }
+
+    /**
+     * 获取默认的POI图片
+     *
+     * @param categoryBean poi类别
+     */
+    private String getDefaultPOIImage(POICategoryBean categoryBean) {
+        String category = poiCategories.get(categoryBean.categotyName);
+        if (category == null) {
+            return "file:///android_asset/ten_top_spots_image/ten_top_spots_1.jpg";
+        }
+        String image = "file:///android_asset/poi/" + category + "/" + String.valueOf(new Random().nextInt(11) % 10) + ".png";
+        return image;
+    }
+
+    /**
+     * 获取默认的POI细节
+     *
+     * @param categoryBean poi类别
+     */
+    private String getDefaultPOIDetail(POICategoryBean categoryBean) {
+        String category = poiCategories.get(categoryBean.categotyName);
+        String detail = null;
+        InputStream detailIS = null;
+        try {
+            detailIS = context.getAssets().open("poi/" + category + "/" + String.valueOf(new Random().nextInt(11) % 10) + ".txt");
+            detail = IOUtils.toString(detailIS);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            return detail;
+        }
     }
 }
