@@ -229,9 +229,9 @@ public class P2PService {
         return new P2PItemBean()
                 .setTitle(p2pItemJsonBean.getTitle())
                 .setDetail(p2pItemJsonBean.getDetail())
-                .setPrice(p2pItemJsonBean.getPrice())
-                .setAddress(p2pItemJsonBean.getAddress())
-                .setTel(p2pItemJsonBean.getTel())
+                .setPrice(p2pItemJsonBean.getPrice() + "元")
+                .setAddress("地址：" + p2pItemJsonBean.getAddress())
+                .setTel("电话：" + p2pItemJsonBean.getTel())
                 .setId(p2pItemJsonBean.getId())
                 .setCategoryBean(new P2PCategoryBean().setTitle(p2pItemJsonBean.getCategory()))
                 .setImageBean(ImageBean.generateImage(p2pItemJsonBean.getImage(), ImageBean.ImageType.OUTLINE));

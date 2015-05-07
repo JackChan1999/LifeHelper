@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.qz.lifehelper.R;
 import com.qz.lifehelper.business.DialogBusiness;
@@ -18,6 +19,7 @@ import com.qz.lifehelper.ui.adapter.P2PListAdapter;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
@@ -160,37 +162,32 @@ public class P2PListFragment extends BaseFragment {
     @ViewById(R.id.toolbar)
     Toolbar toolbar;
 
+    @ViewById(R.id.title_tv)
+    TextView toolbarTitleTv;
+
+    @Click(R.id.add_poi_bn)
+    void onAddPOIBnClicked() {
+        final FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.addToBackStack(null);
+        P2PAddFragment.Callback callback = new P2PAddFragment.Callback() {
+            @Override
+            public void onAddP2PItemSuccess(P2PItemBean p2pItemBean) {
+                data.add(0, p2pItemBean);
+                Task.call(new Callable<Void>() {
+                    @Override
+                    public Void call() throws Exception {
+                        refreshListView(data);
+                        getFragmentManager().popBackStack();
+                        return null;
+                    }
+                }, Task.UI_THREAD_EXECUTOR);
+            }
+        };
+        p2pBusiness.toP2PAddFragment(transaction, catergoryBean, callback);
+    }
+
     @AfterViews
     void setToolbar() {
-        toolbar.setTitle(catergoryBean.title);
-        toolbar.inflateMenu(R.menu.menu_p2p_list);
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                switch (menuItem.getItemId()) {
-                    case R.id.p2p_add_menu_bn:
-                        final FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                        transaction.addToBackStack(null);
-                        P2PAddFragment.Callback callback = new P2PAddFragment.Callback() {
-                            @Override
-                            public void onAddP2PItemSuccess(P2PItemBean p2pItemBean) {
-                                data.add(0, p2pItemBean);
-                                Task.call(new Callable<Void>() {
-                                    @Override
-                                    public Void call() throws Exception {
-                                        refreshListView(data);
-                                        getFragmentManager().popBackStack();
-                                        return null;
-                                    }
-                                }, Task.UI_THREAD_EXECUTOR);
-                            }
-                        };
-                        p2pBusiness.toP2PAddFragment(transaction, catergoryBean, callback);
-                        return true;
-                    default:
-                        return false;
-                }
-            }
-        });
+        toolbarTitleTv.setText(catergoryBean.title);
     }
 }
