@@ -149,6 +149,9 @@ public class POIBusiness {
 
     static {
         poiCategories.put("餐厅", "restruant");
+        poiCategories.put("医院", "hospital");
+        poiCategories.put("酒店", "hotel");
+        poiCategories.put("保洁", "cleaner");
     }
 
     /**
