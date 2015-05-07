@@ -1,6 +1,7 @@
 package com.qz.lifehelper.ui.fragment;
 
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.qz.lifehelper.R;
 import com.qz.lifehelper.business.AuthenticationBusiness;
@@ -76,6 +77,15 @@ public class LoginFragment extends BaseFragment {
                 callback.onLoginSuccess(task.getResult());
                 return null;
             }
-        });
+        }).continueWith(new Continuation<Void, Void>() {
+            @Override
+            public Void then(Task<Void> task) throws Exception {
+                if (task.isFaulted()) {
+                    dialogBusiness.hideDialog("login");
+                    Toast.makeText(getActivity(), "用户名或密码不正确", Toast.LENGTH_SHORT).show();
+                }
+                return null;
+            }
+        }, Task.UI_THREAD_EXECUTOR);
     }
 }

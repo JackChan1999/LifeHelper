@@ -1,5 +1,6 @@
 package com.qz.lifehelper.service;
 
+import com.avos.avoscloud.AVUser;
 import com.qz.lifehelper.entity.ImageBean;
 import com.qz.lifehelper.entity.UserInfoBean;
 
@@ -24,11 +25,9 @@ public class AuthenticateService {
         return Task.callInBackground(new Callable<UserInfoBean>() {
             @Override
             public UserInfoBean call() throws Exception {
-                //模拟网络
-                Thread.sleep(1000);
-
+                AVUser avUser = AVUser.logIn(userName, password);
                 UserInfoBean userInfoBean = UserInfoBean.generateBean(
-                        userName
+                        avUser.getUsername()
                         , getDefaultUserIcon());
                 return userInfoBean;
             }
@@ -39,12 +38,14 @@ public class AuthenticateService {
     /**
      * 注册
      */
-    public Task<UserInfoBean> signin(final String userName, String password) {
+    public Task<UserInfoBean> signin(final String userName, final String password) {
         return Task.callInBackground(new Callable<UserInfoBean>() {
             @Override
             public UserInfoBean call() throws Exception {
-                //模拟网络
-                Thread.sleep(1000);
+                AVUser avUser = new AVUser();
+                avUser.setUsername(userName);
+                avUser.setPassword(password);
+                avUser.signUp();
 
                 UserInfoBean userInfoBean = UserInfoBean.generateBean(
                         userName

@@ -1,6 +1,7 @@
 package com.qz.lifehelper.ui.fragment;
 
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.qz.lifehelper.R;
 import com.qz.lifehelper.business.AuthenticationBusiness;
@@ -66,19 +67,28 @@ public class SigninFragment extends BaseFragment {
     DialogBusiness dialogBusiness;
 
     @Click(R.id.signin_bn)
-    void login() {
+    void sigin() {
         String userName = userNameEt.getText().toString();
         String passowrd = passwordEt.getText().toString();
 
-        dialogBusiness.showDialog(getFragmentManager(), new DialogBusiness.ProgressDialogBuilder().create(), "login");
+        dialogBusiness.showDialog(getFragmentManager(), new DialogBusiness.ProgressDialogBuilder().create(), "sigin");
         authenticationBusiness.signin(userName, passowrd).onSuccess(new Continuation<UserInfoBean, Void>() {
             @Override
             public Void then(Task<UserInfoBean> task) throws Exception {
-                dialogBusiness.hideDialog("login");
+                dialogBusiness.hideDialog("sigin");
                 callback.onSiginSuccess(task.getResult());
                 return null;
             }
-        });
+        }).continueWith(new Continuation<Void, Object>() {
+            @Override
+            public Object then(Task<Void> task) throws Exception {
+                if (task.isFaulted()) {
+                    dialogBusiness.hideDialog("sigin");
+                    Toast.makeText(getActivity(), "该用户已经存在", Toast.LENGTH_LONG).show();
+                }
+                return null;
+            }
+        }, Task.UI_THREAD_EXECUTOR);
     }
 
 }
