@@ -6,20 +6,29 @@ import android.widget.Toast;
 
 import com.qz.lifehelper.entity.P2PCategoryBean;
 import com.qz.lifehelper.entity.P2PItemBean;
+import com.qz.lifehelper.service.IP2PService;
+import com.qz.lifehelper.service.P2POutlineService_;
+import com.qz.lifehelper.ui.AppProfile;
 import com.qz.lifehelper.ui.fragment.P2PAddFragment;
 import com.qz.lifehelper.ui.fragment.P2PAlterFragment;
 import com.qz.lifehelper.ui.fragment.P2PDetailFragment;
 import com.qz.lifehelper.ui.fragment.P2PListFragment;
 import com.qz.lifehelper.ui.fragment.P2pCategoryFragment;
 
+import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
+
+import java.util.Date;
+import java.util.List;
+
+import bolts.Task;
 
 /**
  * 负责处理P2P的业务逻辑
  */
 @EBean
-public class P2PBusiness {
+public class P2PBusiness implements IP2PService {
 
 
     @RootContext
@@ -88,6 +97,42 @@ public class P2PBusiness {
      */
     public void toMySale() {
         Toast.makeText(context, "前往我发布的商品页面", Toast.LENGTH_SHORT).show();
+    }
+
+    private IP2PService p2pService;
+
+    @AfterInject
+    void setService() {
+        if (AppProfile.dateSource.equals(AppProfile.DATE_SOURCE.ONLINE)) {
+            p2pService = P2POutlineService_.getInstance_(context);
+        } else {
+            p2pService = P2POutlineService_.getInstance_(context);
+        }
+    }
+
+    @Override
+    public Task<List<P2PCategoryBean>> getP2PCategory() {
+        return p2pService.getP2PCategory();
+    }
+
+    @Override
+    public Task<List<P2PItemBean>> getP2PItem(P2PCategoryBean catergoryBean, int count, Date after) {
+        return p2pService.getP2PItem(catergoryBean, count, after);
+    }
+
+    @Override
+    public Task<P2PItemBean> addP2PItem(P2PItemBean p2pItemBean) {
+        return p2pService.addP2PItem(p2pItemBean);
+    }
+
+    @Override
+    public Task<P2PItemBean> deleteP2PItem(P2PItemBean p2pItemBean) {
+        return p2pService.deleteP2PItem(p2pItemBean);
+    }
+
+    @Override
+    public Task<P2PItemBean> alterP2PItem(P2PItemBean p2pItemBean) {
+        return p2pService.alterP2PItem(p2pItemBean);
     }
 
 }

@@ -14,7 +14,6 @@ import com.qz.lifehelper.business.DialogBusiness;
 import com.qz.lifehelper.business.P2PBusiness;
 import com.qz.lifehelper.entity.P2PCategoryBean;
 import com.qz.lifehelper.entity.P2PItemBean;
-import com.qz.lifehelper.service.P2PService;
 import com.qz.lifehelper.ui.adapter.P2PListAdapter;
 
 import org.androidannotations.annotations.AfterViews;
@@ -65,9 +64,6 @@ public class P2PListFragment extends BaseFragment {
     P2PBusiness p2pBusiness;
 
     @Bean
-    P2PService p2pService;
-
-    @Bean
     DialogBusiness dialogBusiness;
 
     private List<P2PItemBean> data = new LinkedList<>();
@@ -78,7 +74,8 @@ public class P2PListFragment extends BaseFragment {
         dialogBusiness.showDialog(getFragmentManager()
                 , new DialogBusiness.ProgressDialogBuilder().create()
                 , "p2pList");
-        p2pService.getP2PItem(catergoryBean).onSuccess(new Continuation<List<P2PItemBean>, Void>() {
+        //TODO 分页
+        p2pBusiness.getP2PItem(catergoryBean, 0, null).onSuccess(new Continuation<List<P2PItemBean>, Void>() {
             @Override
             public Void then(Task<List<P2PItemBean>> task) throws Exception {
                 data.clear();

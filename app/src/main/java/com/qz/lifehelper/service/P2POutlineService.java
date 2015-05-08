@@ -15,6 +15,7 @@ import org.androidannotations.annotations.EBean;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -25,7 +26,7 @@ import bolts.Task;
  * 这是一个P2P的虚拟服务器
  */
 @EBean
-public class P2PService {
+public class P2POutlineService implements IP2PService {
 
     @Bean
     P2PPersist p2pPersist;
@@ -73,8 +74,10 @@ public class P2PService {
      * 获取P2P结果信息
      *
      * @param catergoryBean P2P类别
+     * @param count
+     * @param after
      */
-    public Task<List<P2PItemBean>> getP2PItem(final P2PCategoryBean catergoryBean) {
+    public Task<List<P2PItemBean>> getP2PItem(final P2PCategoryBean catergoryBean, int count, Date after) {
         return Task.callInBackground(new Callable<String>() {
             @Override
             public String call() throws Exception {
@@ -222,6 +225,7 @@ public class P2PService {
 
     /**
      * 将p2pItemJsonBean转换为p2pItemBean
+     *
      * @param p2pItemJsonBean
      * @return
      */

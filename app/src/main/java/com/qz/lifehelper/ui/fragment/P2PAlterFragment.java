@@ -5,8 +5,8 @@ import android.widget.ImageView;
 
 import com.qz.lifehelper.R;
 import com.qz.lifehelper.business.DialogBusiness;
+import com.qz.lifehelper.business.P2PBusiness;
 import com.qz.lifehelper.entity.P2PItemBean;
-import com.qz.lifehelper.service.P2PService;
 import com.squareup.picasso.Picasso;
 
 import org.androidannotations.annotations.AfterViews;
@@ -100,7 +100,7 @@ public class P2PAlterFragment extends BaseFragment {
     }
 
     @Bean
-    P2PService p2pService;
+    P2PBusiness p2pBusiness;
 
     @Bean
     DialogBusiness dialogBusiness;
@@ -125,7 +125,7 @@ public class P2PAlterFragment extends BaseFragment {
         dialogBusiness.showDialog(getFragmentManager()
                 , new DialogBusiness.ProgressDialogBuilder().create()
                 , "p2p_alter");
-        p2pService.alterP2PItem(p2pItemBean).onSuccess(new Continuation<P2PItemBean, Void>() {
+        p2pBusiness.alterP2PItem(p2pItemBean).onSuccess(new Continuation<P2PItemBean, Void>() {
             @Override
             public Void then(Task<P2PItemBean> task) throws Exception {
                 dialogBusiness.hideDialog("p2p_alter");
@@ -140,7 +140,7 @@ public class P2PAlterFragment extends BaseFragment {
         dialogBusiness.showDialog(getFragmentManager()
                 , new DialogBusiness.ProgressDialogBuilder().create()
                 , "p2p_delete");
-        p2pService.deleteP2PItem(p2pItemBean).onSuccess(new Continuation<P2PItemBean, Void>() {
+        p2pBusiness.deleteP2PItem(p2pItemBean).onSuccess(new Continuation<P2PItemBean, Void>() {
             @Override
             public Void then(Task<P2PItemBean> task) throws Exception {
                 dialogBusiness.hideDialog("p2p_delete");
