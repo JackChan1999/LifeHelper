@@ -8,9 +8,13 @@ import com.qz.lifehelper.entity.UserInfoBean;
 import com.qz.lifehelper.event.LoginSuccessEvent;
 import com.qz.lifehelper.event.SigninSuccessEvent;
 import com.qz.lifehelper.persist.UserPersist;
-import com.qz.lifehelper.service.AuthenticateService;
+import com.qz.lifehelper.service.AuthenticateOnlineService_;
+import com.qz.lifehelper.service.AuthenticateOutlineService_;
+import com.qz.lifehelper.service.IAuthenticateService;
+import com.qz.lifehelper.ui.AppProfile;
 import com.qz.lifehelper.ui.activity.AuthenticateActivity;
 
+import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
@@ -32,8 +36,17 @@ public class AuthenticationBusiness {
     @RootContext
     Context context;
 
-    @Bean
-    AuthenticateService authenticateService;
+
+    IAuthenticateService authenticateService;
+
+    @AfterInject
+    void setService() {
+        if (AppProfile.dateSource.equals(AppProfile.DATE_SOURCE.ONLINE)) {
+            authenticateService = AuthenticateOnlineService_.getInstance_(context);
+        } else {
+            authenticateService = AuthenticateOutlineService_.getInstance_(context);
+        }
+    }
 
     private Task<UserInfoBean>.TaskCompletionSource authenticateTaskCS;
 

@@ -13,10 +13,10 @@ import bolts.Task;
 /**
  * 用于进行身份验证的Service
  * <p/>
- * 这是一个假实现，一个虚拟服务器
+ * 该服务端使用来Leancloud
  */
 @EBean
-public class AuthenticateService {
+public class AuthenticateOnlineService implements IAuthenticateService {
 
     /**
      * 登录
