@@ -5,6 +5,7 @@ import com.google.gson.reflect.TypeToken;
 import com.qz.lifehelper.entity.ImageBean;
 import com.qz.lifehelper.entity.P2PCategoryBean;
 import com.qz.lifehelper.entity.P2PItemBean;
+import com.qz.lifehelper.entity.UserInfoBean;
 import com.qz.lifehelper.entity.json.P2PCategoryJsonBean;
 import com.qz.lifehelper.entity.json.P2PItemJsonBean;
 import com.qz.lifehelper.persist.P2PPersist;
@@ -178,6 +179,12 @@ public class P2POutlineService implements IP2PService {
             }
 
         });
+    }
+
+    @Override
+    public Task<List<P2PItemBean>> getP2PItem(P2PCategoryBean catergoryBean, int count, Date after, UserInfoBean userInfoBean) {
+        //TODO 没有实现
+        return getP2PItem(catergoryBean, count, after);
     }
 
     /**

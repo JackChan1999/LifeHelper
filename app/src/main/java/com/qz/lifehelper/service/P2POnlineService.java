@@ -3,6 +3,7 @@ package com.qz.lifehelper.service;
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
+import com.avos.avoscloud.AVUser;
 import com.qz.lifehelper.entity.ImageBean;
 import com.qz.lifehelper.entity.P2PCategoryBean;
 import com.qz.lifehelper.entity.P2PItemBean;
@@ -36,16 +37,22 @@ public class P2POnlineService implements IP2PService {
     }
 
     @Override
-    public Task<List<P2PItemBean>> getP2PItem(final P2PCategoryBean catergoryBean, final int count, final Date after) {
+    public Task<List<P2PItemBean>> getP2PItem(final P2PCategoryBean catergoryBean, final int count, final Date after, final UserInfoBean userInfoBean) {
         return Task.callInBackground(new Callable<List<P2PItemBean>>() {
             @Override
             public List<P2PItemBean> call() throws Exception {
                 AVQuery<AVObject> query = new AVQuery<AVObject>(LeancloudConstant.P2P_TABLE);
                 query.limit(count);
-                query.whereEqualTo(LeancloudConstant.CATEGORY_COLUME, catergoryBean.title);
+                if (catergoryBean != null) {
+                    query.whereEqualTo(LeancloudConstant.CATEGORY_COLUME, catergoryBean.title);
+                }
                 query.orderByDescending(LeancloudConstant.CREATED_AT_COLUME);
                 if (after != null) {
                     query.whereLessThan(LeancloudConstant.CREATED_AT_COLUME, after);
+                }
+                if (userInfoBean != null && userInfoBean.id != null) {
+                    AVUser currentUserObject = AVUser.getQuery().whereEqualTo(LeancloudConstant.ID_COLUME, userInfoBean.id).getFirst();
+                    query.whereEqualTo(LeancloudConstant.USER_COLUME, currentUserObject);
                 }
                 List<AVObject> p2pObjects = query.find();
                 List<P2PItemBean> p2pItemBeans = new ArrayList<P2PItemBean>();
@@ -57,6 +64,11 @@ public class P2POnlineService implements IP2PService {
                 return p2pItemBeans;
             }
         });
+    }
+
+    @Override
+    public Task<List<P2PItemBean>> getP2PItem(final P2PCategoryBean catergoryBean, final int count, final Date after) {
+        return getP2PItem(catergoryBean, count, after, null);
     }
 
     @Override

@@ -18,6 +18,7 @@ import com.qz.lifehelper.ui.fragment.P2PAlterFragment;
 import com.qz.lifehelper.ui.fragment.P2PDetailFragment;
 import com.qz.lifehelper.ui.fragment.P2PListFragment;
 import com.qz.lifehelper.ui.fragment.P2pCategoryFragment;
+import com.qz.lifehelper.ui.fragment.PersonalP2PListFragment;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.Bean;
@@ -121,8 +122,16 @@ public class P2PBusiness implements IP2PService {
     /**
      * 前往我发布到商品页面
      */
-    public void toMySale() {
-        Toast.makeText(context, "前往我发布的商品页面", Toast.LENGTH_SHORT).show();
+    public void toMySale(FragmentTransaction transaction) {
+        PersonalP2PListFragment fragment = new PersonalP2PListFragment.Builder().create();
+        transaction.add(android.R.id.content, fragment);
+        transaction.commit();
+//        toP2PCategoryFragment(transaction, new P2pCategoryFragment.Callback() {
+//            @Override
+//            public void onCategorySelected(P2PCategoryBean categoryBean) {
+//
+//            }
+//        });
     }
 
     private IP2PService p2pService;
@@ -175,6 +184,11 @@ public class P2PBusiness implements IP2PService {
     @Override
     public Task<P2PItemBean> alterP2PItem(P2PItemBean p2pItemBean) {
         return p2pService.alterP2PItem(p2pItemBean);
+    }
+
+    @Override
+    public Task<List<P2PItemBean>> getP2PItem(P2PCategoryBean catergoryBean, int count, Date after, UserInfoBean userInfoBean) {
+        return p2pService.getP2PItem(catergoryBean, count, after, userInfoBean);
     }
 
 }
