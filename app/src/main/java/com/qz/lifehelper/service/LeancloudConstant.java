@@ -26,4 +26,6 @@ public class LeancloudConstant {
     public static final String LEANCLOUD_APP_ID = "4y2a48qve1938qr6aykxo7fd0cbc8vq32w4dx2leub8i4ovq";
     public static final String LEANCLOUD_APP_KEY = "kbdqdoxr1vcclo2cbwawoj6rr0f4lptta4rikbxzulhwaavc";
 
+    public static final String SUPER_USER_ID = "554cb2f8e4b031c7f9bf4111";
+
 }

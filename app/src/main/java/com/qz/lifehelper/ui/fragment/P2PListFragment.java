@@ -23,6 +23,7 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -90,7 +91,7 @@ public class P2PListFragment extends BaseFragment {
 
             @Override
             public void onLoadMore() {
-                p2pBusiness.getP2PItem(
+                getP2PItem(
                         catergoryBean
                         , ITEM_COUNT
                         , data.size() != 0 ? data.get(data.size() - 1).createdAt : null)
@@ -116,7 +117,7 @@ public class P2PListFragment extends BaseFragment {
             }
         });
 
-        p2pBusiness.getP2PItem(catergoryBean, ITEM_COUNT, null).continueWith(new Continuation<List<P2PItemBean>, Void>() {
+        getP2PItem(catergoryBean, ITEM_COUNT, null).continueWith(new Continuation<List<P2PItemBean>, Void>() {
             @Override
             public Void then(Task<List<P2PItemBean>> task) throws Exception {
                 dialogBusiness.hideDialog("p2pList");
@@ -231,6 +232,14 @@ public class P2PListFragment extends BaseFragment {
 
     @AfterViews
     void setToolbar() {
-        toolbarTitleTv.setText(catergoryBean.title);
+        toolbarTitleTv.setText(getTitleName());
+    }
+
+    protected String getTitleName() {
+        return catergoryBean.title;
+    }
+
+    protected Task<List<P2PItemBean>> getP2PItem(P2PCategoryBean catergoryBean, int count, Date after) {
+        return p2pBusiness.getP2PItem(catergoryBean, count, after);
     }
 }

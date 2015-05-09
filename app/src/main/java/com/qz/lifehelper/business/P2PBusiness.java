@@ -7,6 +7,7 @@ import android.widget.Toast;
 import com.qz.lifehelper.entity.ImageBean;
 import com.qz.lifehelper.entity.P2PCategoryBean;
 import com.qz.lifehelper.entity.P2PItemBean;
+import com.qz.lifehelper.entity.UserInfoBean;
 import com.qz.lifehelper.service.IP2PService;
 import com.qz.lifehelper.service.ImageService;
 import com.qz.lifehelper.service.P2POnlineService_;
@@ -39,16 +40,36 @@ public class P2PBusiness implements IP2PService {
     @RootContext
     Context context;
 
+    @Bean
+    AuthenticationBusiness authenticationBusiness;
+
     /**
      * 前往P2P修改页面
      */
-    public void toP2PAlterFragment(FragmentTransaction transaction, P2PItemBean p2PItemBean, P2PAlterFragment.Callback callback) {
-        P2PAlterFragment fragment = new P2PAlterFragment.Builder()
-                .setCallback(callback)
-                .setP2PItemBean(p2PItemBean)
-                .create();
-        transaction.add(android.R.id.content, fragment);
-        transaction.commit();
+    public void toP2PAlterFragment(final FragmentTransaction transaction, final P2PItemBean p2PItemBean, final P2PAlterFragment.Callback callback) {
+
+        authenticationBusiness.getCurrentUser(false)
+                .continueWith(new Continuation<UserInfoBean, Void>() {
+                    @Override
+                    public Void then(Task<UserInfoBean> task) throws Exception {
+                        if (task.isFaulted()) {
+                            Toast.makeText(context, "请先登录", Toast.LENGTH_LONG).show();
+                        } else {
+                            UserInfoBean userInfoBean = task.getResult();
+                            if (userInfoBean.id.equals(p2PItemBean.userInfoBean.id) || authenticationBusiness.isSuperUser(p2PItemBean.userInfoBean)) {
+                                P2PAlterFragment fragment = new P2PAlterFragment.Builder()
+                                        .setCallback(callback)
+                                        .setP2PItemBean(p2PItemBean)
+                                        .create();
+                                transaction.add(android.R.id.content, fragment);
+                                transaction.commit();
+                            } else {
+                                Toast.makeText(context, "你没有该权限", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                        return null;
+                    }
+                });
     }
 
     /**

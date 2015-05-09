@@ -12,6 +12,7 @@ import com.qz.lifehelper.persist.UserPersist;
 import com.qz.lifehelper.service.AuthenticateOnlineService_;
 import com.qz.lifehelper.service.AuthenticateOutlineService_;
 import com.qz.lifehelper.service.IAuthenticateService;
+import com.qz.lifehelper.service.LeancloudConstant;
 import com.qz.lifehelper.ui.AppProfile;
 import com.qz.lifehelper.ui.activity.AuthenticateActivity;
 
@@ -178,5 +179,23 @@ public class AuthenticationBusiness {
      */
     public ImageBean getDefaultUserIcon() {
         return ImageBean.generateImage("file:///android_asset/user_icon_1.png", ImageBean.ImageType.OUTLINE);
+    }
+
+    /**
+     * 判断是不是超级用户
+     * <p/>
+     * 超级用户拥有无敌权限
+     */
+    public boolean isSuperUser(UserInfoBean userInfoBean) {
+        if (!isLogin()) {
+            return false;
+        }
+        UserInfoBean cuerrentUser = getCurrentUser();
+
+        if (LeancloudConstant.SUPER_USER_ID.equals(cuerrentUser.id)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
