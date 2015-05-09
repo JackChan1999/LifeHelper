@@ -3,6 +3,7 @@ package com.qz.lifehelper.helper;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.widget.Toast;
 
 import com.qz.lifehelper.business.LocationBusiness;
@@ -53,8 +54,10 @@ public class ArroundHelper {
     /**
      * 跳转到特惠页面
      */
-    public void toSale() {
-        Toast.makeText(context, "前往特惠", Toast.LENGTH_SHORT).show();
+    public void toSale(FragmentManager fragmentManager) {
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.addToBackStack(null);
+        topInfoBusiness.toSaleFragment(transaction);
     }
 
     @Bean

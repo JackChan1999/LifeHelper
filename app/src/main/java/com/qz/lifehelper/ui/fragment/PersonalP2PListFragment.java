@@ -1,5 +1,6 @@
 package com.qz.lifehelper.ui.fragment;
 
+import android.view.View;
 import android.widget.Toast;
 
 import com.qz.lifehelper.R;
@@ -9,8 +10,10 @@ import com.qz.lifehelper.entity.P2PCategoryBean;
 import com.qz.lifehelper.entity.P2PItemBean;
 import com.qz.lifehelper.entity.UserInfoBean;
 
+import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.ViewById;
 
 import java.util.Date;
 import java.util.List;
@@ -54,4 +57,13 @@ public class PersonalP2PListFragment extends P2PListFragment {
             }
         }, Task.UI_THREAD_EXECUTOR);
     }
+
+    @ViewById(R.id.add_poi_bn)
+    View addBn;
+
+    @AfterViews
+    void setAddBn() {
+        addBn.setVisibility(View.GONE);
+    }
+
 }

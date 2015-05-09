@@ -74,6 +74,6 @@ public class ArroundFragmnet extends Fragment {
 
     @Click(R.id.sale)
     public void onSaleClick() {
-        arroundHelper.toSale();
+        arroundHelper.toSale(getFragmentManager());
     }
 }
