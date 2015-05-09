@@ -15,6 +15,7 @@ import com.qz.lifehelper.business.P2PBusiness;
 import com.qz.lifehelper.entity.ImageBean;
 import com.qz.lifehelper.entity.P2PCategoryBean;
 import com.qz.lifehelper.entity.P2PItemBean;
+import com.qz.lifehelper.entity.UserInfoBean;
 import com.squareup.picasso.Picasso;
 
 import org.androidannotations.annotations.AfterViews;
@@ -127,39 +128,49 @@ public class P2PAddFragment extends BaseFragment {
 
     @Click(R.id.submit_bn)
     void submit() {
-        String title = TitleEt.getText().toString();
-        String add = AddEt.getText().toString();
-        String tel = TelEt.getText().toString();
-        String price = PriceEt.getText().toString();
-        String detail = DetailEt.getText().toString();
+        final String title = TitleEt.getText().toString();
+        final String add = AddEt.getText().toString();
+        final String tel = TelEt.getText().toString();
+        final String price = PriceEt.getText().toString();
+        final String detail = DetailEt.getText().toString();
 
         //TODO 检测数据是否合法
 
-        P2PItemBean p2pItemBean = new P2PItemBean()
-                .setTitle(title)
-                .setDetail(detail)
-                .setAddress(add)
-                .setTel(tel)
-                .setPrice(price)
-                .setImageBean(imageBean)
-                .setCategoryBean(categoryBean)
-                .setUserInfoBean(authenticationBusiness.getUserInfo());
-
-        dialogBusiness.showDialog(getFragmentManager(), new DialogBusiness.ProgressDialogBuilder().create(), "upload_p2p");
-        p2pBusiness.addP2PItem(p2pItemBean).continueWith(new Continuation<P2PItemBean, Void>() {
-            @Override
-            public Void then(Task<P2PItemBean> task) throws Exception {
-                dialogBusiness.hideDialog("upload_p2p");
-                if (task.isFaulted()) {
-                    Toast.makeText(P2PAddFragment.this.getActivity(), "上传失败", Toast.LENGTH_LONG).show();
-                    Log.e(TAG, "upload p2p fail", task.getError());
-                } else {
-                    Log.d(TAG, "upload p2p success");
-                    callback.onAddP2PItemSuccess(task.getResult());
-                }
-                return null;
-            }
-        }, Task.UI_THREAD_EXECUTOR);
+        authenticationBusiness.getCurrentUser(true)
+                .continueWithTask(new Continuation<UserInfoBean, Task<Void>>() {
+                    @Override
+                    public Task<Void> then(Task<UserInfoBean> task) throws Exception {
+                        if (task.isFaulted()) {
+                            Toast.makeText(P2PAddFragment.this.getActivity(), "获取当前用户失败", Toast.LENGTH_LONG).show();
+                        } else {
+                            P2PItemBean p2pItemBean = new P2PItemBean()
+                                    .setTitle(title)
+                                    .setDetail(detail)
+                                    .setAddress(add)
+                                    .setTel(tel)
+                                    .setPrice(price)
+                                    .setImageBean(imageBean)
+                                    .setCategoryBean(categoryBean)
+                                    .setUserInfoBean(task.getResult());
+                            dialogBusiness.showDialog(getFragmentManager(), new DialogBusiness.ProgressDialogBuilder().create(), "upload_p2p");
+                            p2pBusiness.addP2PItem(p2pItemBean).continueWith(new Continuation<P2PItemBean, Void>() {
+                                @Override
+                                public Void then(Task<P2PItemBean> task) throws Exception {
+                                    dialogBusiness.hideDialog("upload_p2p");
+                                    if (task.isFaulted()) {
+                                        Toast.makeText(P2PAddFragment.this.getActivity(), "上传失败", Toast.LENGTH_LONG).show();
+                                        Log.e(TAG, "upload p2p fail", task.getError());
+                                    } else {
+                                        Log.d(TAG, "upload p2p success");
+                                        callback.onAddP2PItemSuccess(task.getResult());
+                                    }
+                                    return null;
+                                }
+                            }, Task.UI_THREAD_EXECUTOR);
+                        }
+                        return null;
+                    }
+                });
     }
 
     @ViewById(R.id.toolbar)

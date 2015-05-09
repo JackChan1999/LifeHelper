@@ -126,8 +126,7 @@ public class AuthenticationBusiness {
      * <p/>
      * 只有当isLogin返回true时，才会返回有效数据
      */
-    //TODO 如果没有登入，则进行登录
-    public UserInfoBean getUserInfo() {
+    private UserInfoBean getCurrentUser() {
         if (!isLogin()) {
             throw new IllegalStateException("还没有登陆");
         }
@@ -140,6 +139,21 @@ public class AuthenticationBusiness {
                         userPersist.getUserIcon()
                         , ImageBean.ImageType.OUTLINE)
                 , id);
+    }
+
+    /**
+     * 获取当前登录的用户信息
+     *
+     * @param tryToLogin true，如果当前没有登录则引导用户登录
+     */
+    public Task<UserInfoBean> getCurrentUser(boolean tryToLogin) {
+        if (isLogin()) {
+            return Task.forResult(getCurrentUser());
+        } else if (tryToLogin) {
+            return toAuthenticateActivity();
+        } else {
+            return Task.forError(new Exception("当前没有登录"));
+        }
     }
 
 

@@ -87,8 +87,14 @@ public class PersonalFragment extends Fragment {
     @AfterViews
     void setAuthState() {
         if (authenticationBusiness.isLogin()) {
-            UserInfoBean userInfoBean = authenticationBusiness.getUserInfo();
-            login(userInfoBean.userName, userInfoBean.userIcon);
+            authenticationBusiness.getCurrentUser(false).onSuccess(new Continuation<UserInfoBean, Void>() {
+                @Override
+                public Void then(Task<UserInfoBean> task) throws Exception {
+                    UserInfoBean userInfoBean = task.getResult();
+                    login(userInfoBean.userName, userInfoBean.userIcon);
+                    return null;
+                }
+            });
         } else {
             logout();
         }
