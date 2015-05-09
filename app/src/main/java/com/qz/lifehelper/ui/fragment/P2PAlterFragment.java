@@ -120,7 +120,8 @@ public class P2PAlterFragment extends BaseFragment {
                 .setPrice(priceEt.getText().toString())
                 .setId(this.p2pItemBean.id)
                 .setImageBean(this.p2pItemBean.imageBean)
-                .setCategoryBean(this.p2pItemBean.categoryBean);
+                .setCategoryBean(this.p2pItemBean.categoryBean)
+                .setUserInfoBean(this.p2pItemBean.userInfoBean);
 
         dialogBusiness.showDialog(getFragmentManager()
                 , new DialogBusiness.ProgressDialogBuilder().create()

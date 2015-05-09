@@ -3,6 +3,7 @@ package com.qz.lifehelper.business;
 import android.content.Context;
 import android.content.Intent;
 
+import com.avos.avoscloud.AVUser;
 import com.qz.lifehelper.entity.ImageBean;
 import com.qz.lifehelper.entity.UserInfoBean;
 import com.qz.lifehelper.event.LoginSuccessEvent;
@@ -125,15 +126,20 @@ public class AuthenticationBusiness {
      * <p/>
      * 只有当isLogin返回true时，才会返回有效数据
      */
+    //TODO 如果没有登入，则进行登录
     public UserInfoBean getUserInfo() {
         if (!isLogin()) {
             throw new IllegalStateException("还没有登陆");
         }
+
+        String id = AVUser.getCurrentUser().getObjectId();
+
         return UserInfoBean.generateBean(
                 userPersist.getUserName()
                 , ImageBean.generateImage(
                         userPersist.getUserIcon()
-                        , ImageBean.ImageType.OUTLINE));
+                        , ImageBean.ImageType.OUTLINE)
+                , id);
     }
 
 

@@ -26,9 +26,11 @@ public class AuthenticateOnlineService implements IAuthenticateService {
             @Override
             public UserInfoBean call() throws Exception {
                 AVUser avUser = AVUser.logIn(userName, password);
+                String id = avUser.getObjectId();
                 UserInfoBean userInfoBean = UserInfoBean.generateBean(
                         avUser.getUsername()
-                        , getDefaultUserIcon());
+                        , getDefaultUserIcon()
+                        , id);
                 return userInfoBean;
             }
         });
@@ -47,9 +49,12 @@ public class AuthenticateOnlineService implements IAuthenticateService {
                 avUser.setPassword(password);
                 avUser.signUp();
 
+                String id = avUser.getObjectId();
+
                 UserInfoBean userInfoBean = UserInfoBean.generateBean(
                         userName
-                        , getDefaultUserIcon());
+                        , getDefaultUserIcon()
+                        , id);
                 return userInfoBean;
             }
         });

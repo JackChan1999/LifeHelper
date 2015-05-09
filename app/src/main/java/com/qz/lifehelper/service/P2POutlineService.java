@@ -230,6 +230,7 @@ public class P2POutlineService implements IP2PService {
      * @return
      */
     private P2PItemBean convertToP2PItemBean(P2PItemJsonBean p2pItemJsonBean) {
+        //TODO 设置用户
         return new P2PItemBean()
                 .setTitle(p2pItemJsonBean.getTitle())
                 .setDetail(p2pItemJsonBean.getDetail())
@@ -238,6 +239,7 @@ public class P2POutlineService implements IP2PService {
                 .setTel("电话：" + p2pItemJsonBean.getTel())
                 .setId(p2pItemJsonBean.getId())
                 .setCategoryBean(new P2PCategoryBean().setTitle(p2pItemJsonBean.getCategory()))
-                .setImageBean(ImageBean.generateImage(p2pItemJsonBean.getImage(), ImageBean.ImageType.OUTLINE));
+                .setImageBean(ImageBean.generateImage(p2pItemJsonBean.getImage(), ImageBean.ImageType.OUTLINE))
+                .setUserInfoBean(null);
     }
 }

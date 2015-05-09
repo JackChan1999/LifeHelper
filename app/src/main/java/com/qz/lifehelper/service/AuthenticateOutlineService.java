@@ -27,9 +27,11 @@ public class AuthenticateOutlineService implements IAuthenticateService {
                 //模拟网络
                 Thread.sleep(1000);
 
+                //TODO 生成id
                 UserInfoBean userInfoBean = UserInfoBean.generateBean(
                         userName
-                        , getDefaultUserIcon());
+                        , getDefaultUserIcon()
+                        , "");
                 return userInfoBean;
             }
         });
@@ -43,12 +45,16 @@ public class AuthenticateOutlineService implements IAuthenticateService {
         return Task.callInBackground(new Callable<UserInfoBean>() {
             @Override
             public UserInfoBean call() throws Exception {
+
+                //TODO 生成id
+
                 //模拟网络
                 Thread.sleep(1000);
 
                 UserInfoBean userInfoBean = UserInfoBean.generateBean(
                         userName
-                        , getDefaultUserIcon());
+                        , getDefaultUserIcon()
+                        , "");
                 return userInfoBean;
             }
         });

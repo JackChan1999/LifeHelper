@@ -6,12 +6,14 @@ package com.qz.lifehelper.entity;
 public class UserInfoBean {
     public String userName;
     public ImageBean userIcon;
+    public String id;
 
-    static public final UserInfoBean generateBean(String userName, ImageBean userIcon) {
+    static public final UserInfoBean generateBean(String userName, ImageBean userIcon, String id) {
         UserInfoBean userInfoBean = new UserInfoBean();
 
         userInfoBean.userIcon = userIcon;
         userInfoBean.userName = userName;
+        userInfoBean.id = id;
 
         return userInfoBean;
     }

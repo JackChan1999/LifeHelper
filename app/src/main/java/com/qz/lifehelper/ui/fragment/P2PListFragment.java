@@ -75,7 +75,7 @@ public class P2PListFragment extends BaseFragment {
                 , new DialogBusiness.ProgressDialogBuilder().create()
                 , "p2pList");
         //TODO 分页
-        p2pBusiness.getP2PItem(catergoryBean, 0, null).onSuccess(new Continuation<List<P2PItemBean>, Void>() {
+        p2pBusiness.getP2PItem(catergoryBean, 10, null).onSuccess(new Continuation<List<P2PItemBean>, Void>() {
             @Override
             public Void then(Task<List<P2PItemBean>> task) throws Exception {
                 data.clear();

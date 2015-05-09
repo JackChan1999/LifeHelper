@@ -4,9 +4,12 @@ import android.content.Context;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.Toast;
 
+import com.qz.lifehelper.entity.ImageBean;
 import com.qz.lifehelper.entity.P2PCategoryBean;
 import com.qz.lifehelper.entity.P2PItemBean;
 import com.qz.lifehelper.service.IP2PService;
+import com.qz.lifehelper.service.ImageService;
+import com.qz.lifehelper.service.P2POnlineService_;
 import com.qz.lifehelper.service.P2POutlineService_;
 import com.qz.lifehelper.ui.AppProfile;
 import com.qz.lifehelper.ui.fragment.P2PAddFragment;
@@ -16,12 +19,14 @@ import com.qz.lifehelper.ui.fragment.P2PListFragment;
 import com.qz.lifehelper.ui.fragment.P2pCategoryFragment;
 
 import org.androidannotations.annotations.AfterInject;
+import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
 
 import java.util.Date;
 import java.util.List;
 
+import bolts.Continuation;
 import bolts.Task;
 
 /**
@@ -101,10 +106,13 @@ public class P2PBusiness implements IP2PService {
 
     private IP2PService p2pService;
 
+    @Bean
+    ImageService imageService;
+
     @AfterInject
     void setService() {
         if (AppProfile.dateSource.equals(AppProfile.DATE_SOURCE.ONLINE)) {
-            p2pService = P2POutlineService_.getInstance_(context);
+            p2pService = P2POnlineService_.getInstance_(context);
         } else {
             p2pService = P2POutlineService_.getInstance_(context);
         }
@@ -121,8 +129,14 @@ public class P2PBusiness implements IP2PService {
     }
 
     @Override
-    public Task<P2PItemBean> addP2PItem(P2PItemBean p2pItemBean) {
-        return p2pService.addP2PItem(p2pItemBean);
+    public Task<P2PItemBean> addP2PItem(final P2PItemBean p2pItemBean) {
+        return imageService.uploadImage(p2pItemBean.imageBean).continueWithTask(new Continuation<ImageBean, Task<P2PItemBean>>() {
+            @Override
+            public Task<P2PItemBean> then(Task<ImageBean> task) throws Exception {
+                p2pItemBean.imageBean = task.getResult();
+                return p2pService.addP2PItem(p2pItemBean);
+            }
+        });
     }
 
     @Override
