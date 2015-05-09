@@ -130,13 +130,20 @@ public class P2PBusiness implements IP2PService {
 
     @Override
     public Task<P2PItemBean> addP2PItem(final P2PItemBean p2pItemBean) {
-        return imageService.uploadImage(p2pItemBean.imageBean).continueWithTask(new Continuation<ImageBean, Task<P2PItemBean>>() {
-            @Override
-            public Task<P2PItemBean> then(Task<ImageBean> task) throws Exception {
-                p2pItemBean.imageBean = task.getResult();
-                return p2pService.addP2PItem(p2pItemBean);
-            }
-        });
+        return imageService.uploadImageToQiniu(p2pItemBean.imageBean)
+                .onSuccessTask(new Continuation<ImageBean, Task<P2PItemBean>>() {
+                    @Override
+                    public Task<P2PItemBean> then(Task<ImageBean> task) throws Exception {
+                        return imageService.uploadImageToLeancloud(task.getResult())
+                                .onSuccessTask(new Continuation<ImageBean, Task<P2PItemBean>>() {
+                                    @Override
+                                    public Task<P2PItemBean> then(Task<ImageBean> task) throws Exception {
+                                        p2pItemBean.imageBean = task.getResult();
+                                        return p2pService.addP2PItem(p2pItemBean);
+                                    }
+                                });
+                    }
+                });
     }
 
     @Override
