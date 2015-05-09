@@ -9,7 +9,7 @@
         layout="@layout/toolbar_p2p_add"
         android:id="@+id/toolbar" />
 
-    <ListView
+    <com.qz.lifehelper.ui.view.XListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/listview" />

@@ -147,6 +147,7 @@ public class P2POnlineService implements IP2PService {
                 .setUserInfoBean(userInfoBean)
                 .setImageBean(imageBean)
                 .setId(p2pObject.getObjectId())
-                .setCategoryBean(new P2PCategoryBean().setTitle(p2pObject.getString(LeancloudConstant.CATEGORY_COLUME)));
+                .setCategoryBean(new P2PCategoryBean().setTitle(p2pObject.getString(LeancloudConstant.CATEGORY_COLUME)))
+                .setCreatedAt(p2pObject.getCreatedAt());
     }
 }

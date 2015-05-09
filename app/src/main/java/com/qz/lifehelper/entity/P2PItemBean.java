@@ -1,6 +1,7 @@
 package com.qz.lifehelper.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * 分装了P2P结果信息
@@ -16,6 +17,7 @@ public class P2PItemBean implements Serializable {
     public ImageBean imageBean;
     public P2PCategoryBean categoryBean;
     public UserInfoBean userInfoBean;
+    public Date createdAt;
 
     public P2PItemBean setCategoryBean(P2PCategoryBean categoryBean) {
         this.categoryBean = categoryBean;
@@ -59,6 +61,11 @@ public class P2PItemBean implements Serializable {
 
     public P2PItemBean setUserInfoBean(UserInfoBean userInfoBean) {
         this.userInfoBean = userInfoBean;
+        return this;
+    }
+
+    public P2PItemBean setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
         return this;
     }
 }
