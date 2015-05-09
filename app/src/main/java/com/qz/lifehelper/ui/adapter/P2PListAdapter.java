@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.qz.lifehelper.R;
+import com.qz.lifehelper.entity.ImageBean;
 import com.qz.lifehelper.entity.P2PItemBean;
 import com.squareup.picasso.Picasso;
 
@@ -70,8 +71,13 @@ public class P2PListAdapter extends BaseAdapter {
         childViews.p2pPriceTv.setText(p2PItemBean.price);
         childViews.p2pAddressTv.setText(p2PItemBean.address);
         childViews.p2pTelTv.setText(p2PItemBean.tel);
+
+        String imageSrc = p2PItemBean.imageBean.imageSrc;
+        if (p2PItemBean.imageBean.imageType.equals(ImageBean.ImageType.QINIUYUN)) {
+            imageSrc = imageSrc + "?imageView2/0/w/120";
+        }
         Picasso.with(context)
-                .load(p2PItemBean.imageBean.imageSrc)
+                .load(imageSrc)
                 .into(childViews.p2pImageIv);
         return convertView;
     }
