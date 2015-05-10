@@ -22,7 +22,7 @@ import java.util.List;
  * 十大旅游景点的Adapter
  */
 @EBean
-public class TenTopSpotsAdapter extends BaseAdapter {
+public class TopAdapter extends BaseAdapter {
 
     @RootContext
     Context context;

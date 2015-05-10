@@ -62,4 +62,19 @@ public class OutlinePersist {
 
         return p2pItemsJson;
     }
+
+    /**
+     * 获取十大餐厅的json数据
+     */
+    public String getTenTopRestruant() {
+        String tenTopRestruant = null;
+        try {
+            InputStream tenTopSpotsIS = context.getAssets().open("ten_top_restruant");
+            tenTopRestruant = IOUtils.toString(tenTopSpotsIS);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return tenTopRestruant;
+    }
 }

@@ -12,19 +12,20 @@ import java.util.List;
 import bolts.Task;
 
 /**
- * 十大景点
+ * 十大餐厅
  */
 @EFragment(R.layout.fragment_top)
-public class TenTopSpotsFragment extends TopFragment {
+public class TenTopRestruantFragment extends TopFragment {
+    @Override
+    protected String getTitleName() {
+        return "十大餐厅";
+    }
 
     @Bean
     TopInfoBusiness topInfoBusiness;
 
-    protected String getTitleName() {
-        return "十大旅游景点";
-    }
-
+    @Override
     protected Task<List<POIResultBean>> getData() {
-        return topInfoBusiness.getTenTopSpots();
+        return topInfoBusiness.getTenTopRestruant();
     }
 }

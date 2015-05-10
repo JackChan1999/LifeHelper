@@ -47,8 +47,10 @@ public class ArroundHelper {
     /**
      * 跳转到十佳餐厅页面
      */
-    public void toTop10Restaurant() {
-        Toast.makeText(context, "前往十佳餐厅", Toast.LENGTH_SHORT).show();
+    public void toTop10Restaurant(FragmentManager fragmentManager) {
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.addToBackStack(null);
+        topInfoBusiness.toTenTopRestruantFragment(transaction);
     }
 
     /**
