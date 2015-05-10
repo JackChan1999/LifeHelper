@@ -15,6 +15,7 @@ import com.qz.lifehelper.entity.ImageBean;
 import com.qz.lifehelper.entity.P2PRequestBean;
 import com.qz.lifehelper.entity.UserInfoBean;
 import com.qz.lifehelper.ui.activity.P2PActivity;
+import com.qz.lifehelper.ui.activity.POIActivity;
 import com.squareup.picasso.Picasso;
 
 import org.androidannotations.annotations.AfterViews;
@@ -73,7 +74,8 @@ public class PersonalFragment extends Fragment {
 
     @Click(R.id.my_publish)
     void onMyPublishClick() {
-        poiBusiness.toMyPublish();
+        Intent intent = POIActivity.generatePersonalPOIIntent(this.getActivity());
+        this.getActivity().startActivity(intent);
     }
 
     @Click(R.id.public_info)

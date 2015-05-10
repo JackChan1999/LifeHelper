@@ -94,7 +94,7 @@ public class POIListFragment extends BaseFragment {
         listView.setAdapter(adpater);
 
         dialogBusiness.showDialog(getFragmentManager(), new DialogBusiness.ProgressDialogBuilder().create(), "poi_list");
-        poiBusiness.getPOIItems(cityBean
+        getPOIItems(cityBean
                 , categoryBean
                 , ITEM_COUNT
                 , null)
@@ -125,7 +125,7 @@ public class POIListFragment extends BaseFragment {
 
             @Override
             public void onLoadMore() {
-                poiBusiness.getPOIItems(cityBean
+                getPOIItems(cityBean
                         , categoryBean
                         , ITEM_COUNT
                         , poiResultBeans.size() != 0 ? poiResultBeans.get(poiResultBeans.size() - 1) : null)
@@ -240,7 +240,15 @@ public class POIListFragment extends BaseFragment {
 
     @AfterViews
     void setToolbar() {
-        toolbarTitleTv.setText(categoryBean.categotyName);
+        toolbarTitleTv.setText(getTitleName());
+    }
+
+    protected String getTitleName() {
+        return categoryBean.categotyName;
+    }
+
+    protected Task<List<POIResultBean>> getPOIItems(final CityBean cityBean, final POICategoryBean categoryBean, final int count, POIResultBean lastestItem) {
+        return poiBusiness.getPOIItems(cityBean, categoryBean, count, lastestItem);
     }
 
 }

@@ -58,7 +58,7 @@ public class PersonalP2PListFragment extends P2PListFragment {
         }, Task.UI_THREAD_EXECUTOR);
     }
 
-    @ViewById(R.id.add_poi_bn)
+    @ViewById(R.id.add_p2p_bn)
     View addBn;
 
     @AfterViews

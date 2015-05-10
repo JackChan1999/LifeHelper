@@ -187,6 +187,10 @@ public class AuthenticationBusiness {
      * 超级用户拥有无敌权限
      */
     static public boolean isSuperUser(UserInfoBean userInfoBean) {
+        if (userInfoBean == null) {
+            return true;
+        }
+
         if (getSuperUser().id.equals(userInfoBean.id)) {
             return true;
         } else {
@@ -216,6 +220,11 @@ public class AuthenticationBusiness {
      * 这里的百度用户，不是指用百度账号登录的用户。而是泛指百度。所有的百度poi数据的所有者都是该用户
      */
     static public boolean isBaiduUser(UserInfoBean userInfoBean) {
+
+        if (userInfoBean == null) {
+            return true;
+        }
+
         if (getBaiduUser().id.equals(userInfoBean.id)) {
             return true;
         } else {

@@ -26,7 +26,7 @@ public class POIActivity extends BaseActivity {
     private static final String CITY = "CITY";
 
     public enum FRAGMENT_TYPE_ENUM {
-        POILIST
+        POILIST, PERSONALLIST
     }
 
     static public Intent generatePOIListIntent(Context context, String category, String city) {
@@ -34,6 +34,12 @@ public class POIActivity extends BaseActivity {
         intent.putExtra(CATEGROY, category);
         intent.putExtra(CITY, city);
         intent.putExtra(FRAGMENT_TYPE, FRAGMENT_TYPE_ENUM.POILIST);
+        return intent;
+    }
+
+    static public Intent generatePersonalPOIIntent(Context context) {
+        Intent intent = new Intent(context, POIActivity_.class);
+        intent.putExtra(FRAGMENT_TYPE, FRAGMENT_TYPE_ENUM.PERSONALLIST);
         return intent;
     }
 
@@ -58,6 +64,9 @@ public class POIActivity extends BaseActivity {
                 POICategoryBean categoryBean = POICategoryBean.generate(category);
                 CityBean cityBean = CityBean.generateCity(city);
                 poiBusiness.toPOIListFragment(transaction, categoryBean, cityBean);
+                break;
+            case PERSONALLIST:
+                poiBusiness.toMyPOI(transaction);
                 break;
             default:
                 break;

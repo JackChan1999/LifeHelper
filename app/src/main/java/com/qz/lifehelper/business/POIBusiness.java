@@ -19,6 +19,7 @@ import com.qz.lifehelper.ui.activity.POIAddFragment;
 import com.qz.lifehelper.ui.fragment.POIAlterFragment;
 import com.qz.lifehelper.ui.fragment.POIDetailFragment;
 import com.qz.lifehelper.ui.fragment.POIListFragment;
+import com.qz.lifehelper.ui.fragment.PersonalPOIListFragment;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
@@ -139,33 +140,6 @@ public class POIBusiness {
     }
 
     /**
-     * 前往我发布的信息页面
-     */
-    public void toMyPublish() {
-        POIResultBean poiResultBean = new POIResultBean()
-                .setTitle("title")
-                .setAddress("address")
-                .setTel("tel")
-                .setDetail("detail")
-                .setImageBean(ImageBean.generateImage(null, ImageBean.ImageType.QINIUYUN, "554f3248e4b02deb3549d4d2"))
-                .setUserInfoBean(AuthenticationBusiness.getSuperUser())
-                .setPoiCategoryBean(POICategoryBean.generate("电影"))
-                .setCityBean(CityBean.generateCity("上海"));
-
-        poiOnlineService.addPOIItem(poiResultBean).continueWith(new Continuation<POIResultBean, Void>() {
-            @Override
-            public Void then(Task<POIResultBean> task) throws Exception {
-                if (task.isFaulted()) {
-                    Toast.makeText(context, "fail , " + task.getError(), Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(context, "前往我发布的信息页面", Toast.LENGTH_SHORT).show();
-                }
-                return null;
-            }
-        }, Task.UI_THREAD_EXECUTOR);
-    }
-
-    /**
      * 前往POIListFragment
      */
     public void toPOIListFragment(FragmentTransaction transaction, POICategoryBean categoryBean, CityBean cityBean) {
@@ -237,6 +211,21 @@ public class POIBusiness {
     }
 
     /**
+     * 前往我发布到POI信息页面
+     */
+    public void toMyPOI(FragmentTransaction transaction) {
+        PersonalPOIListFragment fragment = new PersonalPOIListFragment.Builder().create();
+        transaction.add(android.R.id.content, fragment);
+        transaction.commit();
+//        toP2PCategoryFragment(transaction, new P2pCategoryFragment.Callback() {
+//            @Override
+//            public void onCategorySelected(P2PCategoryBean categoryBean) {
+//
+//            }
+//        });
+    }
+
+    /**
      * 修改POI信息
      */
     public Task<POIResultBean> alterPOIItem(POIResultBean poiItemBean) {
@@ -250,4 +239,14 @@ public class POIBusiness {
         return poiOnlineService.deletePOIItem(poiItemBean);
     }
 
+    /**
+     * 获取个人发布的的POI信息
+     *
+     * @param count        每页的个数
+     * @param lastestItem  用于分页。如果为null，则为第一页
+     * @param userInfoBean 用户
+     */
+    public Task<List<POIResultBean>> getPersonalPOIItems(int count, POIResultBean lastestItem, UserInfoBean userInfoBean) {
+        return poiOnlineService.getPOIItems(null, null, count, lastestItem != null ? lastestItem.createdAt : null, userInfoBean);
+    }
 }

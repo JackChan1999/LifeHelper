@@ -3,6 +3,7 @@ package com.qz.lifehelper.service;
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
+import com.qz.lifehelper.business.AuthenticationBusiness;
 import com.qz.lifehelper.entity.CityBean;
 import com.qz.lifehelper.entity.ImageBean;
 import com.qz.lifehelper.entity.POICategoryBean;
@@ -52,7 +53,7 @@ public class POIOnlineService {
                 if (after != null) {
                     query.whereLessThan(LeancloudConstant.CREATED_AT_COLUME, after);
                 }
-                if (userInfoBean != null) {
+                if (!AuthenticationBusiness.isSuperUser(userInfoBean) && userInfoBean != null) {
                     AVObject avUser = AVObject.createWithoutData(LeancloudConstant.USER_TABLE, userInfoBean.id);
                     query.whereEqualTo(LeancloudConstant.USER_COLUME, avUser);
                 }
