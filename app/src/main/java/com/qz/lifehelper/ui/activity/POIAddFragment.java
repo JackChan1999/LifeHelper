@@ -1,4 +1,4 @@
-package com.qz.lifehelper.ui.fragment;
+package com.qz.lifehelper.ui.activity;
 
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
@@ -11,11 +11,14 @@ import android.widget.Toast;
 import com.qz.lifehelper.R;
 import com.qz.lifehelper.business.AuthenticationBusiness;
 import com.qz.lifehelper.business.DialogBusiness;
-import com.qz.lifehelper.business.P2PBusiness;
+import com.qz.lifehelper.business.LocationBusiness;
+import com.qz.lifehelper.business.POIBusiness;
 import com.qz.lifehelper.entity.ImageBean;
-import com.qz.lifehelper.entity.P2PCategoryBean;
-import com.qz.lifehelper.entity.P2PItemBean;
+import com.qz.lifehelper.entity.POICategoryBean;
+import com.qz.lifehelper.entity.POIResultBean;
 import com.qz.lifehelper.entity.UserInfoBean;
+import com.qz.lifehelper.ui.fragment.BaseFragment;
+import com.qz.lifehelper.ui.fragment.TakePhotoFragment;
 import com.squareup.picasso.Picasso;
 
 import org.androidannotations.annotations.AfterViews;
@@ -28,28 +31,29 @@ import bolts.Continuation;
 import bolts.Task;
 
 /**
- * 新增P2P信息
+ * 增加POI信息
  */
-@EFragment(R.layout.fragment_p2p_add)
-public class P2PAddFragment extends BaseFragment {
 
-    private static final String TAG = P2PAddFragment.class.getSimpleName() + "_TAG";
+@EFragment(R.layout.fragment_poi_add)
+public class POIAddFragment extends BaseFragment {
+
+    private static final String TAG = POIAddFragment.class.getSimpleName() + "_TAG";
 
     static public class Builder {
 
-        private P2PAddFragment fragment = new P2PAddFragment_.FragmentBuilder_().build();
+        private POIAddFragment fragment = new POIAddFragment_.FragmentBuilder_().build();
 
         public Builder setCallback(Callback callback) {
             fragment.callback = callback;
             return this;
         }
 
-        public Builder setCategory(P2PCategoryBean category) {
+        public Builder setCategory(POICategoryBean category) {
             fragment.categoryBean = category;
             return this;
         }
 
-        public P2PAddFragment create() {
+        public POIAddFragment create() {
             if (fragment.callback == null) {
                 throw new IllegalStateException("没有设置Callback");
             }
@@ -62,7 +66,7 @@ public class P2PAddFragment extends BaseFragment {
         }
     }
 
-    private P2PCategoryBean categoryBean;
+    private POICategoryBean categoryBean;
 
     /**
      * 上传完成后会回调该接口
@@ -72,9 +76,9 @@ public class P2PAddFragment extends BaseFragment {
         /**
          * 成功上传
          *
-         * @param p2pItemBean 上传到服务器到p2pItem
+         * @param poiItemBean 上传到服务器的poiItem
          */
-        public void onAddP2PItemSuccess(P2PItemBean p2pItemBean);
+        public void onAddPOIItemSuccess(POIResultBean poiItemBean);
     }
 
     private Callback callback;
@@ -94,10 +98,10 @@ public class P2PAddFragment extends BaseFragment {
                 .setCallback(new TakePhotoFragment.Callback() {
                     @Override
                     public void onGetPhoto(final ImageBean imageBean) {
-                        P2PAddFragment.this.imageBean = imageBean;
+                        POIAddFragment.this.imageBean = imageBean;
                         takePhotoBn.setVisibility(View.GONE);
                         imageIv.setVisibility(View.VISIBLE);
-                        Picasso.with(P2PAddFragment.this.getActivity())
+                        Picasso.with(POIAddFragment.this.getActivity())
                                 .load(imageBean.imageSrc)
                                 .into(imageIv);
                     }
@@ -113,9 +117,6 @@ public class P2PAddFragment extends BaseFragment {
     @ViewById(R.id.tel_et)
     EditText TelEt;
 
-    @ViewById(R.id.price_et)
-    EditText PriceEt;
-
     @ViewById(R.id.title_et)
     EditText TitleEt;
 
@@ -123,7 +124,7 @@ public class P2PAddFragment extends BaseFragment {
     EditText DetailEt;
 
     @Bean
-    P2PBusiness p2pBusiness;
+    POIBusiness poiBusiness;
 
     @Bean
     DialogBusiness dialogBusiness;
@@ -131,12 +132,14 @@ public class P2PAddFragment extends BaseFragment {
     @Bean
     AuthenticationBusiness authenticationBusiness;
 
+    @Bean
+    LocationBusiness locationBusiness;
+
     @Click(R.id.submit_bn)
     void submit() {
         final String title = TitleEt.getText().toString();
         final String add = AddEt.getText().toString();
         final String tel = TelEt.getText().toString();
-        final String price = PriceEt.getText().toString();
         final String detail = DetailEt.getText().toString();
 
         //TODO 检测数据是否合法
@@ -146,28 +149,29 @@ public class P2PAddFragment extends BaseFragment {
                     @Override
                     public Task<Void> then(Task<UserInfoBean> task) throws Exception {
                         if (task.isFaulted()) {
-                            Toast.makeText(P2PAddFragment.this.getActivity(), "获取当前用户失败", Toast.LENGTH_LONG).show();
+                            Toast.makeText(POIAddFragment.this.getActivity(), "获取当前用户失败", Toast.LENGTH_LONG).show();
                         } else {
-                            P2PItemBean p2pItemBean = new P2PItemBean()
+                            POIResultBean poiItemBean = new POIResultBean()
                                     .setTitle(title)
                                     .setDetail(detail)
                                     .setAddress(add)
                                     .setTel(tel)
-                                    .setPrice(price)
                                     .setImageBean(imageBean)
-                                    .setCategoryBean(categoryBean)
-                                    .setUserInfoBean(task.getResult());
-                            dialogBusiness.showDialog(getFragmentManager(), new DialogBusiness.ProgressDialogBuilder().create(), "upload_p2p");
-                            p2pBusiness.addP2PItem(p2pItemBean).continueWith(new Continuation<P2PItemBean, Void>() {
+                                    .setPoiCategoryBean(categoryBean)
+                                    .setUserInfoBean(task.getResult())
+                                    .setCityBean(locationBusiness.getCurrentCity());
+
+                            dialogBusiness.showDialog(getFragmentManager(), new DialogBusiness.ProgressDialogBuilder().create(), "upload_poi");
+                            poiBusiness.addPOIItem(poiItemBean).continueWith(new Continuation<POIResultBean, Void>() {
                                 @Override
-                                public Void then(Task<P2PItemBean> task) throws Exception {
-                                    dialogBusiness.hideDialog("upload_p2p");
+                                public Void then(Task<POIResultBean> task) throws Exception {
+                                    dialogBusiness.hideDialog("upload_poi");
                                     if (task.isFaulted()) {
-                                        Toast.makeText(P2PAddFragment.this.getActivity(), "上传失败", Toast.LENGTH_LONG).show();
-                                        Log.e(TAG, "upload p2p fail", task.getError());
+                                        Toast.makeText(POIAddFragment.this.getActivity(), "上传失败", Toast.LENGTH_LONG).show();
+                                        Log.e(TAG, "upload poi fail", task.getError());
                                     } else {
-                                        Log.d(TAG, "upload p2p success");
-                                        callback.onAddP2PItemSuccess(task.getResult());
+                                        Log.d(TAG, "upload poi success");
+                                        callback.onAddPOIItemSuccess(task.getResult());
                                     }
                                     return null;
                                 }
@@ -183,6 +187,6 @@ public class P2PAddFragment extends BaseFragment {
 
     @AfterViews
     void setToolbar() {
-        toolbar.setTitle("新增出售物品");
+        toolbar.setTitle("新增周边信息");
     }
 }

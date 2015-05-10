@@ -13,16 +13,19 @@ import com.qz.lifehelper.business.POIBusiness;
 import com.qz.lifehelper.entity.CityBean;
 import com.qz.lifehelper.entity.POICategoryBean;
 import com.qz.lifehelper.entity.POIResultBean;
+import com.qz.lifehelper.ui.activity.POIAddFragment;
 import com.qz.lifehelper.ui.adapter.POIListAdapter;
 import com.qz.lifehelper.ui.view.XListView;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import bolts.Continuation;
 import bolts.Task;
@@ -149,6 +152,29 @@ public class POIListFragment extends BaseFragment {
 
     @Bean
     DialogBusiness dialogBusiness;
+
+    @Click(R.id.add_poi_bn)
+    void OnAddPOIBnClick() {
+        final FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.addToBackStack(null);
+        POIAddFragment.Callback callback = new POIAddFragment.Callback() {
+            @Override
+            public void onAddPOIItemSuccess(POIResultBean poiItemBean) {
+                poiResultBeans.add(0, poiItemBean);
+                Task.call(new Callable<Void>() {
+                    @Override
+                    public Void call() throws Exception {
+                        adpater.setData(poiResultBeans);
+                        adpater.notifyDataSetChanged();
+                        getFragmentManager().popBackStack();
+                        return null;
+                    }
+                }, Task.UI_THREAD_EXECUTOR);
+            }
+        };
+        poiBusiness.toPOIAddFragment(transaction, callback, categoryBean);
+    }
+
 
     @ViewById(R.id.title_tv)
     TextView toolbarTitleTv;

@@ -18,7 +18,7 @@
             android:textColor="@color/app_text_color_light" />
 
         <ImageView
-            android:id="@+id/add_p2p_bn"
+            android:id="@+id/add_poi_bn"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_width="25dp"

@@ -209,8 +209,8 @@ public class P2PListFragment extends BaseFragment {
     @ViewById(R.id.title_tv)
     TextView toolbarTitleTv;
 
-    @Click(R.id.add_poi_bn)
-    void onAddPOIBnClicked() {
+    @Click(R.id.add_p2p_bn)
+    void onAddP2PBnClicked() {
         final FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.addToBackStack(null);
         P2PAddFragment.Callback callback = new P2PAddFragment.Callback() {

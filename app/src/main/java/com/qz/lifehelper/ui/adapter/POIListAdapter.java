@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.qz.lifehelper.R;
 import com.qz.lifehelper.business.POIBusiness;
+import com.qz.lifehelper.entity.ImageBean;
 import com.qz.lifehelper.entity.POIResultBean;
 import com.squareup.picasso.Picasso;
 
@@ -82,8 +83,13 @@ public class POIListAdapter extends BaseAdapter {
         childs.titleTv.setText(poiResultBean.title);
         childs.addressTv.setText(poiResultBean.address);
         childs.telTv.setText(poiResultBean.tel);
+
+        String imageSrc = poiResultBean.imageBean.imageSrc;
+        if (poiResultBean.imageBean.imageType.equals(ImageBean.ImageType.QINIUYUN)) {
+            imageSrc = imageSrc + "?imageView2/0/w/120";
+        }
         Picasso.with(context)
-                .load(poiResultBean.imageBean.imageSrc)
+                .load(imageSrc)
                 .into(childs.poiIv);
         return convertView;
     }

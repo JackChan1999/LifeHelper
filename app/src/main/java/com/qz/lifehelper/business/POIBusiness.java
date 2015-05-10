@@ -12,7 +12,9 @@ import com.qz.lifehelper.entity.POICategoryBean;
 import com.qz.lifehelper.entity.POIResultBean;
 import com.qz.lifehelper.entity.json.POIResultJsonBean;
 import com.qz.lifehelper.service.BaiduPOIService;
+import com.qz.lifehelper.service.ImageService;
 import com.qz.lifehelper.service.POIOnlineService;
+import com.qz.lifehelper.ui.activity.POIAddFragment;
 import com.qz.lifehelper.ui.fragment.POIDetailFragment;
 import com.qz.lifehelper.ui.fragment.POIListFragment;
 
@@ -46,7 +48,29 @@ public class POIBusiness {
     @Bean
     POIOnlineService poiOnlineService;
 
+    @Bean
+    ImageService imageService;
+
     private int baiduPoiCurrentPagerNumber = -1;
+
+    /**
+     * 新增poi信息
+     */
+    public Task<POIResultBean> addPOIItem(final POIResultBean poiResultBean) {
+        return imageService.uploadImageToQiniu(poiResultBean.imageBean)
+                .onSuccessTask(new Continuation<ImageBean, Task<ImageBean>>() {
+                    @Override
+                    public Task<ImageBean> then(Task<ImageBean> task) throws Exception {
+                        return imageService.uploadImageToLeancloud(task.getResult());
+                    }
+                }).onSuccessTask(new Continuation<ImageBean, Task<POIResultBean>>() {
+                    @Override
+                    public Task<POIResultBean> then(Task<ImageBean> task) throws Exception {
+                        poiResultBean.imageBean = task.getResult();
+                        return poiOnlineService.addPOIItem(poiResultBean);
+                    }
+                });
+    }
 
     /**
      * 获取POI数据
@@ -156,6 +180,18 @@ public class POIBusiness {
     public void toPOIDetailFragment(FragmentTransaction transaction, POIResultBean poiItemBean) {
         POIDetailFragment fragment = new POIDetailFragment.Builder()
                 .setPOItemBean(poiItemBean)
+                .create();
+        transaction.add(android.R.id.content, fragment);
+        transaction.commit();
+    }
+
+    /**
+     * 前往POIAddFragment
+     */
+    public void toPOIAddFragment(FragmentTransaction transaction, POIAddFragment.Callback callback, POICategoryBean categoryBean) {
+        POIAddFragment fragment = new POIAddFragment.Builder()
+                .setCategory(categoryBean)
+                .setCallback(callback)
                 .create();
         transaction.add(android.R.id.content, fragment);
         transaction.commit();
