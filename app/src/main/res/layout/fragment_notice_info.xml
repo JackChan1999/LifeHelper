@@ -6,7 +6,7 @@
     android:background="@android:color/white">
 
     <include
-        layout="@layout/toolbar_notice_info"
+        layout="@layout/toolbar"
         android:id="@+id/toolbar" />
 
     <TextView

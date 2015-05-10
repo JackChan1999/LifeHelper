@@ -1,6 +1,5 @@
 package com.qz.lifehelper.ui.fragment;
 
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
@@ -69,10 +68,12 @@ public class NoticeInfoFragment extends BaseFragment {
     @ViewById(R.id.toolbar)
     Toolbar toolbar;
 
+    @ViewById(R.id.title_tv)
+    TextView titleTv;
+
     @AfterViews
     void setToolbar() {
-        ((ActionBarActivity) getActivity()).setSupportActionBar(toolbar);
-        toolbar.setTitle("公告信息");
+        titleTv.setText("公告信息");
     }
 
 }
