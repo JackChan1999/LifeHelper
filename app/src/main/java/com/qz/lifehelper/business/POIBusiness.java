@@ -12,6 +12,7 @@ import com.qz.lifehelper.entity.POICategoryBean;
 import com.qz.lifehelper.entity.POIResultBean;
 import com.qz.lifehelper.entity.json.POIResultJsonBean;
 import com.qz.lifehelper.service.BaiduPOIService;
+import com.qz.lifehelper.service.POIOnlineService;
 import com.qz.lifehelper.ui.fragment.POIDetailFragment;
 import com.qz.lifehelper.ui.fragment.POIListFragment;
 
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import bolts.Continuation;
 import bolts.Task;
 
 /**
@@ -41,6 +43,9 @@ public class POIBusiness {
     @Bean
     BaiduPOIService baiduPOIService;
 
+    @Bean
+    POIOnlineService poiOnlineService;
+
     private int baiduPoiCurrentPagerNumber = -1;
 
     /**
@@ -51,13 +56,34 @@ public class POIBusiness {
      * @param count        每页的个数
      * @param lastestItem  当前最后一个数据。用于分页，如果为null，则会加载第一页
      */
-    public Task<List<POIResultBean>> getPOIItems(CityBean cityBean, POICategoryBean categoryBean, int count, POIResultBean lastestItem) {
+    public Task<List<POIResultBean>> getPOIItems(final CityBean cityBean, final POICategoryBean categoryBean, final int count, POIResultBean lastestItem) {
         if (baiduPoiCurrentPagerNumber == -1) {
-            baiduPoiCurrentPagerNumber++;
+            return poiOnlineService.getPOIItems(
+                    cityBean
+                    , categoryBean
+                    , count
+                    , lastestItem != null ? lastestItem.createdAt : null, null)
+                    .continueWithTask(new Continuation<List<POIResultBean>, Task<List<POIResultBean>>>() {
+                        @Override
+                        public Task<List<POIResultBean>> then(Task<List<POIResultBean>> task) throws Exception {
+                            if (task.isFaulted()) {
+                                baiduPoiCurrentPagerNumber++;
+                                return baiduPOIService.getPoiItems(cityBean, categoryBean, count, baiduPoiCurrentPagerNumber);
+                            } else {
+                                List<POIResultBean> poiItemBeans = task.getResult();
+                                if (poiItemBeans.size() == 0) {
+                                    baiduPoiCurrentPagerNumber++;
+                                    return baiduPOIService.getPoiItems(cityBean, categoryBean, count, baiduPoiCurrentPagerNumber);
+                                } else {
+                                    return Task.forResult(poiItemBeans);
+                                }
+                            }
+                        }
+                    }, Task.BACKGROUND_EXECUTOR);
         } else {
             baiduPoiCurrentPagerNumber++;
+            return baiduPOIService.getPoiItems(cityBean, categoryBean, count, baiduPoiCurrentPagerNumber);
         }
-        return baiduPOIService.getPoiItems(cityBean, categoryBean, count, baiduPoiCurrentPagerNumber);
     }
 
     /**
@@ -87,7 +113,27 @@ public class POIBusiness {
      * 前往我发布的信息页面
      */
     public void toMyPublish() {
-        Toast.makeText(context, "前往我发布的信息页面", Toast.LENGTH_SHORT).show();
+        POIResultBean poiResultBean = new POIResultBean()
+                .setTitle("title")
+                .setAddress("address")
+                .setTel("tel")
+                .setDetail("detail")
+                .setImageBean(ImageBean.generateImage(null, ImageBean.ImageType.QINIUYUN, "554f3248e4b02deb3549d4d2"))
+                .setUserInfoBean(AuthenticationBusiness.getSuperUser())
+                .setPoiCategoryBean(POICategoryBean.generate("电影"))
+                .setCityBean(CityBean.generateCity("上海"));
+
+        poiOnlineService.addPOIItem(poiResultBean).continueWith(new Continuation<POIResultBean, Void>() {
+            @Override
+            public Void then(Task<POIResultBean> task) throws Exception {
+                if (task.isFaulted()) {
+                    Toast.makeText(context, "fail , " + task.getError(), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(context, "前往我发布的信息页面", Toast.LENGTH_SHORT).show();
+                }
+                return null;
+            }
+        }, Task.UI_THREAD_EXECUTOR);
     }
 
     /**

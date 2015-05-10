@@ -198,4 +198,15 @@ public class AuthenticationBusiness {
             return false;
         }
     }
+
+    /**
+     * 获取超级用户
+     */
+    static public UserInfoBean getSuperUser() {
+        return UserInfoBean.generateBean("root", null, LeancloudConstant.SUPER_USER_ID);
+    }
+
+    static public UserInfoBean getBaiduUser() {
+        return UserInfoBean.generateBean("badidu_isuhfiudshfidshfiuhdsifhdsi", null, "webfefuehwfhewifhewiufhewifh");
+    }
 }

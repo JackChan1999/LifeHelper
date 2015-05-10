@@ -28,4 +28,7 @@ public class LeancloudConstant {
 
     public static final String SUPER_USER_ID = "554cb2f8e4b031c7f9bf4111";
 
+    public static final String POI_TABLE = "poi";
+    public static final String CITY_COLUME = "CITY";
+
 }
