@@ -2,6 +2,8 @@ package com.qz.lifehelper.ui.fragment;
 
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
@@ -148,6 +150,63 @@ public class POIListFragment extends BaseFragment {
                 poiBusiness.toPOIDetailFragment(transaction, poiResultBeans.get(position));
             }
         });
+
+        registerForContextMenu(listView);
+    }
+
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        menu.add("修改");
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        final FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.addToBackStack(null);
+        poiBusiness.toPOIAlterFragment(transaction, poiResultBeans.get(info.position - 1), new POIAlterFragment.Callback() {
+            @Override
+            public void onAlterSuccess(final POIResultBean poiItemBean) {
+                Task.call(new Callable<Void>() {
+                    @Override
+                    public Void call() throws Exception {
+                        for (POIResultBean targerItem : poiResultBeans) {
+                            if (targerItem.id.equals(poiItemBean.id)) {
+                                int indexOf = poiResultBeans.indexOf(targerItem);
+                                poiResultBeans.remove(targerItem);
+                                poiResultBeans.add(indexOf, poiItemBean);
+                                break;
+                            }
+                        }
+                        adpater.setData(poiResultBeans);
+                        adpater.notifyDataSetChanged();
+                        getFragmentManager().popBackStack();
+                        return null;
+                    }
+                });
+            }
+
+            @Override
+            public void onDeleteSuccess(final POIResultBean poiItemBean) {
+                Task.call(new Callable<Void>() {
+                    @Override
+                    public Void call() throws Exception {
+                        for (POIResultBean targerItem : poiResultBeans) {
+                            if (targerItem.id.equals(poiItemBean.id)) {
+                                poiResultBeans.remove(targerItem);
+                                break;
+                            }
+                        }
+                        adpater.setData(poiResultBeans);
+                        adpater.notifyDataSetChanged();
+                        getFragmentManager().popBackStack();
+                        return null;
+                    }
+                });
+            }
+        });
+        return true;
     }
 
     @Bean

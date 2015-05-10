@@ -186,13 +186,8 @@ public class AuthenticationBusiness {
      * <p/>
      * 超级用户拥有无敌权限
      */
-    public boolean isSuperUser(UserInfoBean userInfoBean) {
-        if (!isLogin()) {
-            return false;
-        }
-        UserInfoBean cuerrentUser = getCurrentUser();
-
-        if (LeancloudConstant.SUPER_USER_ID.equals(cuerrentUser.id)) {
+    static public boolean isSuperUser(UserInfoBean userInfoBean) {
+        if (getSuperUser().id.equals(userInfoBean.id)) {
             return true;
         } else {
             return false;
@@ -206,7 +201,25 @@ public class AuthenticationBusiness {
         return UserInfoBean.generateBean("root", null, LeancloudConstant.SUPER_USER_ID);
     }
 
+    /**
+     * 获取百度用户
+     * <p/>
+     * 这里的百度用户，不是指用百度账号登录的用户。而是泛指百度。所有的百度poi数据的所有者都是该用户
+     */
     static public UserInfoBean getBaiduUser() {
         return UserInfoBean.generateBean("badidu_isuhfiudshfidshfiuhdsifhdsi", null, "webfefuehwfhewifhewiufhewifh");
+    }
+
+    /**
+     * 判断是不是百度用户
+     * <p/>
+     * 这里的百度用户，不是指用百度账号登录的用户。而是泛指百度。所有的百度poi数据的所有者都是该用户
+     */
+    static public boolean isBaiduUser(UserInfoBean userInfoBean) {
+        if (getBaiduUser().id.equals(userInfoBean.id)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

@@ -97,6 +97,8 @@ public class POIOnlineService {
         poiObject.put(LeancloudConstant.CATEGORY_COLUME, poiItemBean.poiCategoryBean.categotyName);
         poiObject.put(LeancloudConstant.CITY_COLUME, poiItemBean.cityBean.cityName);
 
+        poiObject.setObjectId(poiItemBean.id);
+
         return poiObject;
     }
 
@@ -130,4 +132,32 @@ public class POIOnlineService {
         return poiItemBean;
     }
 
+    /**
+     * 修改POI信息
+     */
+    public Task<POIResultBean> alterPOIItem(final POIResultBean poiItemBean) {
+        return Task.callInBackground(new Callable<POIResultBean>() {
+            @Override
+            public POIResultBean call() throws Exception {
+                AVObject poiObject = convetToPOIObject(poiItemBean);
+                poiObject.save();
+                poiObject.fetchIfNeeded();
+                return convertToPOIItemBean(poiObject);
+            }
+        });
+    }
+
+    /**
+     * 删除POI信息
+     */
+    public Task<POIResultBean> deletePOIItem(final POIResultBean poiItemBean) {
+        return Task.callInBackground(new Callable<POIResultBean>() {
+            @Override
+            public POIResultBean call() throws Exception {
+                AVObject poiObject = convetToPOIObject(poiItemBean);
+                poiObject.delete();
+                return poiItemBean;
+            }
+        });
+    }
 }

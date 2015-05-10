@@ -102,6 +102,7 @@ public class P2POnlineService implements IP2PService {
             public P2PItemBean call() throws Exception {
                 AVObject p2pObject = convertToP2PObject(p2pItemBean);
                 p2pObject.save();
+                p2pObject.fetchIfNeeded();
                 return convertToP2PItemBean(p2pObject);
             }
         });

@@ -10,11 +10,13 @@ import com.qz.lifehelper.entity.CityBean;
 import com.qz.lifehelper.entity.ImageBean;
 import com.qz.lifehelper.entity.POICategoryBean;
 import com.qz.lifehelper.entity.POIResultBean;
+import com.qz.lifehelper.entity.UserInfoBean;
 import com.qz.lifehelper.entity.json.POIResultJsonBean;
 import com.qz.lifehelper.service.BaiduPOIService;
 import com.qz.lifehelper.service.ImageService;
 import com.qz.lifehelper.service.POIOnlineService;
 import com.qz.lifehelper.ui.activity.POIAddFragment;
+import com.qz.lifehelper.ui.fragment.POIAlterFragment;
 import com.qz.lifehelper.ui.fragment.POIDetailFragment;
 import com.qz.lifehelper.ui.fragment.POIListFragment;
 
@@ -50,6 +52,9 @@ public class POIBusiness {
 
     @Bean
     ImageService imageService;
+
+    @Bean
+    AuthenticationBusiness authenticationBusiness;
 
     private int baiduPoiCurrentPagerNumber = -1;
 
@@ -196,4 +201,53 @@ public class POIBusiness {
         transaction.add(android.R.id.content, fragment);
         transaction.commit();
     }
+
+    /**
+     * 前往POI修改页面
+     */
+    public void toPOIAlterFragment(final FragmentTransaction transaction, final POIResultBean poiItemBean, final POIAlterFragment.Callback callback) {
+
+        authenticationBusiness.getCurrentUser(false)
+                .continueWith(new Continuation<UserInfoBean, Void>() {
+                    @Override
+                    public Void then(Task<UserInfoBean> task) throws Exception {
+                        if (task.isFaulted()) {
+                            Toast.makeText(context, "请先登录", Toast.LENGTH_LONG).show();
+                        } else {
+                            UserInfoBean userInfoBean = task.getResult();
+
+                            if (authenticationBusiness.isBaiduUser(userInfoBean)) {
+                                Toast.makeText(context, "你没有该权限", Toast.LENGTH_LONG).show();
+                            } else {
+                                if (userInfoBean.id.equals(poiItemBean.userInfoBean.id) || authenticationBusiness.isSuperUser(userInfoBean)) {
+                                    POIAlterFragment fragment = new POIAlterFragment.Builder()
+                                            .setCallback(callback)
+                                            .setPOIItemBean(poiItemBean)
+                                            .create();
+                                    transaction.add(android.R.id.content, fragment);
+                                    transaction.commit();
+                                } else {
+                                    Toast.makeText(context, "你没有该权限", Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        }
+                        return null;
+                    }
+                });
+    }
+
+    /**
+     * 修改POI信息
+     */
+    public Task<POIResultBean> alterPOIItem(POIResultBean poiItemBean) {
+        return poiOnlineService.alterPOIItem(poiItemBean);
+    }
+
+    /**
+     * 删除POI信息
+     */
+    public Task<POIResultBean> deletePOIItem(POIResultBean poiItemBean) {
+        return poiOnlineService.deletePOIItem(poiItemBean);
+    }
+
 }

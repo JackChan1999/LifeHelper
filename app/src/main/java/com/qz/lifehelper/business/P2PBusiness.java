@@ -57,7 +57,7 @@ public class P2PBusiness implements IP2PService {
                             Toast.makeText(context, "请先登录", Toast.LENGTH_LONG).show();
                         } else {
                             UserInfoBean userInfoBean = task.getResult();
-                            if (userInfoBean.id.equals(p2PItemBean.userInfoBean.id) || authenticationBusiness.isSuperUser(p2PItemBean.userInfoBean)) {
+                            if (userInfoBean.id.equals(p2PItemBean.userInfoBean.id) || authenticationBusiness.isSuperUser(userInfoBean)) {
                                 P2PAlterFragment fragment = new P2PAlterFragment.Builder()
                                         .setCallback(callback)
                                         .setP2PItemBean(p2PItemBean)
