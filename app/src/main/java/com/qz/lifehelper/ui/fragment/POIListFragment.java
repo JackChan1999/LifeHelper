@@ -1,10 +1,11 @@
 package com.qz.lifehelper.ui.fragment;
 
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.qz.lifehelper.R;
 import com.qz.lifehelper.business.DialogBusiness;
@@ -13,6 +14,7 @@ import com.qz.lifehelper.entity.CityBean;
 import com.qz.lifehelper.entity.POICategoryBean;
 import com.qz.lifehelper.entity.POIResultBean;
 import com.qz.lifehelper.ui.adapter.POIListAdapter;
+import com.qz.lifehelper.ui.view.XListView;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
@@ -30,6 +32,11 @@ import bolts.Task;
  */
 @EFragment(R.layout.fragment_poi_list)
 public class POIListFragment extends BaseFragment {
+
+    private static final int ITEM_COUNT = 10;
+
+    private static final String TAG = POIListFragment.class.getSimpleName() + "_TAG";
+
 
     static public class Builder {
         private POIListFragment fragment = new POIListFragment_.FragmentBuilder_().build();
@@ -61,8 +68,8 @@ public class POIListFragment extends BaseFragment {
     private POICategoryBean categoryBean;
     private CityBean cityBean;
 
-    @ViewById(R.id.poi_result_lv)
-    public ListView listView;
+    @ViewById(R.id.listview)
+    public XListView listView;
 
     @Bean
     POIBusiness poiBusiness;
@@ -77,24 +84,58 @@ public class POIListFragment extends BaseFragment {
      */
     @AfterViews
     public void setListView() {
+        listView.setPullRefreshEnable(false);
+        listView.setPullLoadEnable(false);
         listView.setAdapter(adpater);
-        poiBusiness.loadPOIData(cityBean, categoryBean).onSuccess(
-                new Continuation<List<POIResultBean>, Void>() {
-                    @Override
-                    public Void then(Task<List<POIResultBean>> task) throws Exception {
-                        poiResultBeans.clear();
-                        poiResultBeans.addAll(task.getResult());
-                        if (poiResultBeans == null || poiResultBeans.size() == 0) {
-                            onLoadPOIDataFial();
-                        } else {
-                            adpater.setData(poiResultBeans);
-                            adpater.notifyDataSetChanged();
-                            onLoadPOIDataSuccess();
-                        }
-                        return null;
-                    }
-                }, Task.UI_THREAD_EXECUTOR);
-        onStarLoadPOIData();
+
+        dialogBusiness.showDialog(getFragmentManager(), new DialogBusiness.ProgressDialogBuilder().create(), "poi_list");
+        poiBusiness.getPOIItems(cityBean
+                , categoryBean
+                , ITEM_COUNT
+                , null)
+                .continueWith(
+                        new Continuation<List<POIResultBean>, Void>() {
+                            @Override
+                            public Void then(Task<List<POIResultBean>> task) throws Exception {
+                                dialogBusiness.hideDialog("poi_list");
+                                if (task.isFaulted()) {
+                                    Log.e(TAG, "load poi items fial", task.getError());
+                                    Toast.makeText(POIListFragment.this.getActivity(), "load poi items fail", Toast.LENGTH_LONG).show();
+                                } else {
+                                    poiResultBeans.clear();
+                                    poiResultBeans.addAll(task.getResult());
+                                    adpater.setData(poiResultBeans);
+                                    adpater.notifyDataSetChanged();
+                                    listView.setPullLoadEnable(true);
+                                }
+                                return null;
+                            }
+                        }, Task.UI_THREAD_EXECUTOR);
+
+        listView.setXListViewListener(new XListView.IXListViewListener() {
+            @Override
+            public void onRefresh() {
+
+            }
+
+            @Override
+            public void onLoadMore() {
+                poiBusiness.getPOIItems(cityBean
+                        , categoryBean
+                        , ITEM_COUNT
+                        , poiResultBeans.size() != 0 ? poiResultBeans.get(poiResultBeans.size() - 1) : null)
+                        .onSuccess(new Continuation<List<POIResultBean>, Void>() {
+                            @Override
+                            public Void then(Task<List<POIResultBean>> task) throws Exception {
+                                listView.stopLoadMore();
+                                poiResultBeans.addAll(task.getResult());
+                                adpater.setData(poiResultBeans);
+                                adpater.notifyDataSetChanged();
+                                return null;
+                            }
+                        }, Task.UI_THREAD_EXECUTOR);
+            }
+        });
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -108,27 +149,6 @@ public class POIListFragment extends BaseFragment {
 
     @Bean
     DialogBusiness dialogBusiness;
-
-    /**
-     * 当开始加载数据时被调用
-     */
-    void onStarLoadPOIData() {
-        dialogBusiness.showDialog(getFragmentManager(), new DialogBusiness.ProgressDialogBuilder().create(), "poi_list");
-    }
-
-    /**
-     * 当成功加载数据时被调用
-     */
-    void onLoadPOIDataSuccess() {
-        dialogBusiness.hideDialog("poi_list");
-    }
-
-    /**
-     * 当加载数据失败时被调用
-     */
-    void onLoadPOIDataFial() {
-
-    }
 
     @ViewById(R.id.title_tv)
     TextView toolbarTitleTv;

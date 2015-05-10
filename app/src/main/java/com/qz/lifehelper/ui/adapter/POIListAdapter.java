@@ -79,13 +79,6 @@ public class POIListAdapter extends BaseAdapter {
         ItemPOIREsultChilds childs = (ItemPOIREsultChilds) convertView.getTag();
         final POIResultBean poiResultBean = data.get(position);
 
-//        convertView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
-
         childs.titleTv.setText(poiResultBean.title);
         childs.addressTv.setText(poiResultBean.address);
         childs.telTv.setText(poiResultBean.tel);

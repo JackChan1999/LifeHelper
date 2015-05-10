@@ -4,12 +4,6 @@ import android.content.Context;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.Toast;
 
-import com.baidu.mapapi.search.core.PoiInfo;
-import com.baidu.mapapi.search.poi.OnGetPoiSearchResultListener;
-import com.baidu.mapapi.search.poi.PoiCitySearchOption;
-import com.baidu.mapapi.search.poi.PoiDetailResult;
-import com.baidu.mapapi.search.poi.PoiResult;
-import com.baidu.mapapi.search.poi.PoiSearch;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.qz.lifehelper.entity.CityBean;
@@ -17,20 +11,16 @@ import com.qz.lifehelper.entity.ImageBean;
 import com.qz.lifehelper.entity.POICategoryBean;
 import com.qz.lifehelper.entity.POIResultBean;
 import com.qz.lifehelper.entity.json.POIResultJsonBean;
+import com.qz.lifehelper.service.BaiduPOIService;
 import com.qz.lifehelper.ui.fragment.POIDetailFragment;
 import com.qz.lifehelper.ui.fragment.POIListFragment;
 
+import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
-import org.apache.commons.io.IOUtils;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
 import java.util.concurrent.Callable;
 
 import bolts.Task;
@@ -48,51 +38,26 @@ public class POIBusiness {
     @RootContext
     Context context;
 
+    @Bean
+    BaiduPOIService baiduPOIService;
+
+    private int baiduPoiCurrentPagerNumber = -1;
+
     /**
-     * 开始加载制定城市的相关类别的POI数据。
+     * 获取POI数据
+     *
+     * @param cityBean     要查询数据的城市
+     * @param categoryBean 要查询数据的分类
+     * @param count        每页的个数
+     * @param lastestItem  当前最后一个数据。用于分页，如果为null，则会加载第一页
      */
-    public Task<List<POIResultBean>> loadPOIData(CityBean cityBean, final POICategoryBean category) {
-        final Task<List<POIResultBean>>.TaskCompletionSource taskCompletionSource = Task.create();
-
-        if (isLoding) {
-            return Task.forError(new Exception("已经开始加载，请不要重复加载"));
+    public Task<List<POIResultBean>> getPOIItems(CityBean cityBean, POICategoryBean categoryBean, int count, POIResultBean lastestItem) {
+        if (baiduPoiCurrentPagerNumber == -1) {
+            baiduPoiCurrentPagerNumber++;
+        } else {
+            baiduPoiCurrentPagerNumber++;
         }
-
-        final PoiSearch poiSearch = PoiSearch.newInstance();
-        OnGetPoiSearchResultListener listener = new OnGetPoiSearchResultListener() {
-            @Override
-            public void onGetPoiResult(PoiResult poiResult) {
-                isLoding = false;
-                poiSearch.destroy();
-                List<PoiInfo> poiInfos = poiResult.getAllPoi();
-                List<POIResultBean> poiResultBeans = new ArrayList<>();
-                if (poiInfos != null) {
-                    for (PoiInfo poiInfo : poiInfos) {
-                        POIResultBean mPOIResultBean = new POIResultBean()
-                                .setAddress(poiInfo.address)
-                                .setTel(poiInfo.phoneNum)
-                                .setTitle(poiInfo.name)
-                                .setId(poiInfo.uid)
-                                .setImageBean(ImageBean.generateImage(
-                                        getDefaultPOIImage(category),
-                                        ImageBean.ImageType.OUTLINE))
-                                .setPoiCategoryBean(category)
-                                .setDetail(getDefaultPOIDetail(category));
-                        poiResultBeans.add(mPOIResultBean);
-                    }
-                }
-                taskCompletionSource.setResult(poiResultBeans);
-            }
-
-            @Override
-            public void onGetPoiDetailResult(PoiDetailResult poiDetailResult) {
-
-            }
-        };
-        poiSearch.setOnGetPoiSearchResultListener(listener);
-        poiSearch.searchInCity(new PoiCitySearchOption().city(cityBean.cityName).keyword(category.categotyName).pageNum(10));
-        isLoding = true;
-        return taskCompletionSource.getTask();
+        return baiduPOIService.getPoiItems(cityBean, categoryBean, count, baiduPoiCurrentPagerNumber);
     }
 
     /**
@@ -123,48 +88,6 @@ public class POIBusiness {
      */
     public void toMyPublish() {
         Toast.makeText(context, "前往我发布的信息页面", Toast.LENGTH_SHORT).show();
-    }
-
-    static Map<String, String> poiCategories = new HashMap<>();
-
-    static {
-        poiCategories.put("餐厅", "restruant");
-        poiCategories.put("医院", "hospital");
-        poiCategories.put("酒店", "hotel");
-        poiCategories.put("保洁", "cleaner");
-    }
-
-    /**
-     * 获取默认的POI图片
-     *
-     * @param categoryBean poi类别
-     */
-    private String getDefaultPOIImage(POICategoryBean categoryBean) {
-        String category = poiCategories.get(categoryBean.categotyName);
-        if (category == null) {
-            return "file:///android_asset/ten_top_spots_image/ten_top_spots_1.jpg";
-        }
-        String image = "file:///android_asset/poi/" + category + "/" + String.valueOf(new Random().nextInt(11) % 10) + ".png";
-        return image;
-    }
-
-    /**
-     * 获取默认的POI细节
-     *
-     * @param categoryBean poi类别
-     */
-    private String getDefaultPOIDetail(POICategoryBean categoryBean) {
-        String category = poiCategories.get(categoryBean.categotyName);
-        String detail = null;
-        InputStream detailIS = null;
-        try {
-            detailIS = context.getAssets().open("poi/" + category + "/" + String.valueOf(new Random().nextInt(11) % 10) + ".txt");
-            detail = IOUtils.toString(detailIS);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            return detail;
-        }
     }
 
     /**
