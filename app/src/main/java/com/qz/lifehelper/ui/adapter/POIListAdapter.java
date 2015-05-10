@@ -1,7 +1,6 @@
 package com.qz.lifehelper.ui.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,6 @@ import android.widget.TextView;
 import com.qz.lifehelper.R;
 import com.qz.lifehelper.business.POIBusiness;
 import com.qz.lifehelper.entity.POIResultBean;
-import com.qz.lifehelper.ui.activity.POIResultDetailActivity;
 import com.squareup.picasso.Picasso;
 
 import org.androidannotations.annotations.Bean;
@@ -26,7 +24,7 @@ import java.util.List;
  * 该adapter用于POI搜索结果列表
  */
 @EBean
-public class POIResultListAdpater extends BaseAdapter {
+public class POIListAdapter extends BaseAdapter {
 
     List<POIResultBean> data = new ArrayList<>();
 
@@ -81,13 +79,12 @@ public class POIResultListAdpater extends BaseAdapter {
         ItemPOIREsultChilds childs = (ItemPOIREsultChilds) convertView.getTag();
         final POIResultBean poiResultBean = data.get(position);
 
-        convertView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = POIResultDetailActivity.generateIntent(context, poiResultBean.id);
-                context.startActivity(intent);
-            }
-        });
+//        convertView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
 
         childs.titleTv.setText(poiResultBean.title);
         childs.addressTv.setText(poiResultBean.address);

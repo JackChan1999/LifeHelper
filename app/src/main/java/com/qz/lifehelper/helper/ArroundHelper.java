@@ -8,7 +8,7 @@ import android.widget.Toast;
 
 import com.qz.lifehelper.business.LocationBusiness;
 import com.qz.lifehelper.business.TopInfoBusiness;
-import com.qz.lifehelper.ui.activity.POIResultActivity;
+import com.qz.lifehelper.ui.activity.POIActivity;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
@@ -33,7 +33,7 @@ public class ArroundHelper {
      * 跳转到POI搜索结果页面
      */
     public void toPOIResult(String category) {
-        Intent intent = POIResultActivity.generateIntent(context, locationBusiness.getCurrentCity().cityName, category);
+        Intent intent = POIActivity.generatePOIListIntent(context, category, locationBusiness.getCurrentCity().cityName);
         context.startActivity(intent);
     }
 

@@ -1,6 +1,7 @@
 package com.qz.lifehelper.business;
 
 import android.content.Context;
+import android.support.v4.app.FragmentTransaction;
 import android.widget.Toast;
 
 import com.baidu.mapapi.search.core.PoiInfo;
@@ -16,6 +17,8 @@ import com.qz.lifehelper.entity.ImageBean;
 import com.qz.lifehelper.entity.POICategoryBean;
 import com.qz.lifehelper.entity.POIResultBean;
 import com.qz.lifehelper.entity.json.POIResultJsonBean;
+import com.qz.lifehelper.ui.fragment.POIDetailFragment;
+import com.qz.lifehelper.ui.fragment.POIListFragment;
 
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
@@ -25,7 +28,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -38,13 +40,10 @@ import bolts.Task;
  * <p/>
  * 所有加载到的POI信息都会被缓存，方便POIResultDetail的调用
  */
-@EBean(scope = EBean.Scope.Singleton)
+@EBean
 public class POIBusiness {
     // 是否正在加载POI数据
     boolean isLoding = false;
-
-    // 缓存所有加载过的POI数据
-    Map<String, POIResultBean> poiResults = new LinkedHashMap<>();
 
     @RootContext
     Context context;
@@ -52,7 +51,7 @@ public class POIBusiness {
     /**
      * 开始加载制定城市的相关类别的POI数据。
      */
-    public Task<List<POIResultBean>> loadPOIData(CityBean cityBean, final String category) {
+    public Task<List<POIResultBean>> loadPOIData(CityBean cityBean, final POICategoryBean category) {
         final Task<List<POIResultBean>>.TaskCompletionSource taskCompletionSource = Task.create();
 
         if (isLoding) {
@@ -69,19 +68,17 @@ public class POIBusiness {
                 List<POIResultBean> poiResultBeans = new ArrayList<>();
                 if (poiInfos != null) {
                     for (PoiInfo poiInfo : poiInfos) {
-                        POICategoryBean categoryBean = POICategoryBean.generate(category);
                         POIResultBean mPOIResultBean = new POIResultBean()
                                 .setAddress(poiInfo.address)
                                 .setTel(poiInfo.phoneNum)
                                 .setTitle(poiInfo.name)
                                 .setId(poiInfo.uid)
                                 .setImageBean(ImageBean.generateImage(
-                                        getDefaultPOIImage(categoryBean),
+                                        getDefaultPOIImage(category),
                                         ImageBean.ImageType.OUTLINE))
-                                .setPoiCategoryBean(categoryBean)
-                                .setDetail(getDefaultPOIDetail(categoryBean));
+                                .setPoiCategoryBean(category)
+                                .setDetail(getDefaultPOIDetail(category));
                         poiResultBeans.add(mPOIResultBean);
-                        addPOIResult(mPOIResultBean);
                     }
                 }
                 taskCompletionSource.setResult(poiResultBeans);
@@ -93,27 +90,10 @@ public class POIBusiness {
             }
         };
         poiSearch.setOnGetPoiSearchResultListener(listener);
-        poiSearch.searchInCity(new PoiCitySearchOption().city(cityBean.cityName).keyword(category).pageNum(10));
+        poiSearch.searchInCity(new PoiCitySearchOption().city(cityBean.cityName).keyword(category.categotyName).pageNum(10));
         isLoding = true;
         return taskCompletionSource.getTask();
     }
-
-    /**
-     * 增加POI缓存数据
-     */
-    private void addPOIResult(POIResultBean poiResultBean) {
-        if (!poiResults.containsKey(poiResultBean.id)) {
-            poiResults.put(poiResultBean.id, poiResultBean);
-        }
-    }
-
-    /**
-     * 根据POI数据的id获取缓存的POI数据
-     */
-    public POIResultBean getPOIResult(String poiResultId) {
-        return poiResults.get(poiResultId);
-    }
-
 
     /**
      * 解析POIResult的json数据
@@ -185,5 +165,30 @@ public class POIBusiness {
         } finally {
             return detail;
         }
+    }
+
+    /**
+     * 前往POIListFragment
+     */
+    public void toPOIListFragment(FragmentTransaction transaction, POICategoryBean categoryBean, CityBean cityBean) {
+
+        POIListFragment fragment = new POIListFragment.Builder()
+                .setCategory(categoryBean)
+                .setCity(cityBean)
+                .create();
+
+        transaction.add(android.R.id.content, fragment);
+        transaction.commit();
+    }
+
+    /**
+     * 前往POIDetailFragment
+     */
+    public void toPOIDetailFragment(FragmentTransaction transaction, POIResultBean poiItemBean) {
+        POIDetailFragment fragment = new POIDetailFragment.Builder()
+                .setPOItemBean(poiItemBean)
+                .create();
+        transaction.add(android.R.id.content, fragment);
+        transaction.commit();
     }
 }

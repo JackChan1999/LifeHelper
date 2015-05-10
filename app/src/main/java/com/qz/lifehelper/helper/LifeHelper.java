@@ -8,7 +8,7 @@ import com.qz.lifehelper.entity.P2PCategoryBean;
 import com.qz.lifehelper.entity.P2PRequestBean;
 import com.qz.lifehelper.ui.activity.BusInfoActivity_;
 import com.qz.lifehelper.ui.activity.P2PActivity;
-import com.qz.lifehelper.ui.activity.POIResultActivity;
+import com.qz.lifehelper.ui.activity.POIActivity;
 import com.qz.lifehelper.ui.activity.PlaneInfoActivity_;
 import com.qz.lifehelper.ui.activity.TrainInfoActivity_;
 
@@ -36,7 +36,7 @@ public class LifeHelper {
      * 前往POI搜索结果页
      */
     public void toPOIResult(String catrgory) {
-        Intent intent = POIResultActivity.generateIntent(context, locationBusiness.getCurrentCity().cityName, catrgory);
+        Intent intent = POIActivity.generatePOIListIntent(context, catrgory, locationBusiness.getCurrentCity().cityName);
         context.startActivity(intent);
     }
 
