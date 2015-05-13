@@ -3,11 +3,12 @@ package com.qz.lifehelper.helper;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.widget.Toast;
 
 import com.qz.lifehelper.business.LocationBusiness;
 import com.qz.lifehelper.business.TopInfoBusiness;
-import com.qz.lifehelper.ui.activity.POIResultActivity;
+import com.qz.lifehelper.ui.activity.POIActivity;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
@@ -32,7 +33,7 @@ public class ArroundHelper {
      * 跳转到POI搜索结果页面
      */
     public void toPOIResult(String category) {
-        Intent intent = POIResultActivity.generateIntent(context, locationBusiness.getCurrentCity().cityName, category);
+        Intent intent = POIActivity.generatePOIListIntent(context, category, locationBusiness.getCurrentCity().cityName);
         context.startActivity(intent);
     }
 
@@ -46,15 +47,19 @@ public class ArroundHelper {
     /**
      * 跳转到十佳餐厅页面
      */
-    public void toTop10Restaurant() {
-        Toast.makeText(context, "前往十佳餐厅", Toast.LENGTH_SHORT).show();
+    public void toTop10Restaurant(FragmentManager fragmentManager) {
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.addToBackStack(null);
+        topInfoBusiness.toTenTopRestruantFragment(transaction);
     }
 
     /**
      * 跳转到特惠页面
      */
-    public void toSale() {
-        Toast.makeText(context, "前往特惠", Toast.LENGTH_SHORT).show();
+    public void toSale(FragmentManager fragmentManager) {
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.addToBackStack(null);
+        topInfoBusiness.toSaleFragment(transaction);
     }
 
     @Bean

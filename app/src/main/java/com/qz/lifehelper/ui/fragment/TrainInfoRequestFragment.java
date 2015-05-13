@@ -164,6 +164,6 @@ public class TrainInfoRequestFragment extends Fragment {
     @AfterViews
     void setToolbar() {
         TextView titleTv = (TextView) toolbar.findViewById(R.id.title_tv);
-        titleTv.setText("搜索火车票信息");
+        titleTv.setText("搜索火车票");
     }
 }

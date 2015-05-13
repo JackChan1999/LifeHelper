@@ -1,5 +1,6 @@
 package com.qz.lifehelper.ui.fragment;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,7 +12,10 @@ import com.qz.lifehelper.business.NoticeInfoBusiness;
 import com.qz.lifehelper.business.P2PBusiness;
 import com.qz.lifehelper.business.POIBusiness;
 import com.qz.lifehelper.entity.ImageBean;
+import com.qz.lifehelper.entity.P2PRequestBean;
 import com.qz.lifehelper.entity.UserInfoBean;
+import com.qz.lifehelper.ui.activity.P2PActivity;
+import com.qz.lifehelper.ui.activity.POIActivity;
 import com.squareup.picasso.Picasso;
 
 import org.androidannotations.annotations.AfterViews;
@@ -62,12 +66,16 @@ public class PersonalFragment extends Fragment {
 
     @Click(R.id.my_sales)
     void onMySalesClick() {
-        p2pBusiness.toMySale();
+        Intent intent = P2PActivity.generateIntent(
+                this.getActivity()
+                , new P2PRequestBean().setFragmentType(P2PRequestBean.FragmentType.PERSONAL_P2P_LIST));
+        this.getActivity().startActivity(intent);
     }
 
     @Click(R.id.my_publish)
     void onMyPublishClick() {
-        poiBusiness.toMyPublish();
+        Intent intent = POIActivity.generatePersonalPOIIntent(this.getActivity());
+        this.getActivity().startActivity(intent);
     }
 
     @Click(R.id.public_info)
@@ -87,8 +95,14 @@ public class PersonalFragment extends Fragment {
     @AfterViews
     void setAuthState() {
         if (authenticationBusiness.isLogin()) {
-            UserInfoBean userInfoBean = authenticationBusiness.getUserInfo();
-            login(userInfoBean.userName, userInfoBean.userIcon);
+            authenticationBusiness.getCurrentUser(false).onSuccess(new Continuation<UserInfoBean, Void>() {
+                @Override
+                public Void then(Task<UserInfoBean> task) throws Exception {
+                    UserInfoBean userInfoBean = task.getResult();
+                    login(userInfoBean.userName, userInfoBean.userIcon);
+                    return null;
+                }
+            });
         } else {
             logout();
         }

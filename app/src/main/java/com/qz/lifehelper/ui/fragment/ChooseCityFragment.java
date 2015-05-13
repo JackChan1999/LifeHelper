@@ -1,9 +1,9 @@
 package com.qz.lifehelper.ui.fragment;
 
 
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.qz.lifehelper.R;
 import com.qz.lifehelper.business.LocationBusiness;
@@ -136,7 +136,8 @@ public class ChooseCityFragment extends BaseFragment {
 
     @AfterViews
     void setToolBar() {
-        toolbar.setTitle("选择城市");
-        ((ActionBarActivity) getActivity()).setSupportActionBar(toolbar);
+        TextView titleTv = (TextView) toolbar.findViewById(R.id.title_tv);
+        String title = "选择城市";
+        titleTv.setText(title);
     }
 }

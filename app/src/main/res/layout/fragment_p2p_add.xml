@@ -35,15 +35,20 @@
                 <!--添加照片-->
                 <LinearLayout
                     style="@style/input_take_phpoto"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
                     android:id="@+id/take_photo_ll">
+
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/camera" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="添加照片"
-                        android:drawableTop="@android:drawable/ic_menu_camera" />
+                        style="@style/input_take_phpoto.text" />
 
                 </LinearLayout>
             </LinearLayout>

@@ -2,83 +2,90 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="10dp">
+    style="@style/traffic.train_item.root">
 
     <TextView
-        android:textColor="@android:color/darker_gray"
-        android:layout_marginBottom="10dp"
-        android:textSize="20sp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
         android:id="@+id/train_info_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="G103(高速动车)" />
-
-    <TextView
-        android:textSize="25sp"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="G103(高速动车)"
+        style="@style/traffic.train_item.train_num" />
+
+    <LinearLayout
+        android:id="@+id/start_city"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@id/train_info_tv"
-        android:id="@+id/start_time_tv"
+        style="@style/traffic.train_item.city">
+
+        <TextView
+            android:id="@+id/start_time_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="07:05"
+            style="@style/traffic.train_item.time.start" />
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/start_city_icon"
+            android:id="@+id/start_city_iv"
+            style="@style/traffic.train_item.city_icon" />
+
+        <TextView
+            android:text="北京南"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/start_station_tv"
+            style="@style/traffic.train_item.city_text" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/end_city"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="07:05" />
+        android:layout_below="@id/start_city"
+        style="@style/traffic.train_item.city">
+
+        <TextView
+            android:id="@+id/end_time_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12:43"
+            style="@style/traffic.train_item.time.end" />
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/end_city_icon"
+            android:id="@+id/end_city_iv"
+            style="@style/traffic.train_item.city_icon" />
+
+        <TextView
+            android:text="上海虹桥"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/end_station_tv"
+            style="@style/traffic.train_item.city_text" />
+
+        <TextView
+            android:id="@+id/duration_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5时38分"
+            style="@style/traffic.train_item.duration" />
+    </LinearLayout>
+
 
     <TextView
-        android:textColor="@android:color/darker_gray"
-        android:layout_marginTop="10dp"
-        android:textSize="25sp"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@id/start_time_tv"
-        android:id="@+id/end_time_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="12:43" />
-
-    <TextView
-        android:textSize="25sp"
-        android:drawablePadding="5dp"
-        android:gravity="center"
-        android:layout_toRightOf="@id/start_time_tv"
-        android:layout_alignBaseline="@id/start_time_tv"
-        android:id="@+id/start_station_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawableLeft="@android:drawable/ic_input_add"
-        android:text="北京南" />
-
-    <TextView
-        android:textColor="@android:color/darker_gray"
-        android:textSize="25sp"
-        android:gravity="center"
-        android:layout_alignBaseline="@id/end_time_tv"
-        android:layout_toRightOf="@id/end_time_tv"
-        android:id="@+id/end_station_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawableLeft="@android:drawable/ic_input_add"
-        android:drawablePadding="5dp"
-        android:text="上海虹桥" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/duration_tv"
-        android:layout_alignBaseline="@id/end_station_tv"
-        android:layout_toRightOf="@id/end_station_tv"
-        android:text="5时38分"
-        android:textSize="25sp" />
-
-    <TextView
-        android:textStyle="bold"
-        android:textColor="@android:color/darker_gray"
-        android:textSize="40sp"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
         android:id="@+id/surplus_ticket_count_tv"
+        android:layout_alignTop="@id/start_city"
+        android:layout_alignParentRight="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="526张" />
-
+        android:text="526张"
+        style="@style/traffic.train_item.ticket_count" />
 
 </RelativeLayout>

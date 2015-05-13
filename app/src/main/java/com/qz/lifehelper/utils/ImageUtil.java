@@ -21,7 +21,7 @@ public class ImageUtil {
     /**
      * 图片的最大宽度
      */
-    static private final int maxWidth = 1080;
+    static private final int maxWidth = 720;
 
     /**
      * 等比压缩图片到合适的大小

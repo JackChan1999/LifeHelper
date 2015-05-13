@@ -217,7 +217,7 @@
                 android:layout_height="wrap_content"
                 android:text="删除"
                 android:id="@+id/delete_bn"
-                style="@style/input_bn" />
+                style="@style/input_bn.delete" />
 
             <!--修改-->
             <Button

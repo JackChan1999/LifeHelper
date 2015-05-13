@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <include
+        layout="@layout/toolbar"
+        android:id="@+id/toolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!--修改照片-->
+            <ImageView
+                android:scaleType="centerCrop"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/p2p_image_big"
+                android:id="@+id/image_iv" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                style="@style/input_fill_piece" />
+
+
+            <LinearLayout
+                style="@style/input_container_leave1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <!--地址-->
+                <LinearLayout
+                    style="@style/input_container_leave2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        style="@style/input_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="地址" />
+
+                    <View
+                        style="@style/input_separator_vertical"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent" />
+
+                    <EditText
+                        android:inputType="text"
+                        android:imeOptions="actionNext"
+                        style="@style/input_edit_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/address_et" />
+
+                </LinearLayout>
+
+                <View
+                    style="@style/input_separator_horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp" />
+
+                <!--电话-->
+                <LinearLayout
+                    style="@style/input_container_leave2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        style="@style/input_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="电话" />
+
+                    <View
+                        style="@style/input_separator_vertical"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent" />
+
+                    <EditText
+                        android:imeOptions="actionNext"
+                        android:inputType="number"
+                        style="@style/input_edit_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tel_et" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                style="@style/input_fill_piece" />
+
+            <LinearLayout
+                style="@style/input_container_leave1"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <!--标题-->
+                <LinearLayout
+                    style="@style/input_container_leave2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        style="@style/input_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="标题" />
+
+                    <View
+                        style="@style/input_separator_vertical"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent" />
+
+                    <EditText
+                        android:imeOptions="actionNext"
+                        android:inputType="text"
+                        style="@style/input_edit_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/title_et" />
+
+                </LinearLayout>
+
+
+                <View
+                    style="@style/input_separator_horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp" />
+
+                <!--描述-->
+                <LinearLayout
+                    style="@style/input_container_leave2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        style="@style/input_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="描述" />
+
+                    <View
+                        style="@style/input_separator_vertical"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent" />
+
+                    <EditText
+                        android:imeOptions="actionDone"
+                        android:inputType="textMultiLine"
+                        style="@style/input_edit_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/detail_et"
+                        android:minLines="5" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!--删除-->
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="删除"
+                android:id="@+id/delete_bn"
+                style="@style/input_bn.delete" />
+
+            <!--修改-->
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="修改"
+                android:id="@+id/alter_bn"
+                style="@style/input_bn" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
+
+
+

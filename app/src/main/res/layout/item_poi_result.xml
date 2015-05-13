@@ -5,14 +5,11 @@
 
     <ImageView
         android:id="@+id/poi_iv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:layout_margin="10dp"
-        android:background="@android:color/holo_blue_light"
-        android:minHeight="60dp"
-        android:minWidth="60dp" />
+        style="@style/poi.item.image" />
 
     <TextView
         android:id="@+id/title_tv"
@@ -20,10 +17,8 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@id/poi_iv"
         android:layout_toRightOf="@id/poi_iv"
-        android:padding="5dp"
         android:text="井山湖农庄"
-        android:textSize="20sp"
-        android:textColor="@android:color/holo_blue_dark" />
+        style="@style/poi.item.title" />
 
     <TextView
         android:id="@+id/tel_tv"
@@ -32,8 +27,8 @@
         android:layout_alignBaseline="@id/poi_iv"
         android:layout_below="@id/title_tv"
         android:layout_toRightOf="@id/poi_iv"
-        android:padding="2dp"
-        android:text="tel:57780881" />
+        android:text="tel:57780881"
+        style="@style/poi.item.text.tel" />
 
     <TextView
         android:id="@+id/address_tv"
@@ -41,15 +36,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tel_tv"
         android:layout_toRightOf="@id/poi_iv"
-        android:padding="2dp"
-        android:text="add:杭州市滨江区长河街道唐子沿江农……" />
-
-    <ImageView
-        android:layout_width="20dp"
-        android:layout_height="60dp"
-        android:src="@android:drawable/arrow_up_float"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true" />
-
-
+        android:text="add:杭州市滨江区长河街道唐子沿江农……"
+        style="@style/poi.item.text.address" />
 </RelativeLayout>

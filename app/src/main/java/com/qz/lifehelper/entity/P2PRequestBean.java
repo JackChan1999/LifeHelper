@@ -31,6 +31,8 @@ public class P2PRequestBean implements Serializable {
         , P2P_ADD
         //修改P2P
         , P2P_ALTER
+        //个人商品页面
+        , PERSONAL_P2P_LIST
     }
 
     /**

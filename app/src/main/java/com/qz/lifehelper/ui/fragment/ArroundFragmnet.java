@@ -69,11 +69,11 @@ public class ArroundFragmnet extends Fragment {
 
     @Click(R.id.top10restaurant)
     public void onTop10RestaurantClick() {
-        arroundHelper.toTop10Restaurant();
+        arroundHelper.toTop10Restaurant(getFragmentManager());
     }
 
     @Click(R.id.sale)
     public void onSaleClick() {
-        arroundHelper.toSale();
+        arroundHelper.toSale(getFragmentManager());
     }
 }

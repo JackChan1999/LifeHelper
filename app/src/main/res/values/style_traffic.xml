@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="traffic">
+        <item name="android:description">@string/life_helper</item>
+    </style>
+
+    <style name="traffic.root">
+        <item name="android:paddingTop">36dp</item>
+        <item name="android:paddingLeft">18dp</item>
+        <item name="android:paddingRight">18dp</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="traffic.city_group_leave1">
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="traffic.city_group_leave2">
+        <item name="android:layout_weight">2</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="traffic.city_group_leave3">
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="traffic.city_text_title">
+        <item name="android:textColor">@color/app_text_color_dark</item>
+        <item name="android:textSize">25sp</item>
+    </style>
+
+    <style name="traffic.city_text_content">
+        <item name="android:singleLine">true</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:textSize">30sp</item>
+        <item name="android:textColor">@color/app_text_color_dark</item>
+    </style>
+
+    <style name="traffic.city_text_content.date">
+        <item name="android:singleLine">true</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:textSize">23sp</item>
+        <item name="android:textColor">@color/app_text_color_dark</item>
+    </style>
+
+    <style name="traffic.underline">
+        <item name="android:background">@color/app_bg_color_light</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_marginBottom">5dp</item>
+    </style>
+
+    <style name="traffic.exchange">
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+
+    <style name="traffic.bn">
+        <item name="android:textColor">@color/app_text_color_dark</item>
+        <item name="android:textSize">25sp</item>
+        <item name="android:background">@color/app_bn</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+    </style>
+
+    <style name="traffic.arror_icon">
+        <item name="android:layout_marginLeft">5dp</item>
+    </style>
+
+    <style name="traffic.bus_item">
+        <item name="android:description">@string/life_helper</item>
+    </style>
+
+    <style name="traffic.bus_item.root">
+        <item name="android:paddingRight">12dp</item>
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:paddingBottom">20dp</item>
+        <item name="android:paddingTop">20dp</item>
+    </style>
+
+    <style name="traffic.bus_item.time">
+        <item name="android:layout_marginRight">8dp</item>
+        <item name="android:textSize">30sp</item>
+        <item name="android:textColor">@color/app_text_color_dark</item>
+    </style>
+
+    <style name="traffic.bus_item.city_text">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/app_text_color_dark</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="traffic.bus_item.city_icon">
+        <item name="android:layout_marginRight">5dp</item>
+    </style>
+
+    <style name="traffic.bus_item.city">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="traffic.bus_item.price">
+        <item name="android:textSize">40sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/app_text_color_grey</item>
+    </style>
+
+    <style name="traffic.train_item">
+        <item name="android:description">@string/life_helper</item>
+    </style>
+
+    <style name="traffic.train_item.train_num">
+        <item name="android:textColor">@color/app_text_color_grey</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:layout_marginBottom">0dp</item>
+    </style>
+
+    <style name="traffic.train_item.time">
+        <item name="android:layout_marginRight">8dp</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/app_text_color_dark</item>
+    </style>
+
+    <style name="traffic.train_item.time.start"></style>
+
+    <style name="traffic.train_item.time.end"></style>
+
+    <style name="traffic.train_item.city_text">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/app_text_color_dark</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="traffic.train_item.city_icon">
+        <item name="android:layout_marginRight">5dp</item>
+    </style>
+
+    <style name="traffic.train_item.city">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="traffic.train_item.duration">
+        <item name="android:textSize">18sp</item>
+        <item name="android:layout_marginLeft">6dp</item>
+    </style>
+
+    <style name="traffic.train_item.ticket_count">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/app_text_color_grey</item>
+        <item name="android:textSize">32sp</item>
+    </style>
+
+    <style name="traffic.train_item.root">
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:paddingTop">10dp</item>
+    </style>
+
+    <style name="traffic.plane_item">
+        <item name="android:description">@string/life_helper</item>
+    </style>
+
+    <style name="traffic.plane_item.num">
+        <item name="android:textColor">@color/app_text_color_grey</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:layout_marginBottom">0dp</item>
+    </style>
+
+    <style name="traffic.plane_item.root">
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:paddingTop">10dp</item>
+    </style>
+
+    <style name="traffic.plane_item.rate">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/app_text_color_grey</item>
+        <item name="android:textSize">33sp</item>
+    </style>
+
+    <style name="traffic.plane_item.city_text">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/app_text_color_dark</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="traffic.plane_item.city_icon">
+        <item name="android:layout_marginRight">5dp</item>
+    </style>
+
+    <style name="traffic.plane_item.city">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="traffic.plane_item.time">
+        <item name="android:layout_marginRight">8dp</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/app_text_color_dark</item>
+    </style>
+
+    <style name="traffic.plane_item.time.start"></style>
+
+    <style name="traffic.plane_item.time.end"></style>
+
+
+</resources>

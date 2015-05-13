@@ -6,12 +6,13 @@
         android:name=".ui.LifeHelperApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
-        android:label="@string/life_helper"
         android:theme="@style/AppTheme">
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="Drjj8aQ7mvTgYYES5rMgdZUE" />
+
+        <activity android:name=".ui.activity.POIActivity_" />
 
         <activity
             android:name=".ui.activity.AuthenticateActivity_"
@@ -31,10 +32,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".ui.activity.POIResultActivity_" />
-
-        <activity android:name=".ui.activity.POIResultDetailActivity_" />
 
         <service
             android:name="com.baidu.location.f"

@@ -3,14 +3,20 @@ package com.qz.lifehelper.business;
 import android.content.Context;
 import android.content.Intent;
 
+import com.avos.avoscloud.AVUser;
 import com.qz.lifehelper.entity.ImageBean;
 import com.qz.lifehelper.entity.UserInfoBean;
 import com.qz.lifehelper.event.LoginSuccessEvent;
 import com.qz.lifehelper.event.SigninSuccessEvent;
 import com.qz.lifehelper.persist.UserPersist;
-import com.qz.lifehelper.service.AuthenticateService;
+import com.qz.lifehelper.service.AuthenticateOnlineService_;
+import com.qz.lifehelper.service.AuthenticateOutlineService_;
+import com.qz.lifehelper.service.IAuthenticateService;
+import com.qz.lifehelper.service.LeancloudConstant;
+import com.qz.lifehelper.ui.AppProfile;
 import com.qz.lifehelper.ui.activity.AuthenticateActivity;
 
+import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
@@ -32,8 +38,17 @@ public class AuthenticationBusiness {
     @RootContext
     Context context;
 
-    @Bean
-    AuthenticateService authenticateService;
+
+    IAuthenticateService authenticateService;
+
+    @AfterInject
+    void setService() {
+        if (AppProfile.dateSource.equals(AppProfile.DATE_SOURCE.ONLINE)) {
+            authenticateService = AuthenticateOnlineService_.getInstance_(context);
+        } else {
+            authenticateService = AuthenticateOutlineService_.getInstance_(context);
+        }
+    }
 
     private Task<UserInfoBean>.TaskCompletionSource authenticateTaskCS;
 
@@ -112,15 +127,34 @@ public class AuthenticationBusiness {
      * <p/>
      * 只有当isLogin返回true时，才会返回有效数据
      */
-    public UserInfoBean getUserInfo() {
+    private UserInfoBean getCurrentUser() {
         if (!isLogin()) {
             throw new IllegalStateException("还没有登陆");
         }
+
+        String id = AVUser.getCurrentUser().getObjectId();
+
         return UserInfoBean.generateBean(
                 userPersist.getUserName()
                 , ImageBean.generateImage(
                         userPersist.getUserIcon()
-                        , ImageBean.ImageType.OUTLINE));
+                        , ImageBean.ImageType.OUTLINE)
+                , id);
+    }
+
+    /**
+     * 获取当前登录的用户信息
+     *
+     * @param tryToLogin true，如果当前没有登录则引导用户登录
+     */
+    public Task<UserInfoBean> getCurrentUser(boolean tryToLogin) {
+        if (isLogin()) {
+            return Task.forResult(getCurrentUser());
+        } else if (tryToLogin) {
+            return toAuthenticateActivity();
+        } else {
+            return Task.forError(new Exception("当前没有登录"));
+        }
     }
 
 
@@ -145,5 +179,56 @@ public class AuthenticationBusiness {
      */
     public ImageBean getDefaultUserIcon() {
         return ImageBean.generateImage("file:///android_asset/user_icon_1.png", ImageBean.ImageType.OUTLINE);
+    }
+
+    /**
+     * 判断是不是超级用户
+     * <p/>
+     * 超级用户拥有无敌权限
+     */
+    static public boolean isSuperUser(UserInfoBean userInfoBean) {
+        if (userInfoBean == null) {
+            return true;
+        }
+
+        if (getSuperUser().id.equals(userInfoBean.id)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 获取超级用户
+     */
+    static public UserInfoBean getSuperUser() {
+        return UserInfoBean.generateBean("root", null, LeancloudConstant.SUPER_USER_ID);
+    }
+
+    /**
+     * 获取百度用户
+     * <p/>
+     * 这里的百度用户，不是指用百度账号登录的用户。而是泛指百度。所有的百度poi数据的所有者都是该用户
+     */
+    static public UserInfoBean getBaiduUser() {
+        return UserInfoBean.generateBean("badidu_isuhfiudshfidshfiuhdsifhdsi", null, "webfefuehwfhewifhewiufhewifh");
+    }
+
+    /**
+     * 判断是不是百度用户
+     * <p/>
+     * 这里的百度用户，不是指用百度账号登录的用户。而是泛指百度。所有的百度poi数据的所有者都是该用户
+     */
+    static public boolean isBaiduUser(UserInfoBean userInfoBean) {
+
+        if (userInfoBean == null) {
+            return true;
+        }
+
+        if (getBaiduUser().id.equals(userInfoBean.id)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

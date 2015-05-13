@@ -24,10 +24,20 @@ public class ImageBean {
      */
     public ImageType imageType;
 
+    public String id;
+
     public static final ImageBean generateImage(String imageSrc, ImageType imageType) {
         ImageBean imageBean = new ImageBean();
         imageBean.imageSrc = imageSrc;
         imageBean.imageType = imageType;
+        return imageBean;
+    }
+
+    public static final ImageBean generateImage(String imageSrc, ImageType imageType, String id) {
+        ImageBean imageBean = new ImageBean();
+        imageBean.imageSrc = imageSrc;
+        imageBean.imageType = imageType;
+        imageBean.id = id;
         return imageBean;
     }
 }

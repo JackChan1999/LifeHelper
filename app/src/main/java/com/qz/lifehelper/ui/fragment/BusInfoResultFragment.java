@@ -1,6 +1,8 @@
 package com.qz.lifehelper.ui.fragment;
 
+import android.support.v7.widget.Toolbar;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.qz.lifehelper.R;
 import com.qz.lifehelper.business.BusBusiness;
@@ -83,5 +85,15 @@ public class BusInfoResultFragment extends BaseFragment {
                 return null;
             }
         }, Task.UI_THREAD_EXECUTOR);
+    }
+
+    @ViewById(R.id.toolbar)
+    Toolbar toolbar;
+
+    @AfterViews
+    void setToolbar() {
+        TextView titleTv = (TextView) toolbar.findViewById(R.id.title_tv);
+        String title = startCity.cityName + "－" + endCity.cityName;
+        titleTv.setText(title);
     }
 }

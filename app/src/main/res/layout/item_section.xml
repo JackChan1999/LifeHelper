@@ -2,14 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
-    android:background="@android:color/holo_blue_light">
+    style="@style/choose_city.section_group">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/title_tv"
-        android:textSize="12sp"
-        android:paddingLeft="10dp" />
+        style="@style/choose_city.section_text" />
 
 </LinearLayout>

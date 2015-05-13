@@ -53,6 +53,9 @@ public class P2PActivity extends BaseActivity {
             case P2P_LIST:
                 p2pBusiness.toP2PListFragment(transaction, p2pRequestBean.category);
                 break;
+            case PERSONAL_P2P_LIST:
+                p2pBusiness.toMySale(transaction);
+                break;
         }
     }
 }
