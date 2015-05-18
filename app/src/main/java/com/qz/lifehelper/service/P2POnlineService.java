@@ -4,7 +4,6 @@ import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.AVUser;
-import com.qz.lifehelper.business.AuthenticationBusiness;
 import com.qz.lifehelper.entity.ImageBean;
 import com.qz.lifehelper.entity.P2PCategoryBean;
 import com.qz.lifehelper.entity.P2PItemBean;
@@ -51,7 +50,7 @@ public class P2POnlineService implements IP2PService {
                 if (after != null) {
                     query.whereLessThan(LeancloudConstant.CREATED_AT_COLUME, after);
                 }
-                if (!AuthenticationBusiness.isSuperUser(userInfoBean) && (userInfoBean != null && userInfoBean.id != null)) {
+                if (userInfoBean != null && userInfoBean.id != null) {
                     AVUser currentUserObject = AVUser.getQuery().whereEqualTo(LeancloudConstant.ID_COLUME, userInfoBean.id).getFirst();
                     query.whereEqualTo(LeancloudConstant.USER_COLUME, currentUserObject);
                 }

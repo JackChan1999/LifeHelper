@@ -187,6 +187,9 @@ public class P2PBusiness implements IP2PService {
 
     @Override
     public Task<List<P2PItemBean>> getP2PItem(P2PCategoryBean catergoryBean, int count, Date after, UserInfoBean userInfoBean) {
+        if (userInfoBean != null && AuthenticationBusiness.isSuperUser(userInfoBean)) {
+            userInfoBean = null;
+        }
         return p2pService.getP2PItem(catergoryBean, count, after, userInfoBean);
     }
 

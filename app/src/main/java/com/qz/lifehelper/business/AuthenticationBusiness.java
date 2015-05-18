@@ -212,6 +212,12 @@ public class AuthenticationBusiness {
             return true;
         }
 
+        if (AppProfile.dateSource.equals(AppProfile.DATE_SOURCE.OUTLINE)) {
+            if (userInfoBean.userName.equals("root")) {
+                return true;
+            }
+        }
+
         if (getSuperUser().id.equals(userInfoBean.id)) {
             return true;
         } else {
