@@ -16,7 +16,6 @@ import com.qz.lifehelper.persist.TrafficPersist;
 import com.qz.lifehelper.service.JuheConstant;
 import com.qz.lifehelper.service.PlaneOutlineService_;
 import com.qz.lifehelper.service.PlaneService;
-import com.qz.lifehelper.ui.AppProfile;
 import com.qz.lifehelper.ui.fragment.PlaneInfoRequestFragment_;
 import com.qz.lifehelper.ui.fragment.PlaneInfoResultFragment;
 import com.qz.lifehelper.utils.DateUtil;
@@ -49,12 +48,15 @@ public class PlaneBusiness {
     @RootContext
     Context context;
 
+    @Bean
+    AppBusiness appBusiness;
+
     /**
      * 设置PlaneService，PlaneService负责与服务器的链接
      */
     @AfterInject
     void setPlaneService() {
-        if (AppProfile.dateSource.equals(AppProfile.DATE_SOURCE.OUTLINE)) {
+        if (appBusiness.getDateSourceType().equals(AppBusiness.DATE_SOURCE.OUTLINE)) {
             planeService = PlaneOutlineService_.getInstance_(context);
         } else {
             RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(JuheConstant.BASE_URL).build();

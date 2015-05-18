@@ -6,9 +6,9 @@ import com.qz.lifehelper.entity.ImageBean;
 import com.qz.lifehelper.service.IImageService;
 import com.qz.lifehelper.service.ImageOnlineService_;
 import com.qz.lifehelper.service.ImageOutlineService_;
-import com.qz.lifehelper.ui.AppProfile;
 
 import org.androidannotations.annotations.AfterInject;
+import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
 
@@ -25,9 +25,12 @@ public class ImageBusiness implements IImageService {
 
     private IImageService imageService;
 
+    @Bean
+    AppBusiness appBusiness;
+
     @AfterInject
     void setService() {
-        if (AppProfile.dateSource.equals(AppProfile.DATE_SOURCE.ONLINE)) {
+        if (appBusiness.getDateSourceType().equals(AppBusiness.DATE_SOURCE.ONLINE)) {
             imageService = ImageOnlineService_.getInstance_(context);
         } else {
             imageService = ImageOutlineService_.getInstance_(context);

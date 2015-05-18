@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
+import com.qz.lifehelper.persist.AppPersist;
+
+import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
 
@@ -30,5 +33,38 @@ public class AppBusiness {
             e.printStackTrace();
         }
         return version;
+    }
+
+    /**
+     * 数据来源
+     */
+    public enum DATE_SOURCE {
+        //离线数据，在线数据
+        OUTLINE, ONLINE,
+    }
+
+    @Bean
+    AppPersist appPersist;
+
+    /**
+     * 获取应用的数据来源
+     */
+    public DATE_SOURCE getDateSourceType() {
+        if (appPersist.isOnlineSource()) {
+            return DATE_SOURCE.ONLINE;
+        } else {
+            return DATE_SOURCE.OUTLINE;
+        }
+    }
+
+    /**
+     * 设置应用的数据来源
+     */
+    public void setDateSourceType(DATE_SOURCE dateSourceType) {
+        if (dateSourceType.equals(DATE_SOURCE.ONLINE)) {
+            appPersist.setIsOnlineSource(true);
+        } else {
+            appPersist.setIsOnlineSource(false);
+        }
     }
 }

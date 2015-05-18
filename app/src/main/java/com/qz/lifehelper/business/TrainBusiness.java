@@ -17,7 +17,6 @@ import com.qz.lifehelper.persist.TrafficPersist;
 import com.qz.lifehelper.service.JuheConstant;
 import com.qz.lifehelper.service.TrainOutlineService_;
 import com.qz.lifehelper.service.TrainService;
-import com.qz.lifehelper.ui.AppProfile;
 import com.qz.lifehelper.ui.fragment.TrainInfoRequestFragment;
 import com.qz.lifehelper.ui.fragment.TrainInfoRequestFragment_;
 import com.qz.lifehelper.ui.fragment.TrainInfoResultFragment;
@@ -49,6 +48,9 @@ public class TrainBusiness {
     @RootContext
     Context context;
 
+    @Bean
+    AppBusiness appBusiness;
+
     /**
      * 配置TrainService
      * <p/>
@@ -57,7 +59,7 @@ public class TrainBusiness {
     @AfterInject
     void setTrainService() {
 
-        if (AppProfile.dateSource.equals(AppProfile.DATE_SOURCE.OUTLINE)) {
+        if (appBusiness.getDateSourceType().equals(AppBusiness.DATE_SOURCE.OUTLINE)) {
             trainService = TrainOutlineService_.getInstance_(context);
         } else {
             RestAdapter restAdapter = new RestAdapter.Builder()

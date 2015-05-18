@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.qz.lifehelper.R;
 import com.qz.lifehelper.business.AppBusiness;
@@ -14,6 +15,9 @@ import com.qz.lifehelper.business.POIBusiness;
 import com.qz.lifehelper.entity.ImageBean;
 import com.qz.lifehelper.entity.P2PRequestBean;
 import com.qz.lifehelper.entity.UserInfoBean;
+import com.qz.lifehelper.event.LoginSuccessEvent;
+import com.qz.lifehelper.event.LogoutEvent;
+import com.qz.lifehelper.event.SigninSuccessEvent;
 import com.qz.lifehelper.ui.activity.P2PActivity;
 import com.qz.lifehelper.ui.activity.POIActivity;
 import com.squareup.picasso.Picasso;
@@ -24,8 +28,11 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
+import java.util.Date;
+
 import bolts.Continuation;
 import bolts.Task;
+import de.greenrobot.event.EventBus;
 
 /**
  * 个人信息页
@@ -62,6 +69,30 @@ public class PersonalFragment extends Fragment {
                 }
             }, Task.UI_THREAD_EXECUTOR);
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    public void onEvent(LoginSuccessEvent event) {
+        login(event.userInfoBean.userName, event.userInfoBean.userIcon);
+    }
+
+    public void onEvent(SigninSuccessEvent event) {
+        login(event.userInfoBean.userName, event.userInfoBean.userIcon);
+    }
+
+    public void onEvent(LogoutEvent event) {
+        logout();
     }
 
     @Click(R.id.my_sales)
@@ -143,5 +174,34 @@ public class PersonalFragment extends Fragment {
     @AfterViews
     void setAppVersion() {
         appVersionTv.setText(appBusiness.getVersionNumber());
+    }
+
+    private int appVersionTvCount = 0;
+    private Date appVersionTvLastClickTime;
+
+    @Click(R.id.app_version_tv)
+    void setAppDateSourceType() {
+        Date currentTime = new Date();
+        if (appVersionTvLastClickTime != null && currentTime.getTime() - appVersionTvLastClickTime.getTime() > 1000) {
+            appVersionTvCount = 0;
+            appVersionTvLastClickTime = null;
+            return;
+        }
+
+        if (appVersionTvCount == 4) {
+            if (appBusiness.getDateSourceType().equals(AppBusiness.DATE_SOURCE.OUTLINE)) {
+                appBusiness.setDateSourceType(AppBusiness.DATE_SOURCE.ONLINE);
+                authenticationBusiness.logout();
+                Toast.makeText(this.getActivity(), "转化为在线数据", Toast.LENGTH_LONG).show();
+            } else {
+                appBusiness.setDateSourceType(AppBusiness.DATE_SOURCE.OUTLINE);
+                authenticationBusiness.logout();
+                Toast.makeText(this.getActivity(), "转化为离线数据", Toast.LENGTH_LONG).show();
+            }
+            appVersionTvCount = 0;
+        } else {
+            appVersionTvLastClickTime = new Date();
+            appVersionTvCount++;
+        }
     }
 }

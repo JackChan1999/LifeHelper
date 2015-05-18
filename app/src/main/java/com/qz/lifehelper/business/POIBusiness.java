@@ -16,7 +16,6 @@ import com.qz.lifehelper.service.BaiduPOIService;
 import com.qz.lifehelper.service.IPOIService;
 import com.qz.lifehelper.service.POIOnlineService_;
 import com.qz.lifehelper.service.POIOutlineService_;
-import com.qz.lifehelper.ui.AppProfile;
 import com.qz.lifehelper.ui.activity.POIAddFragment;
 import com.qz.lifehelper.ui.fragment.POIAlterFragment;
 import com.qz.lifehelper.ui.fragment.POIDetailFragment;
@@ -61,9 +60,12 @@ public class POIBusiness {
 
     private int baiduPoiCurrentPagerNumber = -1;
 
+    @Bean
+    AppBusiness appBusiness;
+
     @AfterInject
     void setService() {
-        if (AppProfile.dateSource.equals(AppProfile.DATE_SOURCE.OUTLINE)) {
+        if (appBusiness.getDateSourceType().equals(AppBusiness.DATE_SOURCE.OUTLINE)) {
             poiService = POIOutlineService_.getInstance_(context);
         } else {
             poiService = POIOnlineService_.getInstance_(context);
@@ -99,7 +101,7 @@ public class POIBusiness {
      * @param lastestItem  当前最后一个数据。用于分页，如果为null，则会加载第一页
      */
     public Task<List<POIResultBean>> getPOIItems(final CityBean cityBean, final POICategoryBean categoryBean, final int count, POIResultBean lastestItem) {
-        if (AppProfile.dateSource.equals(AppProfile.DATE_SOURCE.OUTLINE)) {
+        if (appBusiness.getDateSourceType().equals(AppBusiness.DATE_SOURCE.OUTLINE)) {
             return poiService.getPOIItems(cityBean, categoryBean, count, lastestItem != null ? lastestItem.createdAt : null, null);
         }
 
@@ -263,7 +265,7 @@ public class POIBusiness {
      * @param userInfoBean 用户
      */
     public Task<List<POIResultBean>> getPersonalPOIItems(int count, POIResultBean lastestItem, UserInfoBean userInfoBean) {
-        if (userInfoBean != null && AuthenticationBusiness.isSuperUser(userInfoBean)) {
+        if (userInfoBean != null && authenticationBusiness.isSuperUser(userInfoBean)) {
             userInfoBean = null;
         }
         return poiService.getPOIItems(null, null, count, lastestItem != null ? lastestItem.createdAt : null, userInfoBean);

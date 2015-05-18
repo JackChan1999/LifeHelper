@@ -12,6 +12,7 @@ import com.qz.lifehelper.dao.UserDao;
 import com.qz.lifehelper.entity.ImageBean;
 import com.qz.lifehelper.entity.UserInfoBean;
 import com.qz.lifehelper.event.LoginSuccessEvent;
+import com.qz.lifehelper.event.LogoutEvent;
 import com.qz.lifehelper.event.SigninSuccessEvent;
 import com.qz.lifehelper.persist.UserPersist;
 import com.qz.lifehelper.service.AuthenticateOnlineService_;
@@ -19,7 +20,6 @@ import com.qz.lifehelper.service.AuthenticateOutlineService_;
 import com.qz.lifehelper.service.IAuthenticateService;
 import com.qz.lifehelper.service.LeancloudConstant;
 import com.qz.lifehelper.service.OutlineServiceConstant;
-import com.qz.lifehelper.ui.AppProfile;
 import com.qz.lifehelper.ui.activity.AuthenticateActivity;
 
 import org.androidannotations.annotations.AfterInject;
@@ -50,7 +50,7 @@ public class AuthenticationBusiness {
 
     @AfterInject
     void setService() {
-        if (AppProfile.dateSource.equals(AppProfile.DATE_SOURCE.ONLINE)) {
+        if (appBusiness.getDateSourceType().equals(AppBusiness.DATE_SOURCE.ONLINE)) {
             authenticateService = AuthenticateOnlineService_.getInstance_(context);
         } else {
             authenticateService = AuthenticateOutlineService_.getInstance_(context);
@@ -129,6 +129,9 @@ public class AuthenticationBusiness {
         });
     }
 
+    @Bean
+    AppBusiness appBusiness;
+
     /**
      * 获取当前用户的信息
      * <p/>
@@ -140,7 +143,7 @@ public class AuthenticationBusiness {
         }
 
         String id = null;
-        if (AppProfile.dateSource.equals(AppProfile.DATE_SOURCE.ONLINE)) {
+        if (appBusiness.getDateSourceType().equals(AppBusiness.DATE_SOURCE.ONLINE)) {
             id = AVUser.getCurrentUser().getObjectId();
         } else {
             DaoMaster.DevOpenHelper devOpenHelper = new DaoMaster.DevOpenHelper(context, OutlineServiceConstant.BD_NAME, null);
@@ -193,6 +196,7 @@ public class AuthenticationBusiness {
     public void logout() {
         userPersist.setUserName(null);
         userPersist.setUserIcon(null);
+        EventBus.getDefault().post(new LogoutEvent());
     }
 
     /**
@@ -207,12 +211,12 @@ public class AuthenticationBusiness {
      * <p/>
      * 超级用户拥有无敌权限
      */
-    static public boolean isSuperUser(UserInfoBean userInfoBean) {
+    public boolean isSuperUser(UserInfoBean userInfoBean) {
         if (userInfoBean == null) {
             return true;
         }
 
-        if (AppProfile.dateSource.equals(AppProfile.DATE_SOURCE.OUTLINE)) {
+        if (appBusiness.getDateSourceType().equals(AppBusiness.DATE_SOURCE.OUTLINE)) {
             if (userInfoBean.userName.equals("root")) {
                 return true;
             }

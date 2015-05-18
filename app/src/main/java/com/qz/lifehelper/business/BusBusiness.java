@@ -12,12 +12,12 @@ import com.qz.lifehelper.entity.json.JuheResponseJsonBean2;
 import com.qz.lifehelper.service.BusOutlineService_;
 import com.qz.lifehelper.service.BusService;
 import com.qz.lifehelper.service.JuheConstant;
-import com.qz.lifehelper.ui.AppProfile;
 import com.qz.lifehelper.ui.fragment.BusInfoRequestFragment;
 import com.qz.lifehelper.ui.fragment.BusInfoRequestFragment_;
 import com.qz.lifehelper.ui.fragment.BusInfoResultFragment;
 
 import org.androidannotations.annotations.AfterInject;
+import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
 
@@ -38,6 +38,9 @@ public class BusBusiness {
     @RootContext
     Context context;
 
+    @Bean
+    AppBusiness appBusiness;
+
     /**
      * 配置BusService
      * <p/>
@@ -45,7 +48,7 @@ public class BusBusiness {
      */
     @AfterInject
     void setBusService() {
-        if (AppProfile.dateSource.equals(AppProfile.DATE_SOURCE.OUTLINE)) {
+        if (appBusiness.getDateSourceType().equals(AppBusiness.DATE_SOURCE.OUTLINE)) {
             busService = BusOutlineService_.getInstance_(context);
         } else {
             RestAdapter restAdapter = new RestAdapter.Builder()

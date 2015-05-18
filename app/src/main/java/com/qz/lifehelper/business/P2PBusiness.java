@@ -11,7 +11,6 @@ import com.qz.lifehelper.entity.UserInfoBean;
 import com.qz.lifehelper.service.IP2PService;
 import com.qz.lifehelper.service.P2POnlineService_;
 import com.qz.lifehelper.service.P2POutlineService_;
-import com.qz.lifehelper.ui.AppProfile;
 import com.qz.lifehelper.ui.fragment.P2PAddFragment;
 import com.qz.lifehelper.ui.fragment.P2PAlterFragment;
 import com.qz.lifehelper.ui.fragment.P2PDetailFragment;
@@ -39,9 +38,6 @@ public class P2PBusiness implements IP2PService {
 
     @RootContext
     Context context;
-
-    @Bean
-    AuthenticationBusiness authenticationBusiness;
 
     /**
      * 前往P2P修改页面
@@ -138,9 +134,12 @@ public class P2PBusiness implements IP2PService {
     @Bean
     ImageBusiness imageBusiness;
 
+    @Bean
+    AppBusiness appBusiness;
+
     @AfterInject
     void setService() {
-        if (AppProfile.dateSource.equals(AppProfile.DATE_SOURCE.ONLINE)) {
+        if (appBusiness.getDateSourceType().equals(AppBusiness.DATE_SOURCE.ONLINE)) {
             p2pService = P2POnlineService_.getInstance_(context);
         } else {
             p2pService = P2POutlineService_.getInstance_(context);
@@ -185,9 +184,12 @@ public class P2PBusiness implements IP2PService {
         return p2pService.alterP2PItem(p2pItemBean);
     }
 
+    @Bean
+    AuthenticationBusiness authenticationBusiness;
+
     @Override
     public Task<List<P2PItemBean>> getP2PItem(P2PCategoryBean catergoryBean, int count, Date after, UserInfoBean userInfoBean) {
-        if (userInfoBean != null && AuthenticationBusiness.isSuperUser(userInfoBean)) {
+        if (userInfoBean != null && authenticationBusiness.isSuperUser(userInfoBean)) {
             userInfoBean = null;
         }
         return p2pService.getP2PItem(catergoryBean, count, after, userInfoBean);

@@ -10,6 +10,7 @@ import com.qz.lifehelper.entity.POICategoryBean;
 import com.qz.lifehelper.entity.POIResultBean;
 import com.qz.lifehelper.entity.UserInfoBean;
 
+import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 
 import java.util.ArrayList;
@@ -26,6 +27,9 @@ import bolts.Task;
  */
 @EBean
 public class POIOnlineService implements IPOIService {
+
+    @Bean
+    AuthenticationBusiness authenticationBusiness;
 
     /**
      * 获取POI数据
@@ -53,7 +57,7 @@ public class POIOnlineService implements IPOIService {
                 if (after != null) {
                     query.whereLessThan(LeancloudConstant.CREATED_AT_COLUME, after);
                 }
-                if (!AuthenticationBusiness.isSuperUser(userInfoBean) && userInfoBean != null) {
+                if (!authenticationBusiness.isSuperUser(userInfoBean) && userInfoBean != null) {
                     AVObject avUser = AVObject.createWithoutData(LeancloudConstant.USER_TABLE, userInfoBean.id);
                     query.whereEqualTo(LeancloudConstant.USER_COLUME, avUser);
                 }
