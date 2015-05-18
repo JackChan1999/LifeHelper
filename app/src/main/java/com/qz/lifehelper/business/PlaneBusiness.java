@@ -1,5 +1,6 @@
 package com.qz.lifehelper.business;
 
+import android.content.Context;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
@@ -13,7 +14,9 @@ import com.qz.lifehelper.entity.json.AirportJsonBean;
 import com.qz.lifehelper.entity.json.PlaneInfoJsonBean;
 import com.qz.lifehelper.persist.TrafficPersist;
 import com.qz.lifehelper.service.JuheConstant;
+import com.qz.lifehelper.service.PlaneOutlineService_;
 import com.qz.lifehelper.service.PlaneService;
+import com.qz.lifehelper.ui.AppProfile;
 import com.qz.lifehelper.ui.fragment.PlaneInfoRequestFragment_;
 import com.qz.lifehelper.ui.fragment.PlaneInfoResultFragment;
 import com.qz.lifehelper.utils.DateUtil;
@@ -21,6 +24,7 @@ import com.qz.lifehelper.utils.DateUtil;
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
+import org.androidannotations.annotations.RootContext;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -42,13 +46,20 @@ public class PlaneBusiness {
 
     private PlaneService planeService;
 
+    @RootContext
+    Context context;
+
     /**
      * 设置PlaneService，PlaneService负责与服务器的链接
      */
     @AfterInject
     void setPlaneService() {
-        RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(JuheConstant.BASE_URL).build();
-        planeService = restAdapter.create(PlaneService.class);
+        if (AppProfile.dateSource.equals(AppProfile.DATE_SOURCE.OUTLINE)) {
+            planeService = PlaneOutlineService_.getInstance_(context);
+        } else {
+            RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(JuheConstant.BASE_URL).build();
+            planeService = restAdapter.create(PlaneService.class);
+        }
     }
 
     /**

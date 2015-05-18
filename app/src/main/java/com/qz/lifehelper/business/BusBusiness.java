@@ -1,5 +1,6 @@
 package com.qz.lifehelper.business;
 
+import android.content.Context;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
@@ -8,14 +9,17 @@ import com.qz.lifehelper.entity.CityBean;
 import com.qz.lifehelper.entity.json.BusInfoBean;
 import com.qz.lifehelper.entity.json.BusInfoJsonBean;
 import com.qz.lifehelper.entity.json.JuheResponseJsonBean2;
+import com.qz.lifehelper.service.BusOutlineService_;
 import com.qz.lifehelper.service.BusService;
 import com.qz.lifehelper.service.JuheConstant;
+import com.qz.lifehelper.ui.AppProfile;
 import com.qz.lifehelper.ui.fragment.BusInfoRequestFragment;
 import com.qz.lifehelper.ui.fragment.BusInfoRequestFragment_;
 import com.qz.lifehelper.ui.fragment.BusInfoResultFragment;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.EBean;
+import org.androidannotations.annotations.RootContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +35,9 @@ import retrofit.RestAdapter;
 public class BusBusiness {
     private BusService busService;
 
+    @RootContext
+    Context context;
+
     /**
      * 配置BusService
      * <p/>
@@ -38,10 +45,14 @@ public class BusBusiness {
      */
     @AfterInject
     void setBusService() {
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(JuheConstant.BASE_URL2)
-                .build();
-        busService = restAdapter.create(BusService.class);
+        if (AppProfile.dateSource.equals(AppProfile.DATE_SOURCE.OUTLINE)) {
+            busService = BusOutlineService_.getInstance_(context);
+        } else {
+            RestAdapter restAdapter = new RestAdapter.Builder()
+                    .setEndpoint(JuheConstant.BASE_URL2)
+                    .build();
+            busService = restAdapter.create(BusService.class);
+        }
     }
 
 

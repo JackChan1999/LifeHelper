@@ -1,5 +1,6 @@
 package com.qz.lifehelper.business;
 
+import android.content.Context;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
@@ -14,7 +15,9 @@ import com.qz.lifehelper.entity.json.TrainInfoJsonBean;
 import com.qz.lifehelper.entity.json.TrainStationJsonBean;
 import com.qz.lifehelper.persist.TrafficPersist;
 import com.qz.lifehelper.service.JuheConstant;
+import com.qz.lifehelper.service.TrainOutlineService_;
 import com.qz.lifehelper.service.TrainService;
+import com.qz.lifehelper.ui.AppProfile;
 import com.qz.lifehelper.ui.fragment.TrainInfoRequestFragment;
 import com.qz.lifehelper.ui.fragment.TrainInfoRequestFragment_;
 import com.qz.lifehelper.ui.fragment.TrainInfoResultFragment;
@@ -23,6 +26,7 @@ import com.qz.lifehelper.utils.DateUtil;
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
+import org.androidannotations.annotations.RootContext;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -42,6 +46,9 @@ public class TrainBusiness {
     @Bean
     TrafficPersist trafficPersist;
 
+    @RootContext
+    Context context;
+
     /**
      * 配置TrainService
      * <p/>
@@ -49,10 +56,15 @@ public class TrainBusiness {
      */
     @AfterInject
     void setTrainService() {
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(JuheConstant.BASE_URL)
-                .build();
-        trainService = restAdapter.create(TrainService.class);
+
+        if (AppProfile.dateSource.equals(AppProfile.DATE_SOURCE.OUTLINE)) {
+            trainService = TrainOutlineService_.getInstance_(context);
+        } else {
+            RestAdapter restAdapter = new RestAdapter.Builder()
+                    .setEndpoint(JuheConstant.BASE_URL)
+                    .build();
+            trainService = restAdapter.create(TrainService.class);
+        }
     }
 
     /**
