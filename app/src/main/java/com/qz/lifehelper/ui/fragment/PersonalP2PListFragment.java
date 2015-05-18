@@ -5,7 +5,6 @@ import android.widget.Toast;
 
 import com.qz.lifehelper.R;
 import com.qz.lifehelper.business.AuthenticationBusiness;
-import com.qz.lifehelper.business.P2PBusiness;
 import com.qz.lifehelper.entity.P2PCategoryBean;
 import com.qz.lifehelper.entity.P2PItemBean;
 import com.qz.lifehelper.entity.UserInfoBean;
@@ -37,9 +36,6 @@ public class PersonalP2PListFragment extends P2PListFragment {
     protected String getTitleName() {
         return "我的商品";
     }
-
-    @Bean
-    P2PBusiness p2pBusiness;
 
     @Bean
     AuthenticationBusiness authenticationBusiness;

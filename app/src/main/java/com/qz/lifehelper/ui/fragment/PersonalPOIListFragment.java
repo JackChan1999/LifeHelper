@@ -5,7 +5,6 @@ import android.widget.Toast;
 
 import com.qz.lifehelper.R;
 import com.qz.lifehelper.business.AuthenticationBusiness;
-import com.qz.lifehelper.business.POIBusiness;
 import com.qz.lifehelper.entity.CityBean;
 import com.qz.lifehelper.entity.POICategoryBean;
 import com.qz.lifehelper.entity.POIResultBean;
@@ -37,9 +36,6 @@ public class PersonalPOIListFragment extends POIListFragment {
     protected String getTitleName() {
         return "我发布的周边信息";
     }
-
-    @Bean
-    POIBusiness poiBusiness;
 
     @Bean
     AuthenticationBusiness authenticationBusiness;
