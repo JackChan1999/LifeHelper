@@ -13,13 +13,17 @@ import com.qz.lifehelper.entity.POIResultBean;
 import com.qz.lifehelper.entity.UserInfoBean;
 import com.qz.lifehelper.entity.json.POIResultJsonBean;
 import com.qz.lifehelper.service.BaiduPOIService;
-import com.qz.lifehelper.service.POIOnlineService;
+import com.qz.lifehelper.service.IPOIService;
+import com.qz.lifehelper.service.POIOnlineService_;
+import com.qz.lifehelper.service.POIOutlineService_;
+import com.qz.lifehelper.ui.AppProfile;
 import com.qz.lifehelper.ui.activity.POIAddFragment;
 import com.qz.lifehelper.ui.fragment.POIAlterFragment;
 import com.qz.lifehelper.ui.fragment.POIDetailFragment;
 import com.qz.lifehelper.ui.fragment.POIListFragment;
 import com.qz.lifehelper.ui.fragment.PersonalPOIListFragment;
 
+import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
@@ -47,8 +51,7 @@ public class POIBusiness {
     @Bean
     BaiduPOIService baiduPOIService;
 
-    @Bean
-    POIOnlineService poiOnlineService;
+    IPOIService poiService;
 
     @Bean
     ImageBusiness imageBusiness;
@@ -57,6 +60,16 @@ public class POIBusiness {
     AuthenticationBusiness authenticationBusiness;
 
     private int baiduPoiCurrentPagerNumber = -1;
+
+    @AfterInject
+    void setService() {
+        if (AppProfile.dateSource.equals(AppProfile.DATE_SOURCE.OUTLINE)) {
+            poiService = POIOutlineService_.getInstance_(context);
+        } else {
+            poiService = POIOnlineService_.getInstance_(context);
+        }
+    }
+
 
     /**
      * 新增poi信息
@@ -72,7 +85,7 @@ public class POIBusiness {
                     @Override
                     public Task<POIResultBean> then(Task<ImageBean> task) throws Exception {
                         poiResultBean.imageBean = task.getResult();
-                        return poiOnlineService.addPOIItem(poiResultBean);
+                        return poiService.addPOIItem(poiResultBean);
                     }
                 });
     }
@@ -86,8 +99,12 @@ public class POIBusiness {
      * @param lastestItem  当前最后一个数据。用于分页，如果为null，则会加载第一页
      */
     public Task<List<POIResultBean>> getPOIItems(final CityBean cityBean, final POICategoryBean categoryBean, final int count, POIResultBean lastestItem) {
+        if (AppProfile.dateSource.equals(AppProfile.DATE_SOURCE.OUTLINE)) {
+            return poiService.getPOIItems(cityBean, categoryBean, count, lastestItem != null ? lastestItem.createdAt : null, null);
+        }
+
         if (baiduPoiCurrentPagerNumber == -1) {
-            return poiOnlineService.getPOIItems(
+            return poiService.getPOIItems(
                     cityBean
                     , categoryBean
                     , count
@@ -228,14 +245,14 @@ public class POIBusiness {
      * 修改POI信息
      */
     public Task<POIResultBean> alterPOIItem(POIResultBean poiItemBean) {
-        return poiOnlineService.alterPOIItem(poiItemBean);
+        return poiService.alterPOIItem(poiItemBean);
     }
 
     /**
      * 删除POI信息
      */
     public Task<POIResultBean> deletePOIItem(POIResultBean poiItemBean) {
-        return poiOnlineService.deletePOIItem(poiItemBean);
+        return poiService.deletePOIItem(poiItemBean);
     }
 
     /**
@@ -246,6 +263,9 @@ public class POIBusiness {
      * @param userInfoBean 用户
      */
     public Task<List<POIResultBean>> getPersonalPOIItems(int count, POIResultBean lastestItem, UserInfoBean userInfoBean) {
-        return poiOnlineService.getPOIItems(null, null, count, lastestItem != null ? lastestItem.createdAt : null, userInfoBean);
+        if (userInfoBean != null && AuthenticationBusiness.isSuperUser(userInfoBean)) {
+            userInfoBean = null;
+        }
+        return poiService.getPOIItems(null, null, count, lastestItem != null ? lastestItem.createdAt : null, userInfoBean);
     }
 }

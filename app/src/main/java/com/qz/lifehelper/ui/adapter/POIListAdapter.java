@@ -87,10 +87,16 @@ public class POIListAdapter extends BaseAdapter {
         String imageSrc = poiResultBean.imageBean.imageSrc;
         if (poiResultBean.imageBean.imageType.equals(ImageBean.ImageType.QINIUYUN)) {
             imageSrc = imageSrc + "?imageView2/0/w/120";
+            Picasso.with(context)
+                    .load(imageSrc)
+                    .into(childs.poiIv);
+        } else {
+            Picasso.with(context)
+                    .load(imageSrc)
+                    .resize(150, 0)
+                    .into(childs.poiIv);
         }
-        Picasso.with(context)
-                .load(imageSrc)
-                .into(childs.poiIv);
+
         return convertView;
     }
 }

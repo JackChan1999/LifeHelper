@@ -25,7 +25,7 @@ import bolts.Task;
  * 使用的是Leancloud
  */
 @EBean
-public class POIOnlineService {
+public class POIOnlineService implements IPOIService {
 
     /**
      * 获取POI数据
