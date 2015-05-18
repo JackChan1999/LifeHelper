@@ -1,13 +1,25 @@
 package com.qz.lifehelper.service;
 
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+
+import com.qz.lifehelper.dao.DaoMaster;
+import com.qz.lifehelper.dao.DaoSession;
+import com.qz.lifehelper.dao.User;
+import com.qz.lifehelper.dao.UserDao;
 import com.qz.lifehelper.entity.ImageBean;
 import com.qz.lifehelper.entity.UserInfoBean;
+import com.qz.lifehelper.utils.OutlineServiceUtil;
 
+import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.EBean;
+import org.androidannotations.annotations.RootContext;
 
+import java.util.Date;
 import java.util.concurrent.Callable;
 
 import bolts.Task;
+import de.greenrobot.dao.query.QueryBuilder;
 
 /**
  * 用于进行身份验证的Service
@@ -17,6 +29,20 @@ import bolts.Task;
 @EBean
 public class AuthenticateOutlineService implements IAuthenticateService {
 
+    @RootContext
+    Context context;
+
+    private UserDao userDao;
+
+    @AfterInject
+    void setDao() {
+        DaoMaster.DevOpenHelper devOpenHelper = new DaoMaster.DevOpenHelper(context, OutlineServiceConstant.BD_NAME, null);
+        SQLiteDatabase database = devOpenHelper.getWritableDatabase();
+        DaoMaster daoMaster = new DaoMaster(database);
+        DaoSession daoSession = daoMaster.newSession();
+        userDao = daoSession.getUserDao();
+    }
+
     /**
      * 登录
      */
@@ -25,14 +51,21 @@ public class AuthenticateOutlineService implements IAuthenticateService {
             @Override
             public UserInfoBean call() throws Exception {
                 //模拟网络
-                Thread.sleep(1000);
+                OutlineServiceUtil.analogLoding();
 
-                //TODO 生成id
+                QueryBuilder<User> queryBuilder = userDao.queryBuilder();
+                User user = queryBuilder.where(UserDao.Properties.Name.eq(userName))
+                        .where(UserDao.Properties.Password.eq(password))
+                        .unique();
                 UserInfoBean userInfoBean = UserInfoBean.generateBean(
-                        userName
+                        user.getName()
                         , getDefaultUserIcon()
-                        , "");
-                return userInfoBean;
+                        , String.valueOf(user.getId()));
+                if (user == null) {
+                    throw new Exception("用户名或密码不正确");
+                } else {
+                    return userInfoBean;
+                }
             }
         });
     }
@@ -41,21 +74,16 @@ public class AuthenticateOutlineService implements IAuthenticateService {
     /**
      * 注册
      */
-    public Task<UserInfoBean> signin(final String userName, String password) {
+    public Task<UserInfoBean> signin(final String userName, final String password) {
         return Task.callInBackground(new Callable<UserInfoBean>() {
             @Override
             public UserInfoBean call() throws Exception {
-
-                //TODO 生成id
-
                 //模拟网络
-                Thread.sleep(1000);
+                OutlineServiceUtil.analogLoding();
 
-                UserInfoBean userInfoBean = UserInfoBean.generateBean(
-                        userName
-                        , getDefaultUserIcon()
-                        , "");
-                return userInfoBean;
+                User user = new User(null, new Date(), userName, password);
+                Long id = userDao.insert(user);
+                return UserInfoBean.generateBean(userName, getDefaultUserIcon(), String.valueOf(id));
             }
         });
     }

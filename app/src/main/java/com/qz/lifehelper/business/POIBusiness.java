@@ -13,7 +13,6 @@ import com.qz.lifehelper.entity.POIResultBean;
 import com.qz.lifehelper.entity.UserInfoBean;
 import com.qz.lifehelper.entity.json.POIResultJsonBean;
 import com.qz.lifehelper.service.BaiduPOIService;
-import com.qz.lifehelper.service.ImageService;
 import com.qz.lifehelper.service.POIOnlineService;
 import com.qz.lifehelper.ui.activity.POIAddFragment;
 import com.qz.lifehelper.ui.fragment.POIAlterFragment;
@@ -52,7 +51,7 @@ public class POIBusiness {
     POIOnlineService poiOnlineService;
 
     @Bean
-    ImageService imageService;
+    ImageBusiness imageBusiness;
 
     @Bean
     AuthenticationBusiness authenticationBusiness;
@@ -63,11 +62,11 @@ public class POIBusiness {
      * 新增poi信息
      */
     public Task<POIResultBean> addPOIItem(final POIResultBean poiResultBean) {
-        return imageService.uploadImageToQiniu(poiResultBean.imageBean)
+        return imageBusiness.uploadImageToQiniu(poiResultBean.imageBean)
                 .onSuccessTask(new Continuation<ImageBean, Task<ImageBean>>() {
                     @Override
                     public Task<ImageBean> then(Task<ImageBean> task) throws Exception {
-                        return imageService.uploadImageToLeancloud(task.getResult());
+                        return imageBusiness.uploadImageToLeancloud(task.getResult());
                     }
                 }).onSuccessTask(new Continuation<ImageBean, Task<POIResultBean>>() {
                     @Override

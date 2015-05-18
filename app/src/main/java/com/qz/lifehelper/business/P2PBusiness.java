@@ -9,7 +9,6 @@ import com.qz.lifehelper.entity.P2PCategoryBean;
 import com.qz.lifehelper.entity.P2PItemBean;
 import com.qz.lifehelper.entity.UserInfoBean;
 import com.qz.lifehelper.service.IP2PService;
-import com.qz.lifehelper.service.ImageService;
 import com.qz.lifehelper.service.P2POnlineService_;
 import com.qz.lifehelper.service.P2POutlineService_;
 import com.qz.lifehelper.ui.AppProfile;
@@ -137,7 +136,7 @@ public class P2PBusiness implements IP2PService {
     private IP2PService p2pService;
 
     @Bean
-    ImageService imageService;
+    ImageBusiness imageBusiness;
 
     @AfterInject
     void setService() {
@@ -160,11 +159,11 @@ public class P2PBusiness implements IP2PService {
 
     @Override
     public Task<P2PItemBean> addP2PItem(final P2PItemBean p2pItemBean) {
-        return imageService.uploadImageToQiniu(p2pItemBean.imageBean)
+        return imageBusiness.uploadImageToQiniu(p2pItemBean.imageBean)
                 .onSuccessTask(new Continuation<ImageBean, Task<P2PItemBean>>() {
                     @Override
                     public Task<P2PItemBean> then(Task<ImageBean> task) throws Exception {
-                        return imageService.uploadImageToLeancloud(task.getResult())
+                        return imageBusiness.uploadImageToLeancloud(task.getResult())
                                 .onSuccessTask(new Continuation<ImageBean, Task<P2PItemBean>>() {
                                     @Override
                                     public Task<P2PItemBean> then(Task<ImageBean> task) throws Exception {

@@ -21,9 +21,9 @@ import bolts.Task;
  * 图片服务器
  */
 @EBean
-public class ImageService {
+public class ImageOnlineService implements IImageService {
 
-    static private final String TAG = ImageService.class.getSimpleName() + "_TAG";
+    static private final String TAG = ImageOnlineService.class.getSimpleName() + "_TAG";
 
     /**
      * 将图片上传到七牛云服务器

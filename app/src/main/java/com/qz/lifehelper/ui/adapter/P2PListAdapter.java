@@ -75,10 +75,16 @@ public class P2PListAdapter extends BaseAdapter {
         String imageSrc = p2PItemBean.imageBean.imageSrc;
         if (p2PItemBean.imageBean.imageType.equals(ImageBean.ImageType.QINIUYUN)) {
             imageSrc = imageSrc + "?imageView2/0/w/120";
+            Picasso.with(context)
+                    .load(imageSrc)
+                    .into(childViews.p2pImageIv);
+        } else {
+            Picasso.with(context)
+                    .load(imageSrc)
+                    .resize(150, 0)
+                    .into(childViews.p2pImageIv);
         }
-        Picasso.with(context)
-                .load(imageSrc)
-                .into(childViews.p2pImageIv);
+
         return convertView;
     }
 

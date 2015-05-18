@@ -124,7 +124,7 @@ public class P2PListFragment extends BaseFragment {
                 if (task.isFaulted()) {
                     Log.e(TAG, "load p2p items fail", task.getError());
                 } else {
-                    Log.d(TAG, "load p2p items success", task.getError());
+                    Log.d(TAG, "load p2p items success");
                     data.clear();
                     data.addAll(task.getResult());
                     refreshListView(data);

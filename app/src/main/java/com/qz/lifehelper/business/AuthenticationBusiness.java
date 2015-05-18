@@ -2,8 +2,13 @@ package com.qz.lifehelper.business;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 
 import com.avos.avoscloud.AVUser;
+import com.qz.lifehelper.dao.DaoMaster;
+import com.qz.lifehelper.dao.DaoSession;
+import com.qz.lifehelper.dao.User;
+import com.qz.lifehelper.dao.UserDao;
 import com.qz.lifehelper.entity.ImageBean;
 import com.qz.lifehelper.entity.UserInfoBean;
 import com.qz.lifehelper.event.LoginSuccessEvent;
@@ -13,6 +18,7 @@ import com.qz.lifehelper.service.AuthenticateOnlineService_;
 import com.qz.lifehelper.service.AuthenticateOutlineService_;
 import com.qz.lifehelper.service.IAuthenticateService;
 import com.qz.lifehelper.service.LeancloudConstant;
+import com.qz.lifehelper.service.OutlineServiceConstant;
 import com.qz.lifehelper.ui.AppProfile;
 import com.qz.lifehelper.ui.activity.AuthenticateActivity;
 
@@ -23,6 +29,7 @@ import org.androidannotations.annotations.RootContext;
 
 import bolts.Continuation;
 import bolts.Task;
+import de.greenrobot.dao.query.QueryBuilder;
 import de.greenrobot.event.EventBus;
 
 /**
@@ -132,7 +139,21 @@ public class AuthenticationBusiness {
             throw new IllegalStateException("还没有登陆");
         }
 
-        String id = AVUser.getCurrentUser().getObjectId();
+        String id = null;
+        if (AppProfile.dateSource.equals(AppProfile.DATE_SOURCE.ONLINE)) {
+            id = AVUser.getCurrentUser().getObjectId();
+        } else {
+            DaoMaster.DevOpenHelper devOpenHelper = new DaoMaster.DevOpenHelper(context, OutlineServiceConstant.BD_NAME, null);
+            SQLiteDatabase database = devOpenHelper.getWritableDatabase();
+            DaoMaster daoMaster = new DaoMaster(database);
+            DaoSession daoSession = daoMaster.newSession();
+            UserDao userDao = daoSession.getUserDao();
+            QueryBuilder<User> queryBuilder = userDao.queryBuilder();
+            Long lId = queryBuilder.where(UserDao.Properties.Name.eq(userPersist.getUserName()))
+                    .unique()
+                    .getId();
+            id = String.valueOf(lId);
+        }
 
         return UserInfoBean.generateBean(
                 userPersist.getUserName()

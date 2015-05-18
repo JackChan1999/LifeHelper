@@ -18,6 +18,6 @@ public class AppProfile {
      * <p/>
      * 用于控制是采用离线数据还是在线数据
      */
-    static public DATE_SOURCE dateSource = DATE_SOURCE.ONLINE;
+    static public DATE_SOURCE dateSource = DATE_SOURCE.OUTLINE;
 
 }
