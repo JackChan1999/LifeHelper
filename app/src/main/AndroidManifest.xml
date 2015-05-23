@@ -3,7 +3,7 @@
     package="com.qz.lifehelper">
 
     <application
-        android:name=".ui.LifeHelperApplication"
+        android:name=".ui.LifeHelperApplication_"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:theme="@style/AppTheme">

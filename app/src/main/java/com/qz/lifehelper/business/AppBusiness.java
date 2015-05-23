@@ -67,4 +67,18 @@ public class AppBusiness {
             appPersist.setIsOnlineSource(false);
         }
     }
+
+    /**
+     * 判断是否是第一次打开APP
+     */
+    public boolean isFirstOpenApp() {
+        return appPersist.isFirstOpne();
+    }
+
+    /**
+     * 设置是否是第一次打开APP
+     */
+    public void setIsFirstOpenApp(boolean isFirstOpenApp) {
+        appPersist.setIsFirstOpen(isFirstOpenApp);
+    }
 }

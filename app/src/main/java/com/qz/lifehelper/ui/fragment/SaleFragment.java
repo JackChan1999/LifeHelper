@@ -46,7 +46,7 @@ public class SaleFragment extends P2PListFragment {
         return topInfoBusiness.getSales();
     }
 
-    @ViewById(R.id.add_poi_bn)
+    @ViewById(R.id.add_p2p_bn)
     View addBn;
 
     @AfterViews

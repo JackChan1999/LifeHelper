@@ -29,28 +29,46 @@ public class AppPersist {
     @RootContext
     Context context;
 
-    static private final String DATE_SOURCE_TYPE_SP = "DATE_SOURCE_TYPE_SP";
+    static private final String APP_SP = "APP_SP";
 
     static private final String IS_ONLINE_SOURCE = "IS_ONLINE_SOURCE";
 
 
-    private SharedPreferences getDateSourceTypeSP() {
-        return context.getSharedPreferences(DATE_SOURCE_TYPE_SP, Context.MODE_PRIVATE);
+    private SharedPreferences getAppSP() {
+        return context.getSharedPreferences(APP_SP, Context.MODE_PRIVATE);
     }
 
     /**
      * 是否使用在线数据
      */
     public boolean isOnlineSource() {
-        SharedPreferences sharedPreferences = getDateSourceTypeSP();
-        return sharedPreferences.getBoolean(IS_ONLINE_SOURCE, true);
+        SharedPreferences sharedPreferences = getAppSP();
+        return sharedPreferences.getBoolean(IS_ONLINE_SOURCE, false);
     }
 
     /**
      * 设置是否使用在线数据
      */
     public void setIsOnlineSource(boolean isOnlineSource) {
-        SharedPreferences sharedPreferences = getDateSourceTypeSP();
+        SharedPreferences sharedPreferences = getAppSP();
         sharedPreferences.edit().putBoolean(IS_ONLINE_SOURCE, isOnlineSource).commit();
+    }
+
+    static private final String IS_FIRST_OPEN = "IS_FIRST_OPEN";
+
+    /**
+     * 判断是否是第一次打开应用
+     */
+    public boolean isFirstOpne() {
+        SharedPreferences sharedPreferences = getAppSP();
+        return sharedPreferences.getBoolean(IS_FIRST_OPEN, true);
+    }
+
+    /**
+     * 设置是否是第一次打开应用
+     */
+    public void setIsFirstOpen(boolean isFirstOpen) {
+        SharedPreferences sharedPreferences = getAppSP();
+        sharedPreferences.edit().putBoolean(IS_FIRST_OPEN, isFirstOpen).commit();
     }
 }
