@@ -59,9 +59,9 @@ public class P2PDetailFragment extends BaseFragment {
                 .load(p2pItemBean.imageBean.imageSrc)
                 .into(p2pImageIv);
         p2pTitleTv.setText(p2pItemBean.title);
-        p2pAddTv.setText(p2pItemBean.address);
-        p2pTelTv.setText(p2pItemBean.tel);
-        p2pPriceTv.setText(p2pItemBean.price);
+        p2pAddTv.setText("add:" + p2pItemBean.address);
+        p2pTelTv.setText("tel:" + p2pItemBean.tel);
+        p2pPriceTv.setText(p2pItemBean.price + "元");
         p2pContentTv.setText(p2pItemBean.detail);
     }
 }

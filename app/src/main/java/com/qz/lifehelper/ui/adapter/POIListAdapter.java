@@ -81,8 +81,8 @@ public class POIListAdapter extends BaseAdapter {
         final POIResultBean poiResultBean = data.get(position);
 
         childs.titleTv.setText(poiResultBean.title);
-        childs.addressTv.setText(poiResultBean.address);
-        childs.telTv.setText(poiResultBean.tel);
+        childs.addressTv.setText("add:" + poiResultBean.address);
+        childs.telTv.setText("tel:" + poiResultBean.tel);
 
         String imageSrc = poiResultBean.imageBean.imageSrc;
         if (poiResultBean.imageBean.imageType.equals(ImageBean.ImageType.QINIUYUN)) {

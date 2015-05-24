@@ -68,9 +68,9 @@ public class P2PListAdapter extends BaseAdapter {
         P2PItemBean p2PItemBean = data.get(position);
 
         childViews.p2pTitleTv.setText(p2PItemBean.title);
-        childViews.p2pPriceTv.setText(p2PItemBean.price);
-        childViews.p2pAddressTv.setText(p2PItemBean.address);
-        childViews.p2pTelTv.setText(p2PItemBean.tel);
+        childViews.p2pPriceTv.setText(p2PItemBean.price + "元");
+        childViews.p2pAddressTv.setText("add:" + p2PItemBean.address);
+        childViews.p2pTelTv.setText("tel:" + p2PItemBean.tel);
 
         String imageSrc = p2PItemBean.imageBean.imageSrc;
         if (p2PItemBean.imageBean.imageType.equals(ImageBean.ImageType.QINIUYUN)) {
