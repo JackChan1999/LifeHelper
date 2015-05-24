@@ -1,4 +1,5 @@
 <resources>
+    <string name="app_name">生活助手</string>
     <string name="life_helper">LifeHelper</string>
     <string name="find_location_ing">正在定位……</string>
     <string name="login">登陆</string>

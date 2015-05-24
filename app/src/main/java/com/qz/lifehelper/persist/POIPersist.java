@@ -30,6 +30,13 @@ public class POIPersist {
         poiCategories.put("医院", "hospital");
         poiCategories.put("酒店", "hotel");
         poiCategories.put("保洁", "cleaner");
+        poiCategories.put("咖啡", "coffe");
+        poiCategories.put("银行", "bank");
+        poiCategories.put("烧烤", "bbq");
+        poiCategories.put("月嫂", "moon");
+        poiCategories.put("物流", "move");
+        poiCategories.put("电影", "movie");
+        poiCategories.put("超市", "supermarket");
     }
 
     /**
