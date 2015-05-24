@@ -30,17 +30,18 @@ public class ImageUtil {
      */
     public boolean compress(String path) {
         boolean result = true;
-        Bitmap oldBitmap = BitmapFactory.decodeFile(path);
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inSampleSize = 5;
+        Bitmap oldBitmap = BitmapFactory.decodeFile(path, options);
         int targetWidth = maxWidth;
         int targetHeight = maxWidth * oldBitmap.getHeight() / oldBitmap.getWidth();
         Bitmap newBitmap = Bitmap.createScaledBitmap(oldBitmap, targetWidth, targetHeight, true);
         try {
-            if (oldBitmap.getWidth() > maxWidth) {
-                File imageFile = new File(path);
-                FileOutputStream imageOS = new FileOutputStream(imageFile);
-                newBitmap.compress(Bitmap.CompressFormat.JPEG, 100, imageOS);
-            }
+            File imageFile = new File(path);
+            FileOutputStream imageOS = new FileOutputStream(imageFile);
+            newBitmap.compress(Bitmap.CompressFormat.JPEG, 100, imageOS);
         } catch (Exception e) {
+            e.printStackTrace();
             result = false;
         } finally {
             oldBitmap.recycle();
