@@ -9,6 +9,8 @@ import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 该类负责交通出行的数据持续化
@@ -48,5 +50,58 @@ public class TrafficPersist {
             e.printStackTrace();
         }
         return stationJson;
+    }
+
+    static Map<String, String> cityMap = new HashMap<>();
+
+    static {
+        cityMap.put("上海", "sh");
+        cityMap.put("天津", "tj");
+        cityMap.put("杭州", "hz");
+        cityMap.put("北京", "bj");
+        cityMap.put("深圳", "sz");
+    }
+
+
+    /**
+     * 获取离线的长途大巴信息
+     */
+    public String getBusInfo(String starCity, String endCity) {
+        String busInfoStr = null;
+        try {
+            InputStream busInfoIs = context.getAssets().open("traffic/bus/" + cityMap.get(starCity) + cityMap.get(endCity));
+            busInfoStr = IOUtils.toString(busInfoIs);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return busInfoStr;
+    }
+
+    /**
+     * 获取离线的火车信息
+     */
+    public String getTrainInfo(String starCity, String endCity) {
+        String trainInfoStr = null;
+        try {
+            InputStream trainInfoIs = context.getAssets().open("traffic/train/" + cityMap.get(starCity) + cityMap.get(endCity));
+            trainInfoStr = IOUtils.toString(trainInfoIs);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return trainInfoStr;
+    }
+
+    /**
+     * 获取离线的飞机信息
+     */
+    public String getPlaneInfo(String starCity, String endCity) {
+        String planeInfoStr = null;
+        try {
+            InputStream planeInfoIs = context.getAssets().open("traffic/plane/" + cityMap.get(starCity) + cityMap.get(endCity));
+            planeInfoStr = IOUtils.toString(planeInfoIs);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return planeInfoStr;
     }
 }

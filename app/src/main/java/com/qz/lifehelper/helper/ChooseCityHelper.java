@@ -73,6 +73,7 @@ public class ChooseCityHelper {
         hotCities.add(CityItemBean.generateCity("北京"));
         hotCities.add(CityItemBean.generateCity("上海"));
         hotCities.add(CityItemBean.generateCity("深圳"));
+        hotCities.add(CityItemBean.generateCity("天津"));
         return hotCities;
     }
 
