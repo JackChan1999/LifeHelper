@@ -1,11 +1,11 @@
 package com.qz.lifehelper.ui.activity;
 
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.qz.lifehelper.R;
@@ -182,11 +182,11 @@ public class POIAddFragment extends BaseFragment {
                 });
     }
 
-    @ViewById(R.id.toolbar)
-    Toolbar toolbar;
+    @ViewById(R.id.title_tv)
+    TextView titleTv;
 
     @AfterViews
     void setToolbar() {
-        toolbar.setTitle("新增周边信息");
+        titleTv.setText("新增信息");
     }
 }

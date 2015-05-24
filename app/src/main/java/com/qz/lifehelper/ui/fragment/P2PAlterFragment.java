@@ -2,6 +2,7 @@ package com.qz.lifehelper.ui.fragment;
 
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.qz.lifehelper.R;
 import com.qz.lifehelper.business.DialogBusiness;
@@ -150,6 +151,14 @@ public class P2PAlterFragment extends BaseFragment {
                 return null;
             }
         }, Task.UI_THREAD_EXECUTOR);
+    }
+
+    @ViewById(R.id.title_tv)
+    TextView titleTv;
+
+    @AfterViews
+    void setToolbar() {
+        titleTv.setText("修改商品");
     }
 
 }

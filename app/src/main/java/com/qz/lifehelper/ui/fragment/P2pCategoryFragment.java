@@ -1,10 +1,10 @@
 package com.qz.lifehelper.ui.fragment;
 
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.qz.lifehelper.R;
 import com.qz.lifehelper.business.P2PBusiness;
@@ -92,9 +92,11 @@ public class P2pCategoryFragment extends BaseFragment {
         });
     }
 
+    @ViewById(R.id.title_tv)
+    TextView titleTv;
+
     @AfterViews
     void setToolbar() {
-        toolbar.setTitle("商品分类");
-        ((ActionBarActivity) getActivity()).setSupportActionBar(toolbar);
+        titleTv.setText("商品目录");
     }
 }
