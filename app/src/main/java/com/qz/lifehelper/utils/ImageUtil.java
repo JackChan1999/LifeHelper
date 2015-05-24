@@ -45,6 +45,9 @@ public class ImageUtil {
         } finally {
             oldBitmap.recycle();
             newBitmap.recycle();
+            oldBitmap = null;
+            newBitmap = null;
+            System.gc();
             return result;
         }
     }
