@@ -48,6 +48,9 @@ public class AuthenticationBusiness {
 
     IAuthenticateService authenticateService;
 
+    /**
+     * 设置是采用离线数据还是在线数据
+     */
     @AfterInject
     void setService() {
         if (appBusiness.getDateSourceType().equals(AppBusiness.DATE_SOURCE.ONLINE)) {
@@ -72,6 +75,9 @@ public class AuthenticationBusiness {
         return authenticateTaskCS.getTask();
     }
 
+    /**
+     * 当接收到登陆成功的事件，则触发该方法
+     */
     public void onEvent(LoginSuccessEvent event) {
         if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);
@@ -81,6 +87,9 @@ public class AuthenticationBusiness {
         }
     }
 
+    /**
+     * 当接收到注册成果的事件，则触发该方法
+     */
     public void onEvent(SigninSuccessEvent event) {
         if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);
@@ -103,6 +112,8 @@ public class AuthenticationBusiness {
 
     /**
      * 登录
+     * <p/>
+     * 访问服务器，进行登陆操作
      */
     public Task<UserInfoBean> login(final String userName, final String password) {
         return authenticateService.login(userName, password).onSuccess(new Continuation<UserInfoBean, UserInfoBean>() {
@@ -117,6 +128,8 @@ public class AuthenticationBusiness {
 
     /**
      * 注册
+     * <p/>
+     * 访问服务器，进行注册操作
      */
     public Task<UserInfoBean> signin(final String userName, String password) {
         return authenticateService.signin(userName, password).onSuccess(new Continuation<UserInfoBean, UserInfoBean>() {
@@ -135,7 +148,7 @@ public class AuthenticationBusiness {
     /**
      * 获取当前用户的信息
      * <p/>
-     * 只有当isLogin返回true时，才会返回有效数据
+     * 只有当isLogin返回true时，才会返回有效数据。如果没有登陆，则会报错！！！
      */
     private UserInfoBean getCurrentUser() {
         if (!isLogin()) {
@@ -168,6 +181,7 @@ public class AuthenticationBusiness {
 
     /**
      * 获取当前登录的用户信息
+     *
      *
      * @param tryToLogin true，如果当前没有登录则引导用户登录
      */

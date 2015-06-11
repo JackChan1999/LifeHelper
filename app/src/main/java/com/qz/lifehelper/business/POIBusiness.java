@@ -95,6 +95,8 @@ public class POIBusiness {
     /**
      * 获取POI数据
      *
+     * 先获取自产的POI数据，如果没有自产的数据则获取百度的POI数据
+     *
      * @param cityBean     要查询数据的城市
      * @param categoryBean 要查询数据的分类
      * @param count        每页的个数

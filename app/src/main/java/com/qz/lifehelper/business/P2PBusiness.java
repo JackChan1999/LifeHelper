@@ -137,6 +137,9 @@ public class P2PBusiness implements IP2PService {
     @Bean
     AppBusiness appBusiness;
 
+    /**
+     * 设置服务器，是采用在线服务器还是离线服务器
+     */
     @AfterInject
     void setService() {
         if (appBusiness.getDateSourceType().equals(AppBusiness.DATE_SOURCE.ONLINE)) {

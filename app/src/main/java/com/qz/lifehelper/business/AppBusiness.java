@@ -47,7 +47,7 @@ public class AppBusiness {
     AppPersist appPersist;
 
     /**
-     * 获取应用的数据来源
+     * 获取应用的数据来源，是采用离线数据还是在线数据
      */
     public DATE_SOURCE getDateSourceType() {
         if (appPersist.isOnlineSource()) {
@@ -58,7 +58,7 @@ public class AppBusiness {
     }
 
     /**
-     * 设置应用的数据来源
+     * 设置应用的数据来源，是采用离线数据还是在线数据
      */
     public void setDateSourceType(DATE_SOURCE dateSourceType) {
         if (dateSourceType.equals(DATE_SOURCE.ONLINE)) {
